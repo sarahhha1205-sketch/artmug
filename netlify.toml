@@ -1,0 +1,8 @@
+# Netlify 설정 — 아트머그 iframe 임베드 허용
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors *"
