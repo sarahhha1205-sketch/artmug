@@ -126,8 +126,9 @@
     .intro-box strong {
       display: block; font-size: 22px; font-weight: 800;
       color: var(--text-dark); margin-bottom: 10px; line-height: 1.4;
+      word-break: keep-all;
     }
-    .intro-box p { font-size: 17px; color: var(--text-dark-soft); line-height: 1.75; margin-bottom: 8px; }
+    .intro-box p { font-size: 17px; color: var(--text-dark-soft); line-height: 1.75; margin-bottom: 8px; word-break: keep-all; }
     .intro-box p:last-child { margin-bottom: 0; }
     .intro-box .hl {
       position: relative;
@@ -492,43 +493,31 @@
     }
     .prop-lightbox-title { display: none; }
 
-    /* 포트폴리오 — 카테고리별 큰 메뉴 + 아코디언 */
-    .pf-cat-list { display: flex; flex-direction: column; gap: 10px; }
-    .pf-cat-fold {
-      border: 1px solid var(--border-dark-hover); border-radius: 16px;
-      background: var(--surface-elevated); overflow: hidden;
+    /* 포트폴리오 — 카드 1장씩 보여주는 스택 슬라이더 */
+    .pf-stack { max-width: 480px; margin: 0 auto; }
+    .pf-stack-card-wrap { position: relative; }
+    .pf-stack-category {
+      display: inline-block; font-size: 12px; font-weight: 800;
+      color: var(--accent); background: var(--text-dark);
+      padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
     }
-    .pf-cat-toggle {
-      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 18px 20px; border: none; background: transparent; cursor: pointer;
-      font-family: inherit; text-align: left; color: var(--accent);
+    .pf-stack-nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px; margin-top: 16px;
     }
-    .pf-cat-toggle-title { font-size: 16px; font-weight: 900; }
-    .pf-cat-toggle-meta { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-    .pf-cat-count { font-size: 12px; font-weight: 700; color: var(--text-dim); font-variant-numeric: tabular-nums; }
-    .pf-cat-chevron {
-      width: 22px; height: 22px; flex-shrink: 0;
-      display: inline-flex; align-items: center; justify-content: center;
-      color: var(--text-soft); transition: transform 0.22s ease;
+    .pf-stack-arrow {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
+      color: var(--accent); cursor: pointer; font-family: inherit; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.15s ease, transform 0.15s ease;
     }
-    .pf-cat-chevron::before {
-      content: ''; display: block; width: 8px; height: 8px;
-      border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
-      transform: rotate(45deg) translateY(-2px);
+    .pf-stack-arrow:hover:not(:disabled) { transform: translateY(-1px); }
+    .pf-stack-arrow:disabled { opacity: 0.35; cursor: default; }
+    .pf-stack-counter {
+      font-size: 13px; font-weight: 700; color: var(--text-dim);
+      font-variant-numeric: tabular-nums; min-width: 46px; text-align: center;
     }
-    .pf-cat-fold.is-open .pf-cat-chevron { transform: rotate(180deg); }
-    .pf-cat-panel {
-      display: grid; grid-template-rows: 0fr;
-      transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-      border-top: 1px solid transparent;
-    }
-    .pf-cat-fold.is-open .pf-cat-panel { grid-template-rows: 1fr; border-top-color: var(--border-dark); }
-    .pf-cat-panel-inner { overflow: hidden; min-height: 0; }
-    .pf-cat-items {
-      display: flex; flex-direction: column; gap: 14px;
-      padding: 0 18px; opacity: 0; transition: opacity 0.24s ease, padding 0.32s ease;
-    }
-    .pf-cat-fold.is-open .pf-cat-items { padding: 6px 18px 18px; opacity: 1; }
     .pf-empty {
       margin-top: 4px; padding: 28px 16px; text-align: center;
       font-size: 12px; font-weight: 600; color: var(--text-dim);
@@ -771,10 +760,10 @@
     <div class="sec-head">
       <div class="sec-head-copy">
         <h2>포트폴리오</h2>
-        <p class="lead">지금까지 작업한 API·PROP 결과물입니다. 카테고리를 눌러 펼쳐보세요.</p>
+        <p class="lead">지금까지 작업한 API·PROP 결과물입니다. 화살표를 눌러 넘겨보세요.</p>
       </div>
     </div>
-    <div class="pf-cat-list" id="pfCatList"></div>
+    <div class="pf-stack" id="pfStack"></div>
   </section>
 
   <section class="block light" id="sec-order">
@@ -913,6 +902,11 @@
   var VIDEO_WINK = 'videos/윙크.mkv';
   var VIDEO_SLEEP = 'videos/잠자기.mkv';
   var VIDEO_WINGS = 'videos/날개.mkv';
+  var VIDEO_WINGS_2 = 'videos/날개2.mkv';
+  var WINGS_VARIANTS = [
+    { label: '천사 날개 1', desc: '캐릭터에게 천사 날개를 달아줍니다.', video: VIDEO_WINGS },
+    { label: '천사 날개 2', desc: '캐릭터에게 천사 날개를 달아줍니다.', video: VIDEO_WINGS_2 }
+  ];
   var VIDEO_MAGIC = 'videos/마법.mkv';
   var VIDEO_QUESTION = 'videos/물음표.mkv';
   var VIDEO_FLYAWAY = 'videos/날아기기.mkv';
@@ -963,6 +957,11 @@
     { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
   ];
 
+  var WING_PROPS = [
+    { name: '검은 날개', image: 'image/검은날개.png' },
+    { name: '악마 날개', image: 'image/악마날개.jpg' }
+  ];
+
   var BONK_DROP_PROPS = [
     { name: '보라 하트', image: 'image/보라하트.jpg' },
     { name: '치즈', image: 'image/치즈.jpg' },
@@ -995,14 +994,18 @@
       }
     },
     {
-      type: 'card',
+      type: 'swipe',
       title: '천사 날개',
       desc: '캐릭터에게 천사 날개를 달아줍니다.',
       price: '50,000원',
-      video: VIDEO_WINGS,
-      chips: ['날개 변경', '속도', '사운드'],
+      variants: WINGS_VARIANTS,
+      titleMode: 'static',
+      chips: ['날개 변경', '포즈', '파티클', 'PROP', '속도', '사운드'],
+      props: WING_PROPS,
+      propLabel: '변경 가능 날개 보기',
       optionHints: {
-        '날개 변경': '날개의 모양이나 색상을 변경합니다.'
+        '날개 변경': '날개의 모양이나 색상을 변경합니다.',
+        '포즈': '캐릭터의 포즈를 변경합니다.'
       }
     },
     {
@@ -1370,10 +1373,11 @@
     if (!hasPropChange(item.chips)) return '';
     var props = item.props && item.props.length ? item.props : DEFAULT_PROPS;
     var slots = props.map(renderPropSlot).join('');
+    var propLabel = item.propLabel || '변경 가능 PROP 보기';
     return ''
       + '<div class="api-fold api-prop" data-fold-root="' + uid + '-prop">'
       +   '<button type="button" class="api-fold-toggle" aria-expanded="false" aria-controls="prop-panel-' + uid + '">'
-      +     '<span class="api-fold-toggle-label">변경 가능 PROP 보기</span>'
+      +     '<span class="api-fold-toggle-label">' + propLabel + '</span>'
       +     '<span class="api-fold-chevron" aria-hidden="true"></span>'
       +   '</button>'
       +   '<div class="api-fold-panel" id="prop-panel-' + uid + '">'
@@ -1623,70 +1627,56 @@
       + '<article class="api-card">'
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
+      +     (item.category ? '<span class="pf-stack-category">' + item.category + '</span>' : '')
       +     '<div class="api-head"><h3 class="api-title">' + item.title + '</h3></div>'
       +     (item.desc ? '<p class="api-desc">' + item.desc + '</p>' : '')
       +   '</div>'
       + '</article>';
   }
 
-  function initPortfolio() {
-    var listEl = document.getElementById('pfCatList');
-    if (!listEl) return;
+  var pfIndex = 0;
+
+  function renderPortfolioStack() {
+    var stackEl = document.getElementById('pfStack');
+    if (!stackEl) return;
 
     if (!PORTFOLIO_ITEMS.length) {
-      listEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
+      stackEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
       return;
     }
 
-    var seen = {};
-    var cats = [];
-    PORTFOLIO_ITEMS.forEach(function (it) {
-      var c = it.category || '기타';
-      if (!seen[c]) { seen[c] = true; cats.push(c); }
-    });
+    if (pfIndex < 0) pfIndex = 0;
+    if (pfIndex > PORTFOLIO_ITEMS.length - 1) pfIndex = PORTFOLIO_ITEMS.length - 1;
 
-    listEl.innerHTML = cats.map(function (cat, i) {
-      var items = PORTFOLIO_ITEMS.filter(function (it) { return (it.category || '기타') === cat; });
-      var cards = items.map(renderPortfolioCard).join('');
-      return ''
-        + '<div class="pf-cat-fold" data-pf-cat="' + i + '">'
-        +   '<button type="button" class="pf-cat-toggle" aria-expanded="false" aria-controls="pf-cat-panel-' + i + '">'
-        +     '<span class="pf-cat-toggle-title">' + cat + '</span>'
-        +     '<span class="pf-cat-toggle-meta">'
-        +       '<span class="pf-cat-count">' + items.length + '건</span>'
-        +       '<span class="pf-cat-chevron" aria-hidden="true"></span>'
-        +     '</span>'
-        +   '</button>'
-        +   '<div class="pf-cat-panel" id="pf-cat-panel-' + i + '">'
-        +     '<div class="pf-cat-panel-inner">'
-        +       '<div class="pf-cat-items">' + cards + '</div>'
-        +     '</div>'
-        +   '</div>'
-        + '</div>';
-    }).join('');
+    var item = PORTFOLIO_ITEMS[pfIndex];
+    var card = renderPortfolioCard(item);
+    var total = PORTFOLIO_ITEMS.length;
 
-    listEl.querySelectorAll('.pf-cat-toggle').forEach(function (btn) {
-      var fold = btn.closest('.pf-cat-fold');
-      var panel = fold ? fold.querySelector('.pf-cat-panel') : null;
-      if (!fold || !panel) return;
+    stackEl.innerHTML = ''
+      + '<div class="pf-stack-card-wrap">' + card + '</div>'
+      + '<div class="pf-stack-nav">'
+      +   '<button type="button" class="pf-stack-arrow pf-stack-prev" aria-label="이전 포트폴리오"' + (pfIndex === 0 ? ' disabled' : '') + '>‹</button>'
+      +   '<span class="pf-stack-counter">' + (pfIndex + 1) + ' / ' + total + '</span>'
+      +   '<button type="button" class="pf-stack-arrow pf-stack-next" aria-label="다음 포트폴리오"' + (pfIndex === total - 1 ? ' disabled' : '') + '>›</button>'
+      + '</div>';
 
-      panel.addEventListener('transitionend', function (e) {
-        if (e.propertyName === 'grid-template-rows' && window.sendHeight) sendHeight();
-      });
+    var prevBtn = stackEl.querySelector('.pf-stack-prev');
+    var nextBtn = stackEl.querySelector('.pf-stack-next');
+    if (prevBtn) prevBtn.addEventListener('click', function () { pfIndex -= 1; renderPortfolioStack(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { pfIndex += 1; renderPortfolioStack(); });
 
-      btn.addEventListener('click', function () {
-        var open = fold.classList.toggle('is-open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (window.sendHeight) sendHeight();
-      });
-    });
-
-    listEl.querySelectorAll('.pf-cat-items video').forEach(function (v) {
+    stackEl.querySelectorAll('video').forEach(function (v) {
       v.addEventListener('loadedmetadata', function () { if (window.sendHeight) sendHeight(); });
     });
-    listEl.querySelectorAll('.pf-cat-items img').forEach(function (img) {
+    stackEl.querySelectorAll('img').forEach(function (img) {
       img.addEventListener('load', function () { if (window.sendHeight) sendHeight(); });
     });
+    if (window.sendHeight) sendHeight();
+  }
+
+  function initPortfolio() {
+    pfIndex = 0;
+    renderPortfolioStack();
   }
 
   function getSwipeItem(key) {
