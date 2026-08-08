@@ -281,8 +281,9 @@
     .api-swipe-btn:hover { background: rgba(34, 34, 40, 0.95); }
     .api-swipe-meta {
       display: flex; align-items: center; justify-content: center;
-      gap: 12px; margin-top: 10px;
+      gap: 12px; margin-top: 10px; height: 7px;
     }
+    .api-card-meta-spacer { margin-top: 10px; height: 7px; }
     .api-swipe-dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
     .api-swipe-dot {
       width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0;
@@ -999,7 +1000,14 @@
       desc: '캐릭터에게 천사 날개를 달아줍니다.',
       price: '50,000원',
       video: VIDEO_WINGS,
-      chips: ['속도', '사운드']
+      fit: 'contain',
+      zoom: 1.15,
+      panX: -4,
+      letterboxColor: '#e6e6ea',
+      chips: ['날개 변경', '속도', '사운드'],
+      optionHints: {
+        '날개 변경': '날개의 모양이나 색상을 변경합니다.'
+      }
     },
     {
       type: 'swipe',
@@ -1263,8 +1271,17 @@
     var image = media && media.image ? media.image : '';
     var pos = (media && media.objectPosition) || 'center';
     var fit = (media && media.fit) || 'cover';
+    var zoom = (media && media.zoom) || 1;
+    var panX = (media && media.panX) || 0;
+    var panY = (media && media.panY) || 0;
+    var transformStr = '';
+    if (zoom !== 1 || panX || panY) {
+      transformStr = ';transform:scale(' + zoom + ') translate(' + panX + '%, ' + panY + '%);transform-origin:center';
+    }
+    var letterboxColor = (media && media.letterboxColor) || 'var(--color-media)';
     var styleAttr = 'object-position:' + pos + ';object-fit:' + fit
-      + (fit === 'contain' ? ';background:#000' : '');
+      + (fit === 'contain' ? ';background:' + letterboxColor : '')
+      + transformStr;
     label = label || (media && media.label) || '';
     if (loop === undefined) loop = true;
 
@@ -1413,6 +1430,7 @@
       +   '<div class="api-body">'
       +     renderCardHead(item)
       +     '<p class="api-desc">' + item.desc + '</p>'
+      +     '<div class="api-card-meta-spacer" aria-hidden="true"></div>'
       +     renderCardBodyExtras(item, uid)
       +   '</div>'
       + '</article>';
