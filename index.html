@@ -7,8 +7,8 @@
   <style>
     :root {
       --bg-page: #201f26;
-      --surface: #2a2932;
-      --surface-elevated: #35343f;
+      --surface: linear-gradient(135deg, #232a3e 0%, #2a2932 55%, #2f2b25 100%);
+      --surface-elevated: linear-gradient(135deg, #2c3450 0%, #35343f 55%, #3a3428 100%);
       --surface-light: #efeff1;
       --surface-white: #fafafa;
       --surface-muted: #e4e4e8;
@@ -39,7 +39,9 @@
     html, body { overflow-x: hidden; max-width: 100%; width: 100%; min-width: 0; }
     body {
       font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
-      background: var(--bg-page);
+      background:
+        radial-gradient(circle at 85% 100%, rgba(250, 240, 200, 0.14) 0%, rgba(250, 240, 200, 0) 55%),
+        linear-gradient(160deg, #0d1730 0%, var(--bg-page) 45%, #201d18 100%);
       color: var(--text);
       line-height: 1.6;
       font-size: 14px;
@@ -82,9 +84,11 @@
     }
 
     .hero {
-      background: var(--color-hero); color: var(--text);
+      background: linear-gradient(135deg, #0a0e1a 0%, #10182e 45%, #0d1424 100%);
+      color: var(--text);
       padding: 44px 40px 40px; position: relative; overflow: hidden;
       border-bottom: 1px solid var(--border-dark);
+      text-align: center; display: flex; flex-direction: column; align-items: center;
     }
     .hero-tag {
       display: inline-block; font-size: 10px; font-weight: 800;
@@ -100,7 +104,7 @@
     .hero p {
       margin-top: 16px; font-size: 12px; font-weight: 600;
       color: var(--text-soft); line-height: 1.75; max-width: 520px;
-      position: relative; z-index: 1;
+      position: relative; z-index: 1; margin-left: auto; margin-right: auto;
     }
 
     .block {
@@ -171,7 +175,7 @@
       padding: 16px 18px;
       border: 1px solid var(--border-light);
       border-radius: 12px;
-      background: var(--surface-white);
+      background: linear-gradient(120deg, rgba(250, 204, 21, 0.16), rgba(59, 130, 246, 0.16));
       font-family: inherit; font-size: 18px; color: var(--text-dark-soft);
       line-height: 1.55; cursor: pointer;
       transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
@@ -493,30 +497,52 @@
     }
     .prop-lightbox-title { display: none; }
 
-    /* 포트폴리오 — 카드 1장씩 보여주는 스택 슬라이더 */
-    .pf-stack { max-width: 480px; margin: 0 auto; }
-    .pf-stack-card-wrap { position: relative; }
-    .pf-stack-category {
-      display: inline-block; font-size: 12px; font-weight: 800;
-      color: var(--accent); background: var(--text-dark);
-      padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+    /* 포트폴리오 — 전체를 아코디언으로 열고, 카테고리는 버튼으로 선택 */
+    .pf-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
+      padding: 18px 20px; margin: 0; border-radius: 16px;
+      font-family: inherit; cursor: pointer; text-align: left;
+      transition: border-color 0.15s ease, background 0.15s ease;
     }
-    .pf-stack-nav {
-      display: flex; align-items: center; justify-content: center;
-      gap: 18px; margin-top: 16px;
+    .pf-toggle:hover { border-color: var(--border-light-hover); background: var(--surface); }
+    .pf-toggle-title { font-size: 20px; font-weight: 900; letter-spacing: -0.3px; color: var(--accent); }
+    .pf-chevron {
+      width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent); transition: transform 0.22s ease;
     }
-    .pf-stack-arrow {
-      width: 40px; height: 40px; border-radius: 50%;
+    .pf-chevron::before {
+      content: ''; display: block; width: 8px; height: 8px;
+      border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+    }
+    .pf-toggle[aria-expanded="true"] .pf-chevron { transform: rotate(180deg); }
+    .pf-panel {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pf-panel.is-open { grid-template-rows: 1fr; }
+    .pf-panel-inner { overflow: hidden; min-height: 0; }
+    .pf-tabs {
+      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap; margin-top: 20px; padding-bottom: 2px; scrollbar-width: none;
+    }
+    .pf-tabs::-webkit-scrollbar { display: none; }
+    .pf-tab {
+      flex: 0 0 auto; white-space: nowrap; font-family: inherit; cursor: pointer;
+      padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 800;
       border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
-      color: var(--accent); cursor: pointer; font-family: inherit; font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      color: var(--text-dim);
     }
-    .pf-stack-arrow:hover:not(:disabled) { transform: translateY(-1px); }
-    .pf-stack-arrow:disabled { opacity: 0.35; cursor: default; }
-    .pf-stack-counter {
-      font-size: 13px; font-weight: 700; color: var(--text-dim);
-      font-variant-numeric: tabular-nums; min-width: 46px; text-align: center;
+    .pf-tab.is-active { background: var(--text-dark); color: var(--accent); border-color: transparent; }
+    .pf-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+    @container (min-width: 700px) {
+      .pf-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @container (min-width: 1050px) {
+      .pf-list { grid-template-columns: repeat(3, 1fr); }
     }
     .pf-empty {
       margin-top: 4px; padding: 28px 16px; text-align: center;
@@ -738,8 +764,8 @@
   </section>
 
   <section class="block" id="sec-api">
-    <div class="sec-head">
-      <div class="sec-head-copy">
+    <div class="sec-head" style="justify-content: center;">
+      <div class="sec-head-copy" style="text-align: center; flex: none;">
         <h2>API 목록</h2>
       </div>
     </div>
@@ -757,13 +783,16 @@
   </section>
 
   <section class="block" id="sec-portfolio">
-    <div class="sec-head">
-      <div class="sec-head-copy">
-        <h2>포트폴리오</h2>
-        <p class="lead">지금까지 작업한 API·PROP 결과물입니다. 화살표를 눌러 넘겨보세요.</p>
+    <button type="button" class="pf-toggle" id="pfToggle" aria-expanded="false" aria-controls="pfPanel">
+      <span class="pf-toggle-title">포트폴리오</span>
+      <span class="pf-chevron" aria-hidden="true"></span>
+    </button>
+    <div class="pf-panel" id="pfPanel">
+      <div class="pf-panel-inner">
+        <div class="pf-tabs" id="pfTabs"></div>
+        <div class="pf-list" id="pfList"></div>
       </div>
     </div>
-    <div class="pf-stack" id="pfStack"></div>
   </section>
 
   <section class="block light" id="sec-order">
@@ -1149,7 +1178,7 @@
       { label: '보라 하트', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/보라하트.jpg' },
       { label: '별풍선', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/하늘별풍.jpg' },
       { label: '무게추', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/무게추 .jpg' },
-      { label: '천사마이크', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/천사마이크.png' }
+      { label: '천사마이크', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/천사마이크.png', fit: 'contain', letterboxColor: '#fff' }
     ]
   };
 
@@ -1628,56 +1657,95 @@
       + '<article class="api-card">'
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
-      +     (item.category ? '<span class="pf-stack-category">' + item.category + '</span>' : '')
       +     '<div class="api-head"><h3 class="api-title">' + item.title + '</h3></div>'
       +     (item.desc ? '<p class="api-desc">' + item.desc + '</p>' : '')
       +   '</div>'
       + '</article>';
   }
 
-  var pfIndex = 0;
+  var pfCategory = '';
 
-  function renderPortfolioStack() {
-    var stackEl = document.getElementById('pfStack');
-    if (!stackEl) return;
+  function getPfCategories() {
+    var seen = {};
+    var cats = [];
+    PORTFOLIO_ITEMS.forEach(function (it) {
+      var c = it.category || '기타';
+      if (!seen[c]) { seen[c] = true; cats.push(c); }
+    });
+    return cats;
+  }
 
-    if (!PORTFOLIO_ITEMS.length) {
-      stackEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
+  function getPfItems() {
+    return PORTFOLIO_ITEMS.filter(function (it) { return (it.category || '기타') === pfCategory; });
+  }
+
+  function renderPortfolioList() {
+    var listEl = document.getElementById('pfList');
+    if (!listEl) return;
+
+    var items = getPfItems();
+
+    if (!items.length) {
+      listEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
       return;
     }
 
-    if (pfIndex < 0) pfIndex = 0;
-    if (pfIndex > PORTFOLIO_ITEMS.length - 1) pfIndex = PORTFOLIO_ITEMS.length - 1;
+    listEl.innerHTML = items.map(renderPortfolioCard).join('');
 
-    var item = PORTFOLIO_ITEMS[pfIndex];
-    var card = renderPortfolioCard(item);
-    var total = PORTFOLIO_ITEMS.length;
-
-    stackEl.innerHTML = ''
-      + '<div class="pf-stack-card-wrap">' + card + '</div>'
-      + '<div class="pf-stack-nav">'
-      +   '<button type="button" class="pf-stack-arrow pf-stack-prev" aria-label="이전 포트폴리오"' + (pfIndex === 0 ? ' disabled' : '') + '>‹</button>'
-      +   '<span class="pf-stack-counter">' + (pfIndex + 1) + ' / ' + total + '</span>'
-      +   '<button type="button" class="pf-stack-arrow pf-stack-next" aria-label="다음 포트폴리오"' + (pfIndex === total - 1 ? ' disabled' : '') + '>›</button>'
-      + '</div>';
-
-    var prevBtn = stackEl.querySelector('.pf-stack-prev');
-    var nextBtn = stackEl.querySelector('.pf-stack-next');
-    if (prevBtn) prevBtn.addEventListener('click', function () { pfIndex -= 1; renderPortfolioStack(); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { pfIndex += 1; renderPortfolioStack(); });
-
-    stackEl.querySelectorAll('video').forEach(function (v) {
+    listEl.querySelectorAll('video').forEach(function (v) {
       v.addEventListener('loadedmetadata', function () { if (window.sendHeight) sendHeight(); });
     });
-    stackEl.querySelectorAll('img').forEach(function (img) {
+    listEl.querySelectorAll('img').forEach(function (img) {
       img.addEventListener('load', function () { if (window.sendHeight) sendHeight(); });
     });
     if (window.sendHeight) sendHeight();
   }
 
+  function renderPortfolioTabs() {
+    var tabsEl = document.getElementById('pfTabs');
+    if (!tabsEl) return;
+    var cats = getPfCategories();
+    if (cats.length <= 1) { tabsEl.innerHTML = ''; return; }
+    tabsEl.innerHTML = cats.map(function (cat) {
+      return '<button type="button" class="pf-tab' + (cat === pfCategory ? ' is-active' : '') + '" data-pf-cat="' + cat + '">' + cat + '</button>';
+    }).join('');
+    tabsEl.querySelectorAll('.pf-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var cat = btn.getAttribute('data-pf-cat');
+        if (cat === pfCategory) return;
+        pfCategory = cat;
+        renderPortfolioTabs();
+        renderPortfolioList();
+      });
+    });
+  }
+
   function initPortfolio() {
-    pfIndex = 0;
-    renderPortfolioStack();
+    var toggleEl = document.getElementById('pfToggle');
+    var panelEl = document.getElementById('pfPanel');
+
+    if (!PORTFOLIO_ITEMS.length) {
+      var listEl = document.getElementById('pfList');
+      if (listEl) listEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
+      return;
+    }
+
+    var cats = getPfCategories();
+    pfCategory = cats[0];
+
+    renderPortfolioTabs();
+    renderPortfolioList();
+
+    if (toggleEl && panelEl) {
+      panelEl.addEventListener('transitionend', function (e) {
+        if (e.propertyName === 'grid-template-rows' && window.sendHeight) sendHeight();
+      });
+      toggleEl.addEventListener('click', function () {
+        var open = panelEl.classList.toggle('is-open');
+        toggleEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (window.sendHeight) sendHeight();
+      });
+    }
   }
 
   function getSwipeItem(key) {
