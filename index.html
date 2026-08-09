@@ -923,6 +923,7 @@
   var VIDEO_KISS = 'videos/뽀뽀.mkv';
   var VIDEO_HAMMER = 'videos/망치.mkv';
   var VIDEO_WEIGHT = 'videos/무게츄.mkv';
+  var VIDEO_PAT = 'videos/쓰담.mkv';
   var VIDEO_THROW_MANY = 'videos/던지기여러개.mkv';
   var VIDEO_FOLLOW = 'videos/따라!.mkv';
   var VIDEO_KISS_2 = 'videos/뽀뽀2.mkv';
@@ -1048,23 +1049,38 @@
     },
     {
       type: 'card',
-      title: '머리쾅 (떨어지기)',
-      desc: '하늘에서 떨어진 PROP이 캐릭터의 머리를 강타합니다.',
+      title: '쓰다듬기',
+      desc: '캐릭터의 머리를 쓰다듬어줍니다.',
       price: '20,000원',
-      video: VIDEO_WEIGHT,
-      chips: THROW_CHIPS,
-      props: BONK_DROP_PROPS
+      video: VIDEO_PAT,
+      chips: ['쓰담손 색상', '파티클', '속도', '사운드', '표정'],
+      optionHints: {
+        '쓰담손 색상': '쓰다듬는 손의 색상을 변경합니다.'
+      }
     },
     {
       type: 'card',
-      title: '머리쾅 (망치)',
-      desc: '망치로 캐릭터의 머리를 강타합니다.',
+      title: '자동 잠자기',
+      desc: '자리를 비우면 캐릭터가 잠드는 모션을 취합니다.',
       price: '20,000원',
-      video: VIDEO_HAMMER,
-      chips: THROW_CHIPS,
-      props: [
-        { name: '악마 망치', image: 'image/악마 망치.jpg' }
-      ]
+      video: VIDEO_SLEEP,
+      chips: ['파티클', '사운드']
+    },
+    {
+      type: 'card',
+      title: '윙크',
+      desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
+      price: '20,000원',
+      video: VIDEO_WINK,
+      chips: ['파티클', '사운드']
+    },
+    {
+      type: 'card',
+      title: '물음표',
+      desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
+      price: '15,000원',
+      video: VIDEO_QUESTION,
+      chips: ['속도', '사운드']
     },
     {
       type: 'card',
@@ -1095,11 +1111,23 @@
     },
     {
       type: 'card',
-      title: '윙크',
-      desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
+      title: '머리쾅 (떨어지기)',
+      desc: '하늘에서 떨어진 PROP이 캐릭터의 머리를 강타합니다.',
       price: '20,000원',
-      video: VIDEO_WINK,
-      chips: ['파티클', '사운드']
+      video: VIDEO_WEIGHT,
+      chips: THROW_CHIPS,
+      props: BONK_DROP_PROPS
+    },
+    {
+      type: 'card',
+      title: '머리쾅 (망치)',
+      desc: '망치로 캐릭터의 머리를 강타합니다.',
+      price: '20,000원',
+      video: VIDEO_HAMMER,
+      chips: THROW_CHIPS,
+      props: [
+        { name: '악마 망치', image: 'image/악마 망치.jpg' }
+      ]
     },
     {
       type: 'card',
@@ -1109,22 +1137,6 @@
       video: VIDEO_MAGIC,
       objectPosition: '35% center',
       chips: ['파티클', '속도', '사운드']
-    },
-    {
-      type: 'card',
-      title: '물음표',
-      desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
-      price: '15,000원',
-      video: VIDEO_QUESTION,
-      chips: ['속도', '사운드']
-    },
-    {
-      type: 'card',
-      title: '자동 잠자기',
-      desc: '자리를 비우면 캐릭터가 잠드는 모션을 취합니다.',
-      price: '20,000원',
-      video: VIDEO_SLEEP,
-      chips: ['파티클', '사운드']
     },
     {
       type: 'card',
