@@ -472,16 +472,16 @@
     }
 
     .prop-lightbox {
-      position: fixed; inset: 0; z-index: 500;
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px 16px;
+      position: absolute; inset: 0; z-index: 500;
+      min-height: 100%;
     }
     .prop-lightbox[hidden] { display: none; }
     .prop-lightbox-backdrop {
       position: absolute; inset: 0; background: rgba(8, 8, 10, 0.82);
     }
     .prop-lightbox-dialog {
-      position: relative; z-index: 1; width: min(520px, 100%);
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      z-index: 1; width: min(520px, calc(100% - 32px));
       background: var(--surface-white); border: 1px solid var(--border-light);
       border-radius: 16px; padding: 16px; box-shadow: var(--shadow);
     }
@@ -1561,6 +1561,7 @@
     var box = document.getElementById('propLightbox');
     var img = document.getElementById('propLightboxImg');
     var title = document.getElementById('propLightboxTitle');
+    var dialog = box ? box.querySelector('.prop-lightbox-dialog') : null;
     if (!box || !img || !title) return;
 
     function closeLightbox() {
@@ -1569,23 +1570,39 @@
       img.removeAttribute('src');
     }
 
-    function openLightbox(name, src) {
+    /* 이 페이지는 iframe으로 임베드되어 상위 페이지가 스크롤을 담당하는 구조라
+       position:fixed로 화면 중앙에 띄우면 iframe 전체 문서 높이 기준 중앙(화면 밖)에
+       뜨는 문제가 있었음. 그래서 클릭한 요소의 실제 문서상 위치를 기준으로
+       팝업을 배치해서, 사용자가 지금 보고 있는 위치 근처에 뜨도록 함. */
+    function openLightbox(name, src, originEl) {
       img.src = src;
       img.alt = name;
       title.textContent = name;
       box.hidden = false;
       box.setAttribute('aria-hidden', 'false');
+
+      if (dialog) {
+        var centerY = window.innerHeight / 2;
+        if (originEl && originEl.getBoundingClientRect) {
+          var rect = originEl.getBoundingClientRect();
+          centerY = rect.top + rect.height / 2;
+        }
+        var docH = Math.max(document.documentElement.scrollHeight, window.innerHeight);
+        var half = Math.min(360, dialog.offsetHeight ? dialog.offsetHeight / 2 : 240);
+        centerY = Math.max(half + 16, Math.min(centerY, docH - half - 16));
+        dialog.style.top = centerY + 'px';
+      }
     }
 
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.api-prop-slot--zoom, .prop-product-media--zoom');
       if (btn) {
-        openLightbox(btn.dataset.propName || '', btn.dataset.propImage || '');
+        openLightbox(btn.dataset.propName || '', btn.dataset.propImage || '', btn);
         return;
       }
       var mediaImg = e.target.closest('.api-media img, .api-swipe-slide img');
       if (mediaImg) {
-        openLightbox(mediaImg.alt || '', mediaImg.currentSrc || mediaImg.src);
+        openLightbox(mediaImg.alt || '', mediaImg.currentSrc || mediaImg.src, mediaImg);
       }
     });
 
