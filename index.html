@@ -202,6 +202,7 @@
       font-size: 15px; color: var(--text-dark-dim);
     }
     .need-item--order strong { text-decoration-color: rgba(24, 24, 27, 0.35); }
+    .need-item--portfolio { border-left: 3px solid #d4a017; }
 
     .sec-head {
       display: flex; align-items: flex-end; justify-content: space-between;
@@ -760,6 +761,9 @@
       <button type="button" class="need-item need-item--order" data-sec="sec-order">
         바로 <strong>주문서</strong>를 작성하고 싶어요
       </button>
+      <button type="button" class="need-item need-item--portfolio" data-sec="sec-portfolio">
+        <strong>포트폴리오</strong> 보고싶어요
+      </button>
     </div>
   </section>
 
@@ -1211,23 +1215,21 @@
      ───────────────────────────────────────────── */
   var PORTFOLIO_ITEMS = [
     {
-      title: '뽀뽀 API, 팬 캐릭터 제작',
+      title: '나들희님 팬 캐릭터 제작, 팬캐릭터 뽀뽀 API',
       category: 'API 제작',
-      desc: '나들희님 팬 캐릭터 / 팬캐릭터 뽀뽀 작업',
       date: '2025.11',
       video: VIDEO_KISS
     },
     {
-      title: 'PROP 제작',
-      category: 'PROP 제작',
-      desc: '와루도에서 상호작용 가능한 커스텀 PROP 제작 작업입니다.',
-      date: '2026.05',
-      image: 'image/무게추 .jpg'
+      title: '쿠쿠양님 팬 캐릭터 제작, 팬캐릭터 뽀뽀 API',
+      category: 'API 제작',
+      date: '2026.08',
+      video: 'Port/쿠쿠양님.mkv'
     },
     {
       title: '양망치',
       category: 'PROP 제작',
-      desc: '와루도에서 상호작용 가능한 커스텀 PROP 제작 작업입니다.',
+      desc: '양망양님 커스텀 망치 에셋 작업입니다.',
       date: '2026.06',
       image: 'image/양망치.jpg'
     },
@@ -1236,7 +1238,39 @@
       category: '팬 캐릭터 제작',
       desc: '카우리님 팬 캐릭터 제작 작업입니다.',
       date: '2026.08',
-      image: 'image/포폴2.jpg'
+      image: 'Port/카우리님 팬 캐릭터.jpg'
+    },
+    {
+      title: '나들희님 팬 캐릭터',
+      category: '팬 캐릭터 제작',
+      desc: '나들희님 팬 캐릭터 제작 작업입니다.',
+      date: '2025.11',
+      image: 'Port/나들희님 팬 캐릭터.png'
+    },
+    {
+      title: '쿠쿠양님 팬 캐릭터',
+      category: '팬 캐릭터 제작',
+      desc: '쿠쿠양님 팬 캐릭터 제작 작업입니다.',
+      date: '2026.08',
+      image: 'Port/쿠쿠양님 팬 캐릭터.png'
+    },
+    {
+      title: '서무무님 윙크 API',
+      category: 'API 제작',
+      date: '2026.08',
+      image: 'Port/Honeycam_2026-08-14_17-01-49.gif'
+    },
+    {
+      title: '아미아네에나님 물음표 API',
+      category: 'API 제작',
+      date: '2026.08',
+      video: 'Port/아미아네에나님_포트폴리오(물음표).mkv'
+    },
+    {
+      title: '도라니님 던지기 API',
+      category: 'API 제작',
+      date: '2026.08',
+      video: 'Port/도라니님 던지기.mkv.mkv'
     }
   ];
 
