@@ -5,6 +5,11 @@
   <meta name="theme-color" content="#101012">
   <title>Warudo 커스텀 API 제작</title>
   <style>
+    @font-face {
+      font-family: 'Jalnan2';
+      src: url('Jalnan2TTF.ttf') format('truetype'), url('Jalnan2.otf') format('opentype');
+      font-weight: normal; font-style: normal; font-display: swap;
+    }
     :root {
       --bg-page: #201f26;
       --surface: linear-gradient(135deg, #232a3e 0%, #2a2932 55%, #2f2b25 100%);
@@ -37,14 +42,16 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     html, body { overflow-x: hidden; max-width: 100%; width: 100%; min-width: 0; }
+    * { font-weight: 400 !important; }
     body {
-      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+      font-family: 'Jalnan2', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
       background:
         radial-gradient(circle at 85% 100%, rgba(250, 240, 200, 0.14) 0%, rgba(250, 240, 200, 0) 55%),
         linear-gradient(160deg, #0d1730 0%, var(--bg-page) 45%, #201d18 100%);
       color: var(--text);
       line-height: 1.6;
       font-size: 14px;
+      font-weight: 400;
     }
     #page-root { zoom: 1.12; }
     img, video { display: block; max-width: 100%; height: auto; }
@@ -166,9 +173,12 @@
     }
 
     .need-list {
-      display: flex; flex-direction: column; gap: 8px;
+      display: grid; grid-template-columns: 1fr; gap: 8px;
       margin-top: 22px; padding-top: 20px;
       border-top: 1px solid var(--border-light);
+    }
+    @container (min-width: 700px) {
+      .need-list { grid-template-columns: repeat(3, 1fr); }
     }
     .need-item {
       width: 100%; text-align: center;
@@ -197,12 +207,14 @@
     .need-item:hover strong { text-decoration-color: var(--text-dark); }
     .need-item--api { border-left: 3px solid var(--text-dark); }
     .need-item--prop { border-left: 3px solid #a1a1aa; }
-    .need-item--order {
-      border-left: 3px solid transparent; border-style: dashed;
-      font-size: 15px; color: var(--text-dark-dim);
-    }
-    .need-item--order strong { text-decoration-color: rgba(24, 24, 27, 0.35); }
     .need-item--portfolio { border-left: 3px solid #d4a017; }
+    .need-item-order {
+      display: block; width: 100%; text-align: center; margin-top: 10px;
+      padding: 10px 14px; border: 1px dashed var(--border-light); border-radius: 10px;
+      background: var(--surface-muted); font-family: inherit; font-size: 13px;
+      color: var(--text-dark-dim); cursor: pointer;
+    }
+    .need-item-order:hover { border-color: var(--border-light-hover); color: var(--text-dark-soft); }
 
     .sec-head {
       display: flex; align-items: flex-end; justify-content: space-between;
@@ -758,13 +770,13 @@
       <button type="button" class="need-item need-item--prop" data-sec="sec-prop">
         저는 <strong>팬 캐릭터 · PROP 제작</strong>이 필요해요!
       </button>
-      <button type="button" class="need-item need-item--order" data-sec="sec-order">
-        바로 <strong>주문서</strong>를 작성하고 싶어요
-      </button>
       <button type="button" class="need-item need-item--portfolio" data-sec="sec-portfolio">
         <strong>포트폴리오</strong> 보고싶어요
       </button>
     </div>
+    <button type="button" class="need-item-order" data-sec="sec-order">
+      바로 주문서를 작성하고 싶어요
+    </button>
   </section>
 
   <section class="block" id="sec-api">
@@ -2026,7 +2038,7 @@
     });
   });
 
-  document.querySelectorAll('.need-item').forEach(function (btn) {
+  document.querySelectorAll('.need-item, .need-item-order').forEach(function (btn) {
     btn.addEventListener('click', function () {
       scrollToSec(btn.dataset.sec);
     });
