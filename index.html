@@ -516,20 +516,29 @@
 
     /* 포트폴리오 — 전체를 아코디언으로 열고, 카테고리는 버튼으로 선택 */
     .pf-toggle {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
-      padding: 18px 20px; margin: 0; border-radius: 16px;
-      font-family: inherit; cursor: pointer; text-align: left;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      width: 100%; display: flex; align-items: center; justify-content: center;
+      position: relative;
+      gap: 16px; border: 1px solid rgba(255, 255, 255, 0.35);
+      background: linear-gradient(120deg, #9b8cff 0%, #6a5ae0 100%);
+      box-shadow: 0 14px 32px rgba(139, 124, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      padding: 26px 28px; margin: 0; border-radius: 18px;
+      font-family: inherit; cursor: pointer; text-align: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .pf-toggle:hover { border-color: var(--border-light-hover); background: var(--surface); }
-    .pf-toggle-title { font-size: 20px; font-weight: 900; letter-spacing: -0.3px; color: var(--accent); }
+    .pf-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(139, 124, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    .pf-toggle:active { transform: translateY(0); }
+    .pf-toggle-title { font-size: 26px; font-weight: 900; letter-spacing: -0.3px; color: #fff; }
     .pf-chevron {
-      width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
+      width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--accent); transition: transform 0.22s ease;
+      background: rgba(255, 255, 255, 0.24);
+      color: #fff; transition: transform 0.22s ease;
+      position: absolute; right: 20px; top: 50%; margin-top: -19px;
     }
+    .pf-chevron::before { width: 10px; height: 10px; }
     .pf-chevron::before {
       content: ''; display: block; width: 8px; height: 8px;
       border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
@@ -1003,7 +1012,6 @@
 
   /* PROP 목록 — image: '' 비워두면 placeholder (나중에 images/props/xxx.png 등 입력) */
   var THROW_STICK_PROPS = [
-    { name: '보라 하트', image: 'image/보라하트.jpg' },
     { name: '치즈', image: 'image/치즈.jpg' },
     { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
   ];
@@ -1014,7 +1022,6 @@
   ];
 
   var BONK_DROP_PROPS = [
-    { name: '보라 하트', image: 'image/보라하트.jpg' },
     { name: '치즈', image: 'image/치즈.jpg' },
     { name: '무게추', image: 'image/무게추 .jpg' },
     { name: '별풍선', image: 'image/보라별풍.jpg', hint: '색상 변경 가능' }
@@ -1023,7 +1030,6 @@
   var DEFAULT_PROPS = [
     { name: '오리지널 망치', image: '' },
     { name: '악마 망치', image: 'image/악마 망치.jpg' },
-    { name: '보라 하트', image: 'image/보라하트.jpg' },
     { name: '치즈', image: 'image/치즈.jpg' },
     { name: '무게추', image: 'image/무게추 .jpg' },
     { name: '치지직 이모티콘', image: '' },
@@ -1200,6 +1206,7 @@
     variants: [
       { label: '팬캐릭터0', desc: FANCHAR_DESC, image: 'image/0번.png' },
       { label: '팬캐릭터1', desc: FANCHAR_DESC, image: 'image/1번.png' },
+      { label: '팬캐릭터1-1', desc: FANCHAR_DESC, image: 'image/1-1번.png' },
       { label: '팬캐릭터2', desc: FANCHAR_DESC, image: 'image/2번.jpg' },
       { label: '팬캐릭터3', desc: FANCHAR_DESC, image: 'image/3번.png' },
       { label: '팬캐릭터4', desc: FANCHAR_DESC, image: 'image/4번.png' },
@@ -1218,7 +1225,6 @@
     variants: [
       { label: '악마 망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/악마 망치.jpg' },
       { label: '양망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/양망치.jpg' },
-      { label: '보라 하트', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/보라하트.jpg' },
       { label: '별풍선', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/하늘별풍.jpg' },
       { label: '무게추', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/무게추 .jpg' },
       { label: '천사마이크', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/천사마이크.png', fit: 'contain', letterboxColor: '#fff' }
