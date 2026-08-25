@@ -1897,7 +1897,7 @@
       track.style.transition = '';
     }
 
-    if (descEl) descEl.textContent = item.variants[slideIndex].desc;
+    if (descEl) descEl.innerHTML = item.variants[slideIndex].desc;
     var variant = item.variants[slideIndex];
     var titleEl = document.querySelector('[data-swipe-title="' + cardIndex + '"]');
     var priceEl = document.querySelector('[data-swipe-price="' + cardIndex + '"]');
