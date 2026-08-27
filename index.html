@@ -137,14 +137,20 @@
     .block.light .lead { color: var(--text-dark-soft); }
     .lead { font-size: 13px; color: var(--text-soft); margin-bottom: 20px; line-height: 1.75; }
 
-    .intro-box { border-left: 2px solid var(--border-light-hover); padding-left: 16px; }
+    .intro-box { text-align: center; }
     .intro-box strong {
       display: block; font-size: 22px; font-weight: 800;
       color: var(--text-dark); margin-bottom: 10px; line-height: 1.4;
-      word-break: keep-all;
+      word-break: keep-all; text-align: center; white-space: nowrap;
+    }
+    .intro-box strong .intro-line2 { white-space: nowrap; }
+    @media (max-width: 560px) {
+      .intro-box strong { white-space: normal; }
+      .intro-box strong .intro-line2 { display: block; }
     }
     .intro-box p { font-size: 17px; color: var(--text-dark-soft); line-height: 1.75; margin-bottom: 8px; word-break: keep-all; }
     .intro-box p:last-child { margin-bottom: 0; }
+    .pastel-purple { color: #b9a6f2; font-weight: 800; }
     .intro-box .hl {
       position: relative;
       display: inline;
@@ -204,11 +210,11 @@
       outline-offset: 2px;
     }
     .need-item strong {
-      color: var(--text-dark); font-weight: 900;
+      color: #5a3fc0; font-weight: 900;
       text-decoration: underline; text-underline-offset: 3px;
-      text-decoration-color: rgba(24, 24, 27, 0.25);
+      text-decoration-color: rgba(90, 63, 192, 0.35);
     }
-    .need-item:hover strong { text-decoration-color: var(--text-dark); }
+    .need-item:hover strong { text-decoration-color: #5a3fc0; }
     .need-item--api { border-left: 3px solid #6d5fd0; }
     .need-item--prop { border-left: 3px solid #8a83a8; font-size: 15px; }
     .need-item--portfolio { border-left: 3px solid #5d9fd6; }
@@ -741,6 +747,27 @@
       .hero { padding: 32px 20px 28px; }
       .block { padding: 24px 16px; }
       .sec-head { align-items: flex-start; }
+
+      body { font-size: 12px; }
+      .hero h1 { font-size: clamp(20px, 6.5vw, 26px); }
+      .hero p { font-size: 11px; }
+      .hero-tag { font-size: 9px; }
+      .intro-box strong { font-size: 18px; }
+      .intro-box p { font-size: 14px; }
+      .block h2 { font-size: 18px; }
+      .lead { font-size: 12px; }
+      .api-title { font-size: 15px; }
+      .api-desc { font-size: 12px; }
+      .api-price { font-size: 12px; padding: 7px 12px; }
+      .api-chip { font-size: 9px; }
+      .pf-toggle-title { font-size: 20px; }
+      .step-title { font-size: 13px; }
+      .step-desc { font-size: 11px; }
+      .info-item-head { font-size: 12px; }
+      .info-item-body { font-size: 12px; }
+      .cta-box p { font-size: 13px; }
+      .need-item { font-size: 15px; }
+      .need-item--prop { font-size: 13px; }
     }
   </style>
 </head>
@@ -770,10 +797,10 @@
 
   <section class="block light" id="sec-intro">
     <div class="intro-box">
-      <strong>와루도 API 세팅 해드립니다!<br>빠른 마감 / 당일 세팅 가능!</strong>
+      <strong><span class="intro-line1">와루도 API 세팅 해드립니다!</span> <span class="intro-line2">빠른 마감 / 당일 세팅 가능!</span></strong>
       <p>채팅, 도네이션에 반응하는 모든 API 제작이 가능합니다.</p>
-      <p>원하는 Prop (와루도에서 상호작용 가능한 소품) 도 제작해 드립니다!</p>
-      <p>세부 세팅을 어려워 하시는 분을 위해 <span class="hl">원격 세팅 서비스</span>도 기본적으로 제공해 드립니다.</p>
+      <p>원하는 <span class="pastel-purple">팬 캐릭터</span>, <span class="pastel-purple">소품</span>도 제작해 드립니다!</p>
+      <p>세팅을 어려워 하시는 분을 위해 <span class="hl">원격 세팅</span>도 기본적으로 제공해 드립니다.</p>
       <p>상담 후 원하는 API 주문제작도 가능합니다.</p>
     </div>
     <div class="need-list">
@@ -964,8 +991,8 @@
   var VIDEO_WINGS = 'videos/날개.mkv';
   var VIDEO_WINGS_2 = 'videos/날개2.mkv';
   var WINGS_VARIANTS = [
-    { label: '천사 날개 1', desc: '캐릭터가 날개를 달며 날아오릅니다. 날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS },
-    { label: '천사 날개 2', desc: '캐릭터가 날개를 달며 날아오릅니다. 날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS_2 }
+    { label: '천사 날개 1', desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS },
+    { label: '천사 날개 2', desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS_2 }
   ];
   var VIDEO_MAGIC = 'videos/마법.mkv';
   var VIDEO_QUESTION = 'videos/물음표.mkv';
@@ -1057,7 +1084,7 @@
     {
       type: 'swipe',
       title: '천사 / 악마 변신',
-      desc: '캐릭터가 날개를 달며 날아오릅니다. 날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.',
+      desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류와 파티클을 변경할 수 있습니다.<br>악마 뿔이나 천사 헤일로를 추가할 수 있습니다.',
       price: '50,000원',
       variants: WINGS_VARIANTS,
       titleMode: 'static',
@@ -1359,7 +1386,11 @@
     var t = swipeTimers[cardIndex];
     if (!t) return;
     if (t.type === 'timeout') clearTimeout(t.id);
-    if (t.type === 'video') t.video.removeEventListener('loadedmetadata', t.handler);
+    if (t.type === 'video') {
+      t.video.removeEventListener('loadedmetadata', t.handler);
+      t.video.removeEventListener('durationchange', t.handler);
+      if (t.fallbackId) clearTimeout(t.fallbackId);
+    }
     swipeTimers[cardIndex] = null;
   }
 
@@ -1380,15 +1411,20 @@
     }
 
     if (video) {
-      if (video.duration && !isNaN(video.duration)) {
+      if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
         var id = setTimeout(advance, video.duration * 1000);
         swipeTimers[cardIndex] = { type: 'timeout', id: id };
       } else {
+        /* 일부 mkv 파일은 duration 메타데이터가 없어 loadedmetadata가 와도
+           video.duration이 계속 NaN일 수 있음. durationchange도 같이 듣고,
+           그래도 안 잡히면 AUTO_SLIDE_MS 뒤 강제로 넘어가는 fallback을 둔다. */
         var handler = function () {
           startAutoSlide(cardIndex);
         };
         video.addEventListener('loadedmetadata', handler, { once: true });
-        swipeTimers[cardIndex] = { type: 'video', video: video, handler: handler };
+        video.addEventListener('durationchange', handler, { once: true });
+        var fallbackId = setTimeout(advance, AUTO_SLIDE_MS);
+        swipeTimers[cardIndex] = { type: 'video', video: video, handler: handler, fallbackId: fallbackId };
       }
     } else {
       var timeoutId = setTimeout(advance, AUTO_SLIDE_MS);
