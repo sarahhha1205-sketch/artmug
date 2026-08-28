@@ -987,7 +987,7 @@
   var VIDEO_FOLLOW = 'videos/따라!.mkv';
   var VIDEO_KISS_2 = 'videos/뽀뽀2.mkv';
   var VIDEO_PILE = 'videos/쏟아지기.mkv';
-  var VIDEO_PILE_2 = 'videos/쏙아지기!.mkv';
+  var VIDEO_PILE_2 = 'videos/쏟아지기2.mkv';
   var VIDEO_WINK = 'videos/윙크.mkv';
   var VIDEO_SLEEP = 'videos/잠자기.mkv';
   var VIDEO_WINGS = 'videos/날개.mkv';
@@ -1027,6 +1027,11 @@
   ];
 
   var PILE_CHIPS = ['파티클', 'PROP', '속도', '사운드'];
+
+  var PILE_VARIANTS = [
+    { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE },
+    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2 }
+  ];
 
   var OPTION_HINTS = {
     '표정': '캐릭터의 표정을 변경하거나 제거합니다.',
@@ -1170,11 +1175,12 @@
       props: THROW_STICK_PROPS
     },
     {
-      type: 'card',
+      type: 'swipe',
       title: '와르르',
       desc: '캐릭터에게 물건들이 쏟아집니다.',
       price: '20,000원',
-      video: VIDEO_PILE,
+      variants: PILE_VARIANTS,
+      titleMode: 'static',
       chips: PILE_CHIPS,
       props: THROW_STICK_PROPS
     },
