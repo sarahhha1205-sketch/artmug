@@ -347,7 +347,7 @@
       gap: 12px;
     }
     .api-title { flex: 1; min-width: 0; font-size: 17px; font-weight: 900; color: var(--text-dark); letter-spacing: -0.2px; }
-    .api-desc { margin-top: 6px; font-size: 13px; color: var(--text-dark-soft); line-height: 1.65; }
+    .api-desc { margin-top: 6px; font-size: 13px; color: var(--text-dark-soft); line-height: 1.65; min-height: calc(1.65em * 2); }
     .api-price {
       flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
       white-space: nowrap; font-size: 13px; font-weight: 900; color: var(--accent);
@@ -531,49 +531,28 @@
       padding: 26px 28px; margin: 0; border-radius: 18px;
     }
     .pf-toggle-title { font-size: 26px; font-weight: 900; letter-spacing: -0.3px; color: #fff; }
-    .pf-tabs { margin-top: 22px; }
-    .pf-dropdown { position: relative; }
-    .pf-dropdown-toggle {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; font-family: inherit; cursor: pointer;
+    .pf-tabs {
+      display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap; margin-top: 22px; padding-bottom: 2px; scrollbar-width: none;
+    }
+    .pf-tabs::-webkit-scrollbar { display: none; }
+    .pf-tab {
+      flex: 1 1 0; white-space: nowrap; font-family: inherit; cursor: pointer;
       padding: 16px 18px; border-radius: 14px; font-size: 16px; font-weight: 900;
       border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
-      color: var(--text);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      color: var(--text-dim);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
-    .pf-dropdown-toggle:hover { border-color: var(--brand-border); }
-    .pf-dropdown.is-open .pf-dropdown-toggle {
-      border-color: var(--brand-border);
-      box-shadow: 0 0 0 3px var(--brand-soft);
+    .pf-tab:hover { border-color: var(--brand-border); color: var(--text); }
+    .pf-tab.is-active {
+      background: linear-gradient(120deg, #9b8cff 0%, #6a5ae0 100%);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 8px 20px rgba(139, 124, 246, 0.35);
+      transform: translateY(-1px);
     }
-    .pf-dropdown-chevron {
-      width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.08); color: var(--text);
-      transition: transform 0.22s ease;
+    @media (max-width: 560px) {
+      .pf-tab { flex: 0 0 auto; font-size: 13px; padding: 12px 16px; }
     }
-    .pf-dropdown-chevron::before {
-      content: ''; display: block; width: 8px; height: 8px;
-      border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
-      transform: rotate(45deg) translateY(-2px);
-    }
-    .pf-dropdown.is-open .pf-dropdown-chevron { transform: rotate(180deg); }
-    .pf-dropdown-menu {
-      position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 20;
-      background: var(--surface-elevated); border: 1px solid var(--border-dark-hover);
-      border-radius: 14px; overflow: hidden; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-      display: none;
-    }
-    .pf-dropdown.is-open .pf-dropdown-menu { display: block; }
-    .pf-dropdown-item {
-      display: block; width: 100%; text-align: left; font-family: inherit;
-      padding: 13px 18px; font-size: 15px; font-weight: 800; color: var(--text-dim);
-      background: transparent; border: none; border-top: 1px solid var(--border-dark);
-      cursor: pointer;
-    }
-    .pf-dropdown-item:first-child { border-top: none; }
-    .pf-dropdown-item:hover { background: rgba(255, 255, 255, 0.06); color: var(--text); }
-    .pf-dropdown-item.is-active { color: #fff; background: var(--brand); }
     .pf-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
     .pf-groups { display: flex; flex-direction: column; gap: 30px; margin-top: 16px; }
     .pf-group .pf-list { margin-top: 0; }
@@ -1385,7 +1364,7 @@
       video: 'Port/지한이또 쓰담쓰담.mkv'
     },
     {
-      title: '지한이또님 커스텀 API (콧물 주르륵)',
+      title: '지한이또님 커스텀 API<br>콧물 주르륵',
       category: 'API 제작',
       group: '커스텀 제작',
       date: '2026.08',
@@ -1872,9 +1851,17 @@
     return PORTFOLIO_ITEMS.filter(function (it) { return (it.category || '기타') === pfCategory; });
   }
 
+  var pfRevealed = false;
+
   function renderPortfolioList() {
     var listEl = document.getElementById('pfList');
     if (!listEl) return;
+
+    if (!pfRevealed) {
+      listEl.className = 'pf-list';
+      listEl.innerHTML = '';
+      return;
+    }
 
     var items = getPfItems();
 
@@ -1924,45 +1911,29 @@
     if (window.sendHeight) sendHeight();
   }
 
-  var pfDropdownOpen = false;
-
   function renderPortfolioTabs() {
     var tabsEl = document.getElementById('pfTabs');
     if (!tabsEl) return;
     var cats = getPfCategories();
     if (cats.length <= 1) { tabsEl.innerHTML = ''; return; }
 
-    tabsEl.innerHTML = ''
-      + '<div class="pf-dropdown' + (pfDropdownOpen ? ' is-open' : '') + '">'
-      +   '<button type="button" class="pf-dropdown-toggle" id="pfDropdownToggle" aria-expanded="' + (pfDropdownOpen ? 'true' : 'false') + '">'
-      +     '<span>' + pfCategory + '</span>'
-      +     '<span class="pf-dropdown-chevron" aria-hidden="true"></span>'
-      +   '</button>'
-      +   '<div class="pf-dropdown-menu">'
-      +     cats.map(function (cat) {
-              return '<button type="button" class="pf-dropdown-item' + (cat === pfCategory ? ' is-active' : '') + '" data-pf-cat="' + cat + '">' + cat + '</button>';
-            }).join('')
-      +   '</div>'
-      + '</div>';
+    tabsEl.innerHTML = cats.map(function (cat) {
+      var isActive = cat === pfCategory && pfRevealed;
+      return '<button type="button" class="pf-tab' + (isActive ? ' is-active' : '') + '" data-pf-cat="' + cat + '">' + cat + '</button>';
+    }).join('');
 
-    var toggleBtn = tabsEl.querySelector('#pfDropdownToggle');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        pfDropdownOpen = !pfDropdownOpen;
-        renderPortfolioTabs();
-      });
-    }
-    tabsEl.querySelectorAll('.pf-dropdown-item').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
+    tabsEl.querySelectorAll('.pf-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
         var cat = btn.getAttribute('data-pf-cat');
-        pfDropdownOpen = false;
-        if (cat !== pfCategory) {
+        if (cat === pfCategory && pfRevealed) {
+          /* 같은 버튼을 다시 누르면 접는다 */
+          pfRevealed = false;
+        } else {
           pfCategory = cat;
-          renderPortfolioList();
+          pfRevealed = true;
         }
         renderPortfolioTabs();
+        renderPortfolioList();
       });
     });
   }
@@ -1979,13 +1950,6 @@
 
     renderPortfolioTabs();
     renderPortfolioList();
-
-    document.addEventListener('click', function () {
-      if (pfDropdownOpen) {
-        pfDropdownOpen = false;
-        renderPortfolioTabs();
-      }
-    });
   }
 
   function getSwipeItem(key) {
