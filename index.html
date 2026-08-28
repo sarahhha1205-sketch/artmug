@@ -523,55 +523,66 @@
     .prop-lightbox-title { display: none; }
 
     /* 포트폴리오 — 전체를 아코디언으로 열고, 카테고리는 버튼으로 선택 */
-    .pf-toggle {
+    .pf-title-bar {
       width: 100%; display: flex; align-items: center; justify-content: center;
-      position: relative;
-      gap: 16px; border: 1px solid rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.35);
       background: linear-gradient(120deg, #9b8cff 0%, #6a5ae0 100%);
       box-shadow: 0 14px 32px rgba(139, 124, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
       padding: 26px 28px; margin: 0; border-radius: 18px;
-      font-family: inherit; cursor: pointer; text-align: center;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .pf-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(139, 124, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    }
-    .pf-toggle:active { transform: translateY(0); }
     .pf-toggle-title { font-size: 26px; font-weight: 900; letter-spacing: -0.3px; color: #fff; }
-    .pf-chevron {
-      width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.24);
-      color: #fff; transition: transform 0.22s ease;
-      position: absolute; right: 20px; top: 50%; margin-top: -19px;
+    .pf-tabs { margin-top: 22px; }
+    .pf-dropdown { position: relative; }
+    .pf-dropdown-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; font-family: inherit; cursor: pointer;
+      padding: 16px 18px; border-radius: 14px; font-size: 16px; font-weight: 900;
+      border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
+      color: var(--text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .pf-chevron::before { width: 10px; height: 10px; }
-    .pf-chevron::before {
+    .pf-dropdown-toggle:hover { border-color: var(--brand-border); }
+    .pf-dropdown.is-open .pf-dropdown-toggle {
+      border-color: var(--brand-border);
+      box-shadow: 0 0 0 3px var(--brand-soft);
+    }
+    .pf-dropdown-chevron {
+      width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.08); color: var(--text);
+      transition: transform 0.22s ease;
+    }
+    .pf-dropdown-chevron::before {
       content: ''; display: block; width: 8px; height: 8px;
       border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
       transform: rotate(45deg) translateY(-2px);
     }
-    .pf-toggle[aria-expanded="true"] .pf-chevron { transform: rotate(180deg); }
-    .pf-panel {
-      display: grid; grid-template-rows: 0fr;
-      transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    .pf-dropdown.is-open .pf-dropdown-chevron { transform: rotate(180deg); }
+    .pf-dropdown-menu {
+      position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 20;
+      background: var(--surface-elevated); border: 1px solid var(--border-dark-hover);
+      border-radius: 14px; overflow: hidden; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      display: none;
     }
-    .pf-panel.is-open { grid-template-rows: 1fr; }
-    .pf-panel-inner { overflow: hidden; min-height: 0; }
-    .pf-tabs {
-      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-      flex-wrap: nowrap; margin-top: 20px; padding-bottom: 2px; scrollbar-width: none;
+    .pf-dropdown.is-open .pf-dropdown-menu { display: block; }
+    .pf-dropdown-item {
+      display: block; width: 100%; text-align: left; font-family: inherit;
+      padding: 13px 18px; font-size: 15px; font-weight: 800; color: var(--text-dim);
+      background: transparent; border: none; border-top: 1px solid var(--border-dark);
+      cursor: pointer;
     }
-    .pf-tabs::-webkit-scrollbar { display: none; }
-    .pf-tab {
-      flex: 0 0 auto; white-space: nowrap; font-family: inherit; cursor: pointer;
-      padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 800;
-      border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
-      color: var(--text-dim);
-    }
-    .pf-tab.is-active { background: var(--brand); color: #fff; border-color: transparent; }
+    .pf-dropdown-item:first-child { border-top: none; }
+    .pf-dropdown-item:hover { background: rgba(255, 255, 255, 0.06); color: var(--text); }
+    .pf-dropdown-item.is-active { color: #fff; background: var(--brand); }
     .pf-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+    .pf-groups { display: flex; flex-direction: column; gap: 30px; margin-top: 16px; }
+    .pf-group .pf-list { margin-top: 0; }
+    .pf-group-title {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 900; color: var(--accent);
+      margin-bottom: 12px; padding-left: 12px;
+      border-left: 3px solid var(--brand);
+    }
     @container (min-width: 700px) {
       .pf-list { grid-template-columns: repeat(2, 1fr); }
     }
@@ -807,10 +818,10 @@
     </div>
     <div class="need-list">
       <button type="button" class="need-item need-item--api" data-sec="sec-api">
-        저는 <strong>API 세팅</strong>이 필요해요!
+        <strong>API 세팅</strong>이 필요해요!
       </button>
       <button type="button" class="need-item need-item--prop" data-sec="sec-prop">
-        저는 <strong>팬 캐릭터 · 소품 제작</strong>이 필요해요!
+        <strong>팬 캐릭터 · 소품 제작</strong>이 필요해요!
       </button>
       <button type="button" class="need-item need-item--portfolio" data-sec="sec-portfolio">
         <strong>포트폴리오</strong> 보고싶어요
@@ -841,16 +852,11 @@
   </section>
 
   <section class="block" id="sec-portfolio">
-    <button type="button" class="pf-toggle" id="pfToggle" aria-expanded="false" aria-controls="pfPanel">
+    <div class="pf-title-bar">
       <span class="pf-toggle-title">포트폴리오</span>
-      <span class="pf-chevron" aria-hidden="true"></span>
-    </button>
-    <div class="pf-panel" id="pfPanel">
-      <div class="pf-panel-inner">
-        <div class="pf-tabs" id="pfTabs"></div>
-        <div class="pf-list" id="pfList"></div>
-      </div>
     </div>
+    <div class="pf-tabs" id="pfTabs"></div>
+    <div class="pf-list" id="pfList"></div>
   </section>
 
   <section class="block light" id="sec-order">
@@ -1049,6 +1055,7 @@
     { name: '치즈', image: 'image/치즈.jpg' },
     { name: '실버 하트', image: 'image/실버하트.png' },
     { name: '황금 하트', image: 'image/황금하트.png' },
+    { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
     { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
   ];
 
@@ -1062,6 +1069,7 @@
     { name: '무게추', image: 'image/무게추 .jpg' },
     { name: '실버 하트', image: 'image/실버하트.png' },
     { name: '황금 하트', image: 'image/황금하트.png' },
+    { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
     { name: '별풍선', image: 'image/보라별풍.jpg', hint: '색상 변경 가능' }
   ];
 
@@ -1186,15 +1194,6 @@
     },
     {
       type: 'card',
-      title: '머리쾅 (떨어지기)',
-      desc: '하늘에서 떨어진 PROP이 캐릭터의 머리를 강타합니다.',
-      price: '20,000원',
-      video: VIDEO_WEIGHT,
-      chips: THROW_CHIPS,
-      props: BONK_DROP_PROPS
-    },
-    {
-      type: 'card',
       title: '머리쾅 (망치)',
       desc: '망치로 캐릭터의 머리를 강타합니다.',
       price: '20,000원',
@@ -1230,6 +1229,15 @@
       price: '15,000원',
       video: VIDEO_WATER,
       chips: ['표정', '속도', '사운드']
+    },
+    {
+      type: 'card',
+      title: '머리쾅 (떨어지기)',
+      desc: '하늘에서 떨어진 PROP이 캐릭터의 머리를 강타합니다.',
+      price: '20,000원',
+      video: VIDEO_WEIGHT,
+      chips: THROW_CHIPS,
+      props: BONK_DROP_PROPS
     }
   ];
 
@@ -1265,8 +1273,7 @@
       { label: '악마 망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/악마 망치.jpg' },
       { label: '양망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/양망치.jpg' },
       { label: '별풍선', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/하늘별풍.jpg' },
-      { label: '무게추', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/무게추 .jpg' },
-      { label: '천사마이크', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/천사마이크.png', fit: 'contain', letterboxColor: '#fff' }
+      { label: '보석 하트', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/보석하트.png' }
     ]
   };
 
@@ -1287,14 +1294,16 @@
      ───────────────────────────────────────────── */
   var PORTFOLIO_ITEMS = [
     {
-      title: '나들희님 팬 캐릭터 제작, 팬캐릭터 뽀뽀 API',
+      title: '나들희님 팬캐릭터 뽀뽀 API',
       category: 'API 제작',
+      group: '팬캐릭터 뽀뽀',
       date: '2025.11',
       video: VIDEO_KISS
     },
     {
-      title: '쿠쿠양님 팬 캐릭터 제작, 팬캐릭터 뽀뽀 API',
+      title: '쿠쿠양님 팬캐릭터 뽀뽀 API',
       category: 'API 제작',
+      group: '팬캐릭터 뽀뽀',
       date: '2026.08',
       video: 'Port/쿠쿠양님.mkv'
     },
@@ -1313,6 +1322,13 @@
       image: 'Port/카우리님 팬 캐릭터.jpg'
     },
     {
+      title: '라먀니님 팬 캐릭터',
+      category: '팬 캐릭터 제작',
+      desc: '라먀니님 팬 캐릭터 제작 작업입니다.',
+      date: '2026.08',
+      image: 'image/1-1번.png'
+    },
+    {
       title: '나들희님 팬 캐릭터',
       category: '팬 캐릭터 제작',
       desc: '나들희님 팬 캐릭터 제작 작업입니다.',
@@ -1329,40 +1345,55 @@
     {
       title: '서무무님 윙크 API',
       category: 'API 제작',
+      group: '윙크',
       date: '2026.08',
       image: 'Port/Honeycam_2026-08-14_17-01-49.gif'
     },
     {
       title: '아미아네에나님 물음표 API',
       category: 'API 제작',
+      group: '물음표',
       date: '2026.08',
       video: 'Port/아미아네에나님_포트폴리오(물음표).mkv'
     },
     {
       title: '도라니님 던지기 API',
       category: 'API 제작',
+      group: '던지기',
       date: '2026.08',
       video: 'Port/도라니님 던지기.mkv.mkv'
     },
     {
       title: '이뽀님 자동 잠자기 API',
       category: 'API 제작',
+      group: '자동 잠자기',
       date: '2026.08',
       video: 'Port/이뽀님 잠들기 포트폴리오.mkv'
     },
     {
       title: '이뽀님 윙크 API',
       category: 'API 제작',
+      group: '윙크',
       date: '2026.08',
       video: 'Port/이뽀님 윙크 포트폴리오.mkv'
     },
     {
       title: '지한이또님 쓰다듬기 API',
       category: 'API 제작',
+      group: '쓰다듬기',
       date: '2026.08',
       video: 'Port/지한이또 쓰담쓰담.mkv'
+    },
+    {
+      title: '지한이또님 커스텀 API (콧물 주르륵)',
+      category: 'API 제작',
+      group: '커스텀 제작',
+      date: '2026.08',
+      video: 'Port/지한이또 커스텀 API (콧물 주르륵).mp4'
     }
   ];
+
+  var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기'];
 
 
   function propItemToCard(item) {
@@ -1848,11 +1879,41 @@
     var items = getPfItems();
 
     if (!items.length) {
+      listEl.className = 'pf-list';
       listEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
       return;
     }
 
-    listEl.innerHTML = items.map(renderPortfolioCard).join('');
+    var groups = {};
+    var groupKeys = [];
+    var ungrouped = [];
+    items.forEach(function (it) {
+      if (it.group) {
+        if (!groups[it.group]) { groups[it.group] = []; groupKeys.push(it.group); }
+        groups[it.group].push(it);
+      } else {
+        ungrouped.push(it);
+      }
+    });
+
+    if (!groupKeys.length) {
+      listEl.className = 'pf-list';
+      listEl.innerHTML = items.map(renderPortfolioCard).join('');
+    } else {
+      listEl.className = 'pf-groups';
+      var orderedKeys = PORTFOLIO_GROUP_ORDER.filter(function (g) { return groupKeys.indexOf(g) !== -1; })
+        .concat(groupKeys.filter(function (g) { return PORTFOLIO_GROUP_ORDER.indexOf(g) === -1; }));
+      var html = orderedKeys.map(function (g) {
+        return '<div class="pf-group">'
+          + '<h3 class="pf-group-title">' + g + '</h3>'
+          + '<div class="pf-list">' + groups[g].map(renderPortfolioCard).join('') + '</div>'
+          + '</div>';
+      }).join('');
+      if (ungrouped.length) {
+        html += '<div class="pf-group"><div class="pf-list">' + ungrouped.map(renderPortfolioCard).join('') + '</div></div>';
+      }
+      listEl.innerHTML = html;
+    }
 
     listEl.querySelectorAll('video').forEach(function (v) {
       v.addEventListener('loadedmetadata', function () { if (window.sendHeight) sendHeight(); });
@@ -1863,29 +1924,50 @@
     if (window.sendHeight) sendHeight();
   }
 
+  var pfDropdownOpen = false;
+
   function renderPortfolioTabs() {
     var tabsEl = document.getElementById('pfTabs');
     if (!tabsEl) return;
     var cats = getPfCategories();
     if (cats.length <= 1) { tabsEl.innerHTML = ''; return; }
-    tabsEl.innerHTML = cats.map(function (cat) {
-      return '<button type="button" class="pf-tab' + (cat === pfCategory ? ' is-active' : '') + '" data-pf-cat="' + cat + '">' + cat + '</button>';
-    }).join('');
-    tabsEl.querySelectorAll('.pf-tab').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var cat = btn.getAttribute('data-pf-cat');
-        if (cat === pfCategory) return;
-        pfCategory = cat;
+
+    tabsEl.innerHTML = ''
+      + '<div class="pf-dropdown' + (pfDropdownOpen ? ' is-open' : '') + '">'
+      +   '<button type="button" class="pf-dropdown-toggle" id="pfDropdownToggle" aria-expanded="' + (pfDropdownOpen ? 'true' : 'false') + '">'
+      +     '<span>' + pfCategory + '</span>'
+      +     '<span class="pf-dropdown-chevron" aria-hidden="true"></span>'
+      +   '</button>'
+      +   '<div class="pf-dropdown-menu">'
+      +     cats.map(function (cat) {
+              return '<button type="button" class="pf-dropdown-item' + (cat === pfCategory ? ' is-active' : '') + '" data-pf-cat="' + cat + '">' + cat + '</button>';
+            }).join('')
+      +   '</div>'
+      + '</div>';
+
+    var toggleBtn = tabsEl.querySelector('#pfDropdownToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        pfDropdownOpen = !pfDropdownOpen;
         renderPortfolioTabs();
-        renderPortfolioList();
+      });
+    }
+    tabsEl.querySelectorAll('.pf-dropdown-item').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var cat = btn.getAttribute('data-pf-cat');
+        pfDropdownOpen = false;
+        if (cat !== pfCategory) {
+          pfCategory = cat;
+          renderPortfolioList();
+        }
+        renderPortfolioTabs();
       });
     });
   }
 
   function initPortfolio() {
-    var toggleEl = document.getElementById('pfToggle');
-    var panelEl = document.getElementById('pfPanel');
-
     if (!PORTFOLIO_ITEMS.length) {
       var listEl = document.getElementById('pfList');
       if (listEl) listEl.innerHTML = '<p class="pf-empty">등록된 포트폴리오가 없습니다.</p>';
@@ -1898,16 +1980,12 @@
     renderPortfolioTabs();
     renderPortfolioList();
 
-    if (toggleEl && panelEl) {
-      panelEl.addEventListener('transitionend', function (e) {
-        if (e.propertyName === 'grid-template-rows' && window.sendHeight) sendHeight();
-      });
-      toggleEl.addEventListener('click', function () {
-        var open = panelEl.classList.toggle('is-open');
-        toggleEl.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (window.sendHeight) sendHeight();
-      });
-    }
+    document.addEventListener('click', function () {
+      if (pfDropdownOpen) {
+        pfDropdownOpen = false;
+        renderPortfolioTabs();
+      }
+    });
   }
 
   function getSwipeItem(key) {
@@ -2179,6 +2257,16 @@
     if (e.data && e.data.type === 'parentScroll') {
       if (typeof e.data.rectTop === 'number') parentIframeTop = e.data.rectTop;
       updateGnb();
+    }
+    if (e.data && e.data.type === 'scrollToSection' && e.data.id) {
+      var targetEl = document.getElementById(e.data.id);
+      /* 외부(부모 페이지) 커스텀 메뉴가 보낸 요청이면, 그 위젯이 직접 스크롤할 수 있도록
+         이 섹션의 offsetTop을 다시 부모로 알려준다. (부모가 자체 scrollToSection 핸들러가
+         없어도 동작하도록 하기 위한 안전장치) */
+      if (targetEl && window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'sectionOffset', id: e.data.id, top: targetEl.offsetTop }, '*');
+      }
+      if (window.scrollToSec) window.scrollToSec(e.data.id);
     }
   });
 
