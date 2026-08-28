@@ -478,10 +478,18 @@
     button.api-prop-slot:hover .api-prop-icon { border-color: var(--border-light-hover); }
     button.api-prop-slot:focus-visible .api-prop-icon { outline: 2px solid var(--text-dark); outline-offset: 2px; }
     .api-prop-icon {
+      position: relative;
       width: 72px; height: 72px; border-radius: 10px;
       border: 1px solid var(--border-light);
       background: var(--surface-muted);
       overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .api-prop-color-badge {
+      position: absolute; top: 3px; right: 3px; z-index: 2;
+      background: var(--brand); color: #fff;
+      font-size: 6.5px; font-weight: 800; letter-spacing: -0.02em;
+      padding: 2px 4px; border-radius: 6px; line-height: 1; white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
     .api-prop-icon img {
       width: 100%; height: 100%; object-fit: cover; object-position: center;
@@ -1032,8 +1040,7 @@
   /* PROP 목록 — image: '' 비워두면 placeholder (나중에 images/props/xxx.png 등 입력) */
   var THROW_STICK_PROPS = [
     { name: '치즈', image: 'image/치즈.jpg' },
-    { name: '실버 하트', image: 'image/실버하트.png' },
-    { name: '황금 하트', image: 'image/황금하트.png' },
+    { name: '실버 하트', image: 'image/실버하트.png', hint: '색상 변경 가능' },
     { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
     { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
   ];
@@ -1046,8 +1053,7 @@
   var BONK_DROP_PROPS = [
     { name: '치즈', image: 'image/치즈.jpg' },
     { name: '무게추', image: 'image/무게추 .jpg' },
-    { name: '실버 하트', image: 'image/실버하트.png' },
-    { name: '황금 하트', image: 'image/황금하트.png' },
+    { name: '실버 하트', image: 'image/실버하트.png', hint: '색상 변경 가능' },
     { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
     { name: '별풍선', image: 'image/보라별풍.jpg', hint: '색상 변경 가능' }
   ];
@@ -1538,19 +1544,19 @@
   function renderPropSlot(prop) {
     var name = prop.name || '';
     var hintAttr = prop.hint ? ' data-prop-hint="' + prop.hint + '"' : '';
+    var badge = prop.hint ? '<span class="api-prop-color-badge">색상변경 O</span>' : '';
     if (prop.image) {
       return ''
         + '<button type="button" class="api-prop-slot api-prop-slot--zoom" title="' + name + ' 크게 보기"'
         + ' data-prop-name="' + name + '" data-prop-image="' + prop.image + '"' + hintAttr + '>'
-        +   '<div class="api-prop-icon"><img src="' + prop.image + '" alt="' + name + '" loading="lazy" decoding="async"></div>'
+        +   '<div class="api-prop-icon"><img src="' + prop.image + '" alt="' + name + '" loading="lazy" decoding="async">' + badge + '</div>'
         +   '<span class="api-prop-name">' + name + '</span>'
         + '</button>';
     }
     return ''
       + '<div class="api-prop-slot" title="' + name + '" tabindex="' + (prop.hint ? '0' : '-1') + '"' + hintAttr + '>'
-      +   '<div class="api-prop-icon"><span class="api-prop-icon-placeholder">이미지<br>추가</span></div>'
+      +   '<div class="api-prop-icon"><span class="api-prop-icon-placeholder">이미지<br>추가</span>' + badge + '</div>'
       +   '<span class="api-prop-name">' + name + '</span>'
-      +   tip
       + '</div>';
   }
 
