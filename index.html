@@ -123,6 +123,8 @@
       scroll-margin-top: 56px; min-width: 0;
       background: var(--surface); color: var(--text);
       contain: layout;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 900px;
     }
     .block.light {
       background: var(--surface-light); color: var(--text-dark);
@@ -1188,7 +1190,8 @@
         '상호작용 사운드 추가 가능': '망치로 강타할 때 나오는 효과음을 추가·변경합니다.'
       },
       props: [
-        { name: '악마 망치', image: 'image/악마 망치.jpg' }
+        { name: '악마 망치', image: 'image/악마 망치.jpg' },
+        { name: '뿅망치', image: 'image/뿅망치.png' }
       ]
     },
     {
@@ -2348,7 +2351,18 @@
   [300, 800, 1500, 3000, 6000].forEach(function (delay) {
     setTimeout(sendHeight, delay);
   });
-  setInterval(sendHeight, 2000);
+  /* ResizeObserver reacts instantly to real size changes, so we don't need
+     an aggressive interval. Keep a slow fallback interval only for hosts
+     without ResizeObserver support. */
+  if (window.ResizeObserver) {
+    var pageRootForResize = document.getElementById('page-root');
+    if (pageRootForResize) {
+      new ResizeObserver(sendHeight).observe(pageRootForResize);
+    }
+    setInterval(sendHeight, 8000);
+  } else {
+    setInterval(sendHeight, 2000);
+  }
 })();
 </script>
 <script src="js/order-form.js"></script>
