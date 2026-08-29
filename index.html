@@ -311,10 +311,17 @@
     .api-swipe-btn:hover { background: rgba(34, 34, 40, 0.95); }
     .api-swipe-meta {
       display: flex; align-items: center; justify-content: center;
-      gap: 12px; margin-top: 10px; height: 7px;
+      gap: 12px; margin-top: 2px; height: 7px;
     }
-    .api-card-meta-spacer { margin-top: 10px; height: 7px; }
+    .api-card-meta-spacer { margin-top: 2px; height: 0; }
     .api-swipe-dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .api-swipe-dots--media {
+      position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%);
+      z-index: 5; margin: 0; padding: 6px 10px; border-radius: 999px;
+      background: rgba(24, 24, 27, 0.45); backdrop-filter: blur(2px);
+    }
+    .api-swipe-dots--media .api-swipe-dot { background: rgba(255, 255, 255, 0.5); }
+    .api-swipe-dots--media .api-swipe-dot.on { background: #fff; transform: scale(1.12); }
     .api-swipe-dot {
       width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0;
       background: #d4d4d8; cursor: pointer; transition: 0.2s;
@@ -352,7 +359,7 @@
       flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
       white-space: nowrap; font-size: 13px; font-weight: 900; color: var(--accent);
       letter-spacing: -0.02em; line-height: 1;
-      padding: 8px 14px; border-radius: 10px;
+      padding: 10px 14px 6px; border-radius: 10px;
       background: var(--brand); border: 1px solid var(--brand);
     }
     .api-price.muted {
@@ -405,21 +412,32 @@
       border-top-color: var(--border-light);
     }
     .api-fold-panel-inner { overflow: hidden; min-height: 0; }
-    .api-option-list {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 0 14px; opacity: 0;
-      transition: opacity 0.24s ease, padding 0.32s ease;
+    .api-option-block { margin-top: 4px; padding-top: 6px; }
+    .api-option-block + .api-fold { margin-top: 12px; }
+    .api-option-block-label {
+      font-size: 14px; font-weight: 800; color: var(--text-dark-dim);
+      margin-bottom: 8px;
     }
-    .api-fold.is-open .api-option-list {
-      padding: 10px 14px 12px; opacity: 1;
+    .api-option-list {
+      display: flex; flex-wrap: wrap; gap: 8px;
     }
     .api-option-item {
       position: relative; z-index: 1;
-      font-size: 11px; font-weight: 600; color: var(--text-dark);
-      background: var(--surface-inset); border: 1px solid var(--border-light);
-      padding: 6px 12px; border-radius: 999px; line-height: 1.2;
+      font-size: 12px; font-weight: 700; color: #2f6f9e;
+      background: linear-gradient(135deg, #dbeeff 0%, #e6f7fb 100%);
+      border: 1px solid rgba(90, 150, 220, 0.35);
+      padding: 8px 14px; border-radius: 999px; line-height: 1.2;
       cursor: help;
     }
+    /* 옵션 이름별 고정 색상 — 전체적으로 시원한 블루 계열 파스텔 톤 통일 */
+    .api-option-item[data-opt="표정"] { color: #0f6e94; background: linear-gradient(135deg, #dff5fb 0%, #e6f0ff 100%); border-color: rgba(60, 160, 200, 0.35); }
+    .api-option-item[data-opt="파티클"] { color: #2148a8; background: linear-gradient(135deg, #dfe8ff 0%, #e9f1ff 100%); border-color: rgba(70, 110, 220, 0.35); }
+    .api-option-item[data-opt="속도"] { color: #0e7f8f; background: linear-gradient(135deg, #d9f7f2 0%, #e3faf7 100%); border-color: rgba(50, 175, 175, 0.35); }
+    .api-option-item[data-opt="사운드"] { color: #3d3aa8; background: linear-gradient(135deg, #e5e3ff 0%, #eef0ff 100%); border-color: rgba(100, 95, 220, 0.35); }
+    .api-option-item[data-opt="위치"] { color: #0f7a6d; background: linear-gradient(135deg, #d9f5ec 0%, #e6faf3 100%); border-color: rgba(45, 170, 150, 0.35); }
+    .api-option-item[data-opt="날개 변경"] { color: #275fae; background: linear-gradient(135deg, #dceaff 0%, #e8f2ff 100%); border-color: rgba(70, 130, 210, 0.35); }
+    .api-option-item[data-opt="포즈"] { color: #3552a3; background: linear-gradient(135deg, #e1e8ff 0%, #edf1ff 100%); border-color: rgba(85, 115, 200, 0.35); }
+    .api-option-item[data-opt="쓰담손 색상"] { color: #147f96; background: linear-gradient(135deg, #d7f3fb 0%, #e5f8fd 100%); border-color: rgba(50, 165, 195, 0.35); }
     .api-option-item:hover,
     .api-option-item:focus-visible { z-index: 30; }
     .api-option-tip {
@@ -485,11 +503,13 @@
       overflow: hidden; display: flex; align-items: center; justify-content: center;
     }
     .api-prop-color-badge {
-      position: absolute; top: 3px; right: 3px; z-index: 2;
+      position: absolute; top: 4px; left: 50%; z-index: 2;
+      transform: translateX(-50%);
       background: var(--brand); color: #fff;
-      font-size: 6.5px; font-weight: 800; letter-spacing: -0.02em;
-      padding: 2px 4px; border-radius: 6px; line-height: 1; white-space: nowrap;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      font-size: 8.5px; font-weight: 800; letter-spacing: -0.02em;
+      text-align: center;
+      padding: 4px 6px; border-radius: 8px; line-height: 1.2; white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     }
     .api-prop-icon img {
       width: 100%; height: 100%; object-fit: cover; object-position: center;
@@ -853,11 +873,6 @@
     </p>
     <div class="order-panel">
       <form class="order-form" id="order-form" novalidate></form>
-      <div class="order-summary">
-        <h3 class="order-summary-title">예상 견적</h3>
-        <p class="order-summary-price" id="order-estimate">0원</p>
-        <p class="order-summary-note">기본 API는 고정 가격입니다. 커스텀 API·비공개 옵션은 금액이 달라질 수 있습니다.</p>
-      </div>
       <div class="order-output">
         <h3 class="order-summary-title">주문 내용</h3>
         <textarea class="order-preview" id="order-preview" rows="12" readonly></textarea>
@@ -870,7 +885,6 @@
 
   <section class="block" id="sec-flow">
     <h2>이용 순서</h2>
-    <p class="lead">문의부터 세팅 완료까지의 흐름입니다.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
@@ -1012,14 +1026,18 @@
     { label: '여러 개 던지기', desc: '캐릭터에게 물건을 여러 개 던질 수 있습니다.', video: VIDEO_THROW_MANY, objectPosition: '25% center' }
   ];
 
-  var THROW_CHIPS = ['표정', '파티클', 'PROP', '속도', '사운드'];
+  var THROW_CHIPS = ['날아오는 물건 변경 가능', '상호작용 사운드 추가 가능', 'PROP'];
+  var THROW_OPTION_HINTS = {
+    '날아오는 물건 변경 가능': '캐릭터에게 날아오는 물건의 종류를 변경합니다.',
+    '상호작용 사운드 추가 가능': '물건이 맞을 때 나오는 효과음을 추가·변경합니다.'
+  };
 
   var BONK_VARIANTS = [
     { label: '오리지널 PROP', desc: '하늘에서 떨어진 PROP이 캐릭터의 머리를 강타합니다.', video: VIDEO_WEIGHT },
     { label: '악마 망치', desc: '망치로 캐릭터의 머리를 강타합니다.', video: VIDEO_HAMMER }
   ];
 
-  var PILE_CHIPS = ['파티클', 'PROP', '속도', '사운드'];
+  var PILE_CHIPS = THROW_CHIPS;
 
   var PILE_VARIANTS = [
     { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE },
@@ -1029,7 +1047,6 @@
   var OPTION_HINTS = {
     '표정': '캐릭터의 표정을 변경하거나 제거합니다.',
     '파티클': '파티클 효과를 제거하거나 변경합니다.',
-    '속도': 'API 연출의 재생 속도를 조절합니다.',
     '사운드': '효과음을 추가하거나 변경합니다.',
     '위치': '연출이 적용되는 캐릭터 위치를 설정합니다.',
     '맞춤 연출': '요청에 맞춰 연출 방향을 커스텀 제작합니다.',
@@ -1055,7 +1072,7 @@
     { name: '무게추', image: 'image/무게추 .jpg' },
     { name: '실버 하트', image: 'image/실버하트.png', hint: '색상 변경 가능' },
     { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
-    { name: '별풍선', image: 'image/보라별풍.jpg', hint: '색상 변경 가능' }
+    { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
   ];
 
   var DEFAULT_PROPS = [
@@ -1076,9 +1093,10 @@
       price: '50,000원',
       variants: KISS_VARIANTS,
       titleMode: 'static',
-      chips: ['위치', '파티클', '속도', '사운드'],
+      chips: ['위치 변경 가능', '효과 변경 가능'],
       optionHints: {
-        '위치': '캐릭터가 뽀뽀하는 위치를 설정합니다.'
+        '위치 변경 가능': '캐릭터가 뽀뽀하는 위치를 설정합니다.',
+        '효과 변경 가능': '파티클·사운드 효과를 변경합니다.'
       }
     },
     {
@@ -1088,12 +1106,13 @@
       price: '50,000원',
       variants: WINGS_VARIANTS,
       titleMode: 'static',
-      chips: ['날개 변경', '포즈', '파티클', 'PROP', '속도', '사운드'],
+      chips: ['날개 변경 가능', '포즈 변경 가능', '효과 변경 가능', 'PROP'],
       props: WING_PROPS,
       propLabel: '변경 가능 날개 보기',
       optionHints: {
-        '날개 변경': '날개의 모양이나 색상을 변경합니다.',
-        '포즈': '캐릭터의 포즈를 변경합니다.'
+        '날개 변경 가능': '날개의 모양이나 색상을 변경합니다.',
+        '포즈 변경 가능': '캐릭터의 포즈를 변경합니다.',
+        '효과 변경 가능': '파티클·사운드 효과를 변경합니다.'
       }
     },
     {
@@ -1103,7 +1122,7 @@
       price: '10,000원',
       variants: FOLLOW_VARIANTS,
       titleMode: 'static',
-      chips: ['속도', '사운드']
+      chips: ['따라다니는 속도 변경 가능']
     },
     {
       type: 'card',
@@ -1111,7 +1130,11 @@
       desc: '도네이션을 한 시청자의 이름이 던지기 프랍에 들어갑니다.',
       price: '50,000원',
       video: VIDEO_VIEWER_THROW,
-      chips: THROW_CHIPS,
+      chips: ['텍스트 색상', '던지는 물건 변경 가능', 'PROP'],
+      optionHints: {
+        '텍스트 색상': '시청자 이름 텍스트의 색상을 변경합니다.',
+        '던지는 물건 변경 가능': '던지는 물건의 종류를 변경합니다.'
+      },
       props: THROW_STICK_PROPS
     },
     {
@@ -1120,9 +1143,10 @@
       desc: '캐릭터의 머리를 쓰다듬어줍니다.',
       price: '20,000원',
       video: VIDEO_PAT,
-      chips: ['쓰담손 색상', '파티클', '속도', '사운드', '표정'],
+      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능'],
       optionHints: {
-        '쓰담손 색상': '쓰다듬는 손의 색상을 변경합니다.'
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
+        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.'
       }
     },
     {
@@ -1131,7 +1155,7 @@
       desc: '자리를 비우면 캐릭터가 잠드는 모션을 취합니다.',
       price: '20,000원',
       video: VIDEO_SLEEP,
-      chips: ['파티클', '사운드']
+      chips: ['잠드는 표정 변경 가능']
     },
     {
       type: 'card',
@@ -1139,7 +1163,7 @@
       desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
       price: '20,000원',
       video: VIDEO_WINK,
-      chips: ['파티클', '사운드']
+      chips: ['하트 모양 변경 가능']
     },
     {
       type: 'card',
@@ -1147,7 +1171,7 @@
       desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
       price: '15,000원',
       video: VIDEO_QUESTION,
-      chips: ['속도', '사운드']
+      chips: ['사운드 추가 가능']
     },
     {
       type: 'card',
@@ -1155,7 +1179,11 @@
       desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
       price: '20,000원',
       video: VIDEO_STICK,
-      chips: ['파티클', 'PROP', '속도', '사운드'],
+      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', 'PROP'],
+      optionHints: {
+        '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
+        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.'
+      },
       props: THROW_STICK_PROPS
     },
     {
@@ -1165,6 +1193,7 @@
       price: '15,000원',
       video: VIDEO_FLYAWAY,
       chips: THROW_CHIPS,
+      optionHints: THROW_OPTION_HINTS,
       props: THROW_STICK_PROPS
     },
     {
@@ -1175,6 +1204,7 @@
       variants: PILE_VARIANTS,
       titleMode: 'static',
       chips: PILE_CHIPS,
+      optionHints: THROW_OPTION_HINTS,
       props: THROW_STICK_PROPS
     },
     {
@@ -1183,7 +1213,11 @@
       desc: '망치로 캐릭터의 머리를 강타합니다.',
       price: '20,000원',
       video: VIDEO_HAMMER,
-      chips: THROW_CHIPS,
+      chips: ['망치 변경 가능', '상호작용 사운드 추가 가능', 'PROP'],
+      optionHints: {
+        '망치 변경 가능': '캐릭터를 강타하는 망치의 종류를 변경합니다.',
+        '상호작용 사운드 추가 가능': '망치로 강타할 때 나오는 효과음을 추가·변경합니다.'
+      },
       props: [
         { name: '악마 망치', image: 'image/악마 망치.jpg' }
       ]
@@ -1195,7 +1229,11 @@
       price: '50,000원',
       video: VIDEO_MAGIC,
       objectPosition: '35% center',
-      chips: ['파티클', '속도', '사운드']
+      chips: ['마법 종류 변경 가능', '핸드 트래킹 필요'],
+      optionHints: {
+        '마법 종류 변경 가능': '손에서 나가는 마법의 종류를 변경합니다.',
+        '핸드 트래킹 필요': '이 연출은 핸드 트래킹 장비가 있어야 정상 작동합니다.'
+      }
     },
     {
       type: 'card',
@@ -1205,6 +1243,7 @@
       video: VIDEO_THROW_ONE,
       objectPosition: '35% center',
       chips: THROW_CHIPS,
+      optionHints: THROW_OPTION_HINTS,
       props: THROW_STICK_PROPS
     },
     {
@@ -1213,7 +1252,7 @@
       desc: '캐릭터에게 물을 쏠 수 있습니다.',
       price: '15,000원',
       video: VIDEO_WATER,
-      chips: ['표정', '속도', '사운드']
+      chips: ['물줄기 색상 변경 가능']
     },
     {
       type: 'card',
@@ -1222,6 +1261,7 @@
       price: '20,000원',
       video: VIDEO_WEIGHT,
       chips: THROW_CHIPS,
+      optionHints: THROW_OPTION_HINTS,
       props: BONK_DROP_PROPS
     }
   ];
@@ -1516,7 +1556,7 @@
     var hint = getOptionHint(item, label);
     var tip = hint ? '<span class="api-option-tip" role="tooltip">' + hint + '</span>' : '';
     return ''
-      + '<span class="api-option-item"' + (hint ? ' tabindex="0"' : '') + '>'
+      + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + '>'
       +   label + tip
       + '</span>';
   }
@@ -1528,16 +1568,8 @@
       return renderOptionItem(item, cleanChipLabel(c));
     }).join('');
     return ''
-      + '<div class="api-fold api-option" data-fold-root="' + uid + '-opt">'
-      +   '<button type="button" class="api-fold-toggle" aria-expanded="false" aria-controls="option-panel-' + uid + '">'
-      +     '<span class="api-fold-toggle-label">변경 가능 옵션 보기</span>'
-      +     '<span class="api-fold-chevron" aria-hidden="true"></span>'
-      +   '</button>'
-      +   '<div class="api-fold-panel" id="option-panel-' + uid + '">'
-      +     '<div class="api-fold-panel-inner">'
-      +       '<div class="api-option-list" role="list" aria-label="변경 가능 옵션">' + items + '</div>'
-      +     '</div>'
-      +   '</div>'
+      + '<div class="api-option-block">'
+      +   '<div class="api-option-list" role="list" aria-label="변경 가능 옵션">' + items + '</div>'
       + '</div>';
   }
 
@@ -1564,7 +1596,7 @@
     if (!hasPropChange(item.chips)) return '';
     var props = item.props && item.props.length ? item.props : DEFAULT_PROPS;
     var slots = props.map(renderPropSlot).join('');
-    var propLabel = item.propLabel || '변경 가능 PROP 보기';
+    var propLabel = item.propLabel || '변경 가능 물건 보기';
     return ''
       + '<div class="api-fold api-prop" data-fold-root="' + uid + '-prop">'
       +   '<button type="button" class="api-fold-toggle" aria-expanded="false" aria-controls="prop-panel-' + uid + '">'
@@ -1573,7 +1605,7 @@
       +   '</button>'
       +   '<div class="api-fold-panel" id="prop-panel-' + uid + '">'
       +     '<div class="api-fold-panel-inner">'
-      +       '<div class="api-prop-scroll" tabindex="0" role="list" aria-label="PROP 목록">' + slots + '</div>'
+      +       '<div class="api-prop-scroll" tabindex="0" role="list" aria-label="물건 목록">' + slots + '</div>'
       +     '</div>'
       +   '</div>'
       + '</div>';
@@ -1621,7 +1653,6 @@
       +   '<div class="api-body">'
       +     renderCardHead(item)
       +     '<p class="api-desc">' + item.desc + '</p>'
-      +     '<div class="api-card-meta-spacer" aria-hidden="true"></div>'
       +     renderCardBodyExtras(item, uid)
       +   '</div>'
       + '</article>';
@@ -1663,13 +1694,11 @@
       +       '<button type="button" class="api-swipe-btn api-swipe-btn--next" data-swipe-next="' + index + '" aria-label="다음">›</button>'
       +     '</div>'
       +     '<div class="api-swipe-index" aria-live="polite">' + renderSwipeCounter(index, 1, item.variants.length) + '</div>'
+      +     '<div class="api-swipe-dots api-swipe-dots--media" data-swipe-dots="' + index + '">' + dots + '</div>'
       +   '</div>'
       +   '<div class="api-body">'
       +     renderSwipeCardHead(item, index, 0)
       +     '<p class="api-desc" data-swipe-desc="' + index + '">' + item.variants[0].desc + '</p>'
-      +     '<div class="api-swipe-meta">'
-      +       '<div class="api-swipe-dots" data-swipe-dots="' + index + '">' + dots + '</div>'
-      +     '</div>'
       +     (thumbs ? '<div class="api-swipe-thumbs" data-swipe-thumbs="' + index + '">' + thumbs + '</div>' : '')
       +     renderCardBodyExtras(item, 'swipe-' + index)
       +   '</div>'
