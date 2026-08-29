@@ -52,11 +52,6 @@
         price: "20,000"
       },
       {
-        title: "마법",
-        desc: "캐릭터의 손에서 마법이 나갑니다.",
-        price: "50,000"
-      },
-      {
         title: "물음표",
         desc: "시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.",
         price: "15,000"
@@ -64,13 +59,18 @@
     ],
     "api-custom": [
       {
+        title: "마법",
+        desc: "캐릭터의 손에서 마법이 나갑니다.",
+        price: "50,000"
+      },
+      {
         title: "팬 캐릭터 뽀뽀",
         desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.",
         price: "50,000"
       },
       {
-        title: "천사 날개",
-        desc: "캐릭터에게 천사 날개를 달아줍니다.",
+        title: "천사 / 악마 변신",
+        desc: "캐릭터가 날개를 달며 날아오릅니다. 날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.",
         price: "50,000"
       },
       {
@@ -119,19 +119,13 @@
       { key: "api-basic", label: "기본 API" },
       { key: "api-custom", label: "커스텀 API" },
       { key: "prop-production", label: "PROP 제작" }
-    ],
-    propPurchase: {
-      title: "추가 PROP",
-      unitPrice: 5000,
-      unitLabel: "자체제작 PROP 추가 구매 (API 구매 시 1종 무료 제공)"
-    }
+    ]
   };
 
   var form = document.getElementById("order-form");
   var preview = document.getElementById("order-preview");
-  var estimate = document.getElementById("order-estimate");
   var copyBtn = document.getElementById("order-copy");
-  if (!form || !preview || !estimate) return;
+  if (!form || !preview) return;
 
   function parseAmount(text) {
     if (!text) return 0;
@@ -313,13 +307,6 @@
           "요청사항",
           '<textarea class="order-textarea" name="note" rows="4" placeholder="원하시는 연출, 일정, 참고 자료 등"></textarea>'
         ) +
-      "</section>" +
-      '<section class="order-section">' +
-        '<h3 class="order-section-title">' + escapeHtml(cfg.propPurchase.title) + '</h3>' +
-        '<div class="order-prop-simple">' +
-          '<span class="order-prop-note">' + escapeHtml(cfg.propPurchase.unitLabel) + "</span>" +
-          createQuantityControl("prop-qty") +
-        "</div>" +
       "</section>";
   }
 
@@ -378,20 +365,11 @@
     });
   }
 
-  function getPropPurchase() {
-    var cfg = ORDER_CONFIG.propPurchase;
-    var input = form.querySelector('[name="prop-qty"]');
-    var qty = input ? parseInt(input.value, 10) || 0 : 0;
-    if (qty <= 0) return null;
-    return { qty: qty, amount: cfg.unitPrice * qty };
-  }
-
-  function calculateEstimate(selectedApis, isPrivate, propPurchase) {
+  function calculateEstimate(selectedApis, isPrivate) {
     var total = 0;
     selectedApis.forEach(function (entry) {
       total += getApiAmount(entry);
     });
-    if (propPurchase) total += propPurchase.amount;
     if (isPrivate) total += ORDER_CONFIG.privateFee;
     return total;
   }
@@ -426,9 +404,7 @@
     var propEntries = selectedApis.filter(function (entry) {
       return entry.category === "prop-production";
     });
-    var propPurchase = getPropPurchase();
     var isPrivate = form.querySelector('input[name="private"]:checked');
-    var total = calculateEstimate(selectedApis, !!isPrivate, propPurchase);
     var lines = ["[Rabbi API 주문서]", ""];
 
     lines.push("■ Warudo: " + getRadioLabel("warudo"));
@@ -444,14 +420,6 @@
       lines.push("■ PROP 제작");
       appendOrderEntries(lines, propEntries);
     }
-
-    lines.push("");
-    if (propPurchase) {
-      lines.push("■ 추가 PROP");
-      lines.push("- " + propPurchase.qty + "개 (" + formatWon(propPurchase.amount) + ")");
-      lines.push("");
-    }
-    lines.push("■ 예상 견적: " + formatWon(total) + (hasVariableEstimate(selectedApis) ? " (일부 항목 문의)" : ""));
 
     if (note) {
       lines.push("");
@@ -476,11 +444,6 @@
       }
     });
 
-    var selectedApis = getSelectedApis();
-    var propPurchase = getPropPurchase();
-    var isPrivate = !!form.querySelector('input[name="private"]:checked');
-    estimate.textContent = formatWon(calculateEstimate(selectedApis, isPrivate, propPurchase))
-      + (hasVariableEstimate(selectedApis) ? " (일부 항목 문의)" : "");
     preview.value = buildPreviewText();
     if (window.sendHeight) window.sendHeight();
   }
