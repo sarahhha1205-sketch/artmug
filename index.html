@@ -936,10 +936,6 @@
     </div>
   </section>
 
-  <footer class="block dark">
-    <p style="font-size:12px;font-weight:700;">Warudo Custom API · Rabbi</p>
-  </footer>
-
 </div>
 
 <div class="prop-hint-tip" id="propHintTip" role="tooltip"></div>
@@ -1387,6 +1383,20 @@
       group: '커스텀 제작',
       date: '2026.08',
       video: 'Port/지한이또 커스텀 API (콧물 주르륵).mp4'
+    },
+    {
+      title: '우누님 던지기 API',
+      category: 'API 제작',
+      group: '던지기',
+      date: '2026.08',
+      video: 'Port/우누님 던지기 + 팬캐릭터.mkv'
+    },
+    {
+      title: '우누님 팬 캐릭터',
+      category: '팬 캐릭터 제작',
+      desc: '우누님 팬 캐릭터 제작 작업입니다.',
+      date: '2026.08',
+      video: 'Port/우누님 던지기 + 팬캐릭터.mkv'
     }
   ];
 
@@ -1653,7 +1663,7 @@
     var thumbs = hasThumbNav ? item.variants.map(function (v, i) {
       return ''
         + '<button type="button" class="api-swipe-thumb' + (i === 0 ? ' on' : '') + '" data-swipe-thumb="' + index + '" data-index="' + i + '" aria-label="' + (v.label || (i + 1) + '번째') + '">'
-        +   '<img src="' + v.image + '" alt="' + (v.label || '') + '" loading="lazy" decoding="async">'
+        +   '<img src="' + v.image + '" alt="' + (v.label || '') + '" loading="lazy" decoding="async"' + (v.letterboxColor ? ' style="background:' + v.letterboxColor + ';object-fit:contain"' : '') + '>'
         + '</button>';
     }).join('') : '';
     var mediaStyle = item.mediaAspectRatio ? ' style="aspect-ratio:' + item.mediaAspectRatio + '"' : '';
