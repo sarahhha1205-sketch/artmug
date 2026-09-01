@@ -136,6 +136,8 @@
     }
     .block.dark p { color: #a1a1a8; }
     .block h2 { font-size: 22px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.3px; color: var(--accent); }
+    #sec-api h2 { font-size: 32px; }
+    .order-title { text-align: center; font-size: 32px; }
     .block.light h2 { color: var(--text-dark); }
     .block.light .lead { color: var(--text-dark-soft); }
     .lead { font-size: 13px; color: var(--text-soft); margin-bottom: 20px; line-height: 1.75; }
@@ -446,6 +448,7 @@
     .api-fold.api-option.is-open .api-fold-panel,
     .api-fold.api-option.is-open .api-fold-panel-inner { overflow: visible; }
     .api-fold.api-prop.is-open .api-fold-panel-inner { overflow-y: visible; }
+    .api-prop-scroll[hidden] { display: none !important; }
     .api-prop-scroll {
       display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden;
       padding: 0 14px; scroll-snap-type: x mandatory;
@@ -532,6 +535,49 @@
       padding: 26px 28px; margin: 0; border-radius: 18px;
     }
     .pf-toggle-title { font-size: 26px; font-weight: 900; letter-spacing: -0.3px; color: #fff; }
+    .order-platform-tabs {
+      display: flex; justify-content: center; gap: 24px; margin: 28px auto 36px; flex-wrap: wrap;
+      max-width: 1200px;
+    }
+    .order-platform-tab {
+      flex: 1 1 0; font-family: inherit; cursor: pointer; white-space: nowrap;
+      padding: 40px 28px; border-radius: 22px; font-size: 30px; font-weight: 900;
+      border: 2px solid var(--border-light); background: var(--surface-white);
+      color: var(--text-dark-dim);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .order-platform-tab:hover { border-color: var(--border-light-hover); color: var(--text-dark); }
+    .order-platform-tab.is-active {
+      background: var(--brand); border-color: var(--brand); color: #fff;
+      box-shadow: 0 10px 24px rgba(139, 124, 246, 0.35);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 560px) {
+      .order-platform-tabs { margin: 16px auto 22px; gap: 8px; }
+      .order-platform-tab { font-size: 14px; padding: 16px 12px; border-radius: 14px; }
+    }
+    .platform-tabs {
+      display: flex; justify-content: center; gap: 24px; margin: 32px auto 40px; flex-wrap: wrap;
+      max-width: 1200px;
+    }
+    .platform-tab {
+      flex: 1 1 0; font-family: inherit; cursor: pointer; white-space: nowrap;
+      padding: 40px 28px; border-radius: 22px; font-size: 30px; font-weight: 900;
+      border: 1px solid var(--border-dark-hover); background: var(--surface-elevated);
+      color: var(--text-dim);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .platform-tab:hover { border-color: var(--brand-border); color: var(--text); }
+    .platform-tab.is-active {
+      background: linear-gradient(120deg, #9b8cff 0%, #6a5ae0 100%);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 8px 20px rgba(139, 124, 246, 0.35);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 560px) {
+      .platform-tabs { margin: 16px auto 22px; gap: 8px; }
+      .platform-tab { font-size: 14px; padding: 16px 12px; border-radius: 14px; }
+    }
     .pf-tabs {
       display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch;
       flex-wrap: nowrap; margin-top: 22px; padding-bottom: 2px; scrollbar-width: none;
@@ -740,6 +786,10 @@
       .hero { padding: 32px 20px 28px; }
       .block { padding: 24px 16px; }
       .sec-head { align-items: flex-start; }
+      .api-option-tip {
+        left: 0; right: 0; transform: none; width: auto; max-width: none;
+        text-align: center; margin: 0 4px;
+      }
 
       body { font-size: 12px; }
       .hero h1 { font-size: clamp(20px, 6.5vw, 26px); }
@@ -748,6 +798,8 @@
       .intro-box strong { font-size: 18px; }
       .intro-box p { font-size: 14px; }
       .block h2 { font-size: 18px; }
+      #sec-api h2 { font-size: 22px; }
+      .order-title { font-size: 22px; }
       .lead { font-size: 12px; }
       .api-title { font-size: 15px; }
       .api-desc { font-size: 12px; }
@@ -815,6 +867,10 @@
         <h2>API 목록</h2>
       </div>
     </div>
+    <div class="platform-tabs" id="platformTabs">
+      <button type="button" class="platform-tab is-active" data-platform="warudo">Warudo</button>
+      <button type="button" class="platform-tab" data-platform="vts">VTube Studio</button>
+    </div>
     <div class="api-stack" id="apiList"></div>
   </section>
 
@@ -837,10 +893,11 @@
   </section>
 
   <section class="block light" id="sec-order">
-    <h2>주문서 작성</h2>
-    <p class="order-lead">
-      항목을 선택한 뒤 <strong>주문서 복사</strong> 버튼을 눌러 주문 내용을 확인하세요.
-    </p>
+    <h2 class="order-title">주문서 작성하기</h2>
+    <div class="order-platform-tabs" id="orderPlatformTabs">
+      <button type="button" class="order-platform-tab is-active" data-order-platform="warudo">Warudo</button>
+      <button type="button" class="order-platform-tab" data-order-platform="vts">VTube Studio</button>
+    </div>
     <div class="order-panel">
       <form class="order-form" id="order-form" novalidate></form>
       <div class="order-output">
@@ -1006,8 +1063,8 @@
   var PILE_CHIPS = THROW_CHIPS;
 
   var PILE_VARIANTS = [
-    { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE },
-    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2 }
+    { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE, vtsVideo: '2D/2D치즈와르르.mkv' },
+    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2, vtsVideo: '2D/2D치즈와르르.mkv' }
   ];
 
   var OPTION_HINTS = {
@@ -1108,8 +1165,11 @@
       title: '쓰다듬기',
       desc: '캐릭터의 머리를 쓰다듬어줍니다.',
       price: '20,000원',
+      vts: true,
+      vtsVideo: '2D/2D쓰담쓰담.mkv',
       video: VIDEO_PAT,
       chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능'],
+      vtsHideChips: ['상호작용 표정 설정 가능'],
       optionHints: {
         '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
         '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.'
@@ -1128,6 +1188,8 @@
       title: '윙크',
       desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
       price: '20,000원',
+      vts: true,
+      vtsVideo: '2D/2D윙크.mkv',
       video: VIDEO_WINK,
       chips: ['하트 모양 변경 가능']
     },
@@ -1136,6 +1198,8 @@
       title: '물음표',
       desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
       price: '15,000원',
+      vts: true,
+      vtsVideo: '2D/2D물음표.mkv',
       video: VIDEO_QUESTION,
       chips: ['사운드 추가 가능']
     },
@@ -1167,6 +1231,7 @@
       title: '와르르',
       desc: '캐릭터에게 물건들이 쏟아집니다.',
       price: '20,000원',
+      vts: true,
       variants: PILE_VARIANTS,
       titleMode: 'static',
       chips: PILE_CHIPS,
@@ -1178,6 +1243,8 @@
       title: '머리쾅 (망치)',
       desc: '망치로 캐릭터의 머리를 강타합니다.',
       price: '20,000원',
+      vts: true,
+      vtsVideo: '2D/2D뿅망치.mkv',
       video: VIDEO_HAMMER,
       chips: ['망치 변경 가능', '상호작용 사운드 추가 가능', 'PROP'],
       optionHints: {
@@ -1187,6 +1254,9 @@
       props: [
         { name: '악마 망치', image: 'image/악마 망치.jpg' },
         { name: '뿅망치', image: 'image/뿅망치.png' }
+      ],
+      vtsProps: [
+        { name: '뿅망치', image: 'image2D/뿅망치.png' }
       ]
     },
     {
@@ -1207,6 +1277,8 @@
       title: '던지기',
       desc: '캐릭터에게 물건을 던질 수 있습니다.',
       price: '10,000원',
+      vts: true,
+      vtsVideo: '2D/2D던지기.mkv',
       video: VIDEO_THROW_ONE,
       objectPosition: '35% center',
       chips: THROW_CHIPS,
@@ -1396,10 +1468,80 @@
       desc: '우누님 팬 캐릭터 제작 작업입니다.',
       date: '2026.08',
       video: 'Port/우누님 던지기 + 팬캐릭터.mkv'
+    },
+    {
+      title: '달아님 쓰다듬기 API',
+      category: 'API 제작',
+      group: '쓰다듬기',
+      date: '2026.08',
+      video: 'Port/쓰담쓰담달아님.mkv'
+    },
+    {
+      title: '달아님 물음표 API',
+      category: 'API 제작',
+      group: '물음표',
+      date: '2026.08',
+      video: 'Port/물음표 달아님.mkv'
+    },
+    {
+      title: '달아님 커스텀 API<br>웅이아범',
+      category: 'API 제작',
+      group: '커스텀 제작',
+      date: '2026.08',
+      video: 'Port/웅이아범달아님.mkv'
+    },
+    {
+      title: '쓰다듬기 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '쓰다듬기',
+      date: '2026.08',
+      video: '2D/2D쓰담쓰담.mkv'
+    },
+    {
+      title: '윙크 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '윙크',
+      date: '2026.08',
+      video: '2D/2D윙크.mkv'
+    },
+    {
+      title: '머리쾅 (망치) API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '머리쾅 (망치)',
+      date: '2026.08',
+      video: '2D/2D뿅망치.mkv'
+    },
+    {
+      title: '와르르 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '와르르',
+      date: '2026.08',
+      video: '2D/2D치즈와르르.mkv'
+    },
+    {
+      title: '던지기 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '던지기',
+      date: '2026.08',
+      video: '2D/2D던지기.mkv'
+    },
+    {
+      title: '던지기 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '던지기',
+      date: '2026.08',
+      video: '2D/2D치즈던지기.mkv'
+    },
+    {
+      title: '물음표 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '물음표',
+      date: '2026.08',
+      video: '2D/2D물음표.mkv'
     }
   ];
 
-  var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기'];
+  var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기', '머리쾅 (망치)', '와르르', '커스텀 제작'];
 
 
   function propItemToCard(item) {
@@ -1501,7 +1643,9 @@
          start downloading and autoplaying at once on page load, which is
          what makes mobile load so slowly. A video only fetches once it
          scrolls into view (see the IntersectionObserver setup below). */
-      return '<video class="lazy-video" data-src="' + video + '" preload="none"'
+      return '<video class="lazy-video" data-src="' + video + '" data-warudo-src="' + video + '"'
+        + (media && media.vtsVideo ? ' data-vts-src="' + media.vtsVideo + '"' : '')
+        + ' preload="none"'
         + (loop ? ' data-loop="1"' : '') + ' muted playsinline style="' + styleAttr + '"></video>';
     }
     if (image) {
@@ -1536,8 +1680,9 @@
   function renderOptionItem(item, label) {
     var hint = getOptionHint(item, label);
     var tip = hint ? '<span class="api-option-tip" role="tooltip">' + hint + '</span>' : '';
+    var vtsHide = item.vtsHideChips && item.vtsHideChips.indexOf(label) !== -1;
     return ''
-      + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + '>'
+      + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + (vtsHide ? ' data-vts-hide="1"' : '') + '>'
       +   label + tip
       + '</span>';
   }
@@ -1577,6 +1722,7 @@
     if (!hasPropChange(item.chips)) return '';
     var props = item.props && item.props.length ? item.props : DEFAULT_PROPS;
     var slots = props.map(renderPropSlot).join('');
+    var vtsSlots = item.vtsProps && item.vtsProps.length ? item.vtsProps.map(renderPropSlot).join('') : '';
     var propLabel = item.propLabel || '변경 가능 물건 보기';
     return ''
       + '<div class="api-fold api-prop" data-fold-root="' + uid + '-prop">'
@@ -1586,7 +1732,8 @@
       +   '</button>'
       +   '<div class="api-fold-panel" id="prop-panel-' + uid + '">'
       +     '<div class="api-fold-panel-inner">'
-      +       '<div class="api-prop-scroll" tabindex="0" role="list" aria-label="물건 목록">' + slots + '</div>'
+      +       '<div class="api-prop-scroll" data-prop-platform="warudo" tabindex="0" role="list" aria-label="물건 목록">' + slots + '</div>'
+      +       (vtsSlots ? '<div class="api-prop-scroll" data-prop-platform="vts" tabindex="0" role="list" aria-label="물건 목록" hidden>' + vtsSlots + '</div>' : '')
       +     '</div>'
       +   '</div>'
       + '</div>';
@@ -1598,12 +1745,21 @@
     return '<div class="api-extras">' + extras + '</div>';
   }
 
+  function vtsPriceText(priceStr) {
+    var n = parseInt(String(priceStr).replace(/[^0-9]/g, ''), 10);
+    if (isNaN(n)) return priceStr;
+    return (n + 10000).toLocaleString('ko-KR') + '원';
+  }
+
   function renderCardHead(item) {
     var priceClass = item.price.indexOf('문의') >= 0 ? 'api-price muted' : 'api-price';
+    var priceAttrs = item.vts
+      ? ' data-base-price="' + item.price + '" data-vts-price="' + vtsPriceText(item.price) + '"'
+      : ' data-base-price="' + item.price + '"';
     return ''
       + '<div class="api-head">'
       +   '<h3 class="api-title">' + item.title + '</h3>'
-      +   '<span class="' + priceClass + '">' + item.price + '</span>'
+      +   '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
       + '</div>';
   }
 
@@ -1619,17 +1775,21 @@
     var variant = item.variants[slideIndex] || item.variants[0];
     var price = variant.price || item.price;
     var priceClass = price.indexOf('문의') >= 0 ? 'api-price muted' : 'api-price';
+    var priceAttrs = item.vts && !variant.price
+      ? ' data-base-price="' + price + '" data-vts-price="' + vtsPriceText(price) + '"'
+      : ' data-base-price="' + price + '"';
     return ''
       + '<div class="api-head">'
       +   '<h3 class="api-title" data-swipe-title="' + index + '">' + swipeCardTitle(item, slideIndex) + '</h3>'
-      +   '<span class="' + priceClass + '" data-swipe-price="' + index + '">' + price + '</span>'
+      +   '<span class="' + priceClass + '" data-swipe-price="' + index + '"' + priceAttrs + '>' + price + '</span>'
       + '</div>';
   }
 
   function renderCard(item, index) {
     var uid = 'card-' + index;
+    var platforms = 'warudo' + (item.vts ? ' vts' : '');
     return ''
-      + '<article class="api-card">'
+      + '<article class="api-card" data-platforms="' + platforms + '">'
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
       +     renderCardHead(item)
@@ -1666,8 +1826,9 @@
         + '</button>';
     }).join('') : '';
     var mediaStyle = item.mediaAspectRatio ? ' style="aspect-ratio:' + item.mediaAspectRatio + '"' : '';
+    var platforms = 'warudo' + (item.vts ? ' vts' : '');
     return ''
-      + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '">'
+      + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '" data-platforms="' + platforms + '">'
       +   '<div class="api-media api-swipe" data-swipe="' + index + '" tabindex="0" role="region" aria-label="' + item.title + ' 미리보기"' + mediaStyle + '>'
       +     '<div class="api-swipe-track">' + slides + '</div>'
       +     '<div class="api-swipe-arrows" aria-hidden="true">'
@@ -1818,6 +1979,62 @@
     initFoldAccordions();
     initPropLightbox();
     initPropHintTip();
+    applyApiPlatform(currentApiPlatform);
+  }
+
+  var currentApiPlatform = 'warudo';
+
+  function applyApiPlatform(platform) {
+    currentApiPlatform = platform;
+    var listEl = document.getElementById('apiList');
+    if (!listEl) return;
+    Array.prototype.forEach.call(listEl.querySelectorAll('[data-platforms]'), function (card) {
+      var plats = (card.getAttribute('data-platforms') || 'warudo').split(' ');
+      card.style.display = plats.indexOf(platform) === -1 ? 'none' : '';
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('[data-base-price]'), function (el) {
+      var useVts = platform === 'vts' && el.hasAttribute('data-vts-price');
+      el.textContent = useVts ? el.getAttribute('data-vts-price') : el.getAttribute('data-base-price');
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('.lazy-video[data-warudo-src]'), function (v) {
+      var target = (platform === 'vts' && v.dataset.vtsSrc) ? v.dataset.vtsSrc : v.dataset.warudoSrc;
+      if (v.dataset.src === target) return;
+      v.dataset.src = target;
+      if (v.src || v.currentSrc) {
+        /* 이미 한번 로드된 video면 새 소스로 강제 교체 */
+        v.pause();
+        v.removeAttribute('src');
+        v.src = target;
+        v.load();
+        var playPromise = v.play();
+        if (playPromise && playPromise.catch) playPromise.catch(function () {});
+      }
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('[data-vts-hide]'), function (el) {
+      el.style.display = platform === 'vts' ? 'none' : '';
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('.api-fold-panel-inner'), function (panel) {
+      var scrolls = panel.querySelectorAll('.api-prop-scroll[data-prop-platform]');
+      if (scrolls.length < 2) return;
+      Array.prototype.forEach.call(scrolls, function (s) {
+        s.hidden = s.getAttribute('data-prop-platform') !== platform;
+      });
+    });
+    var note = document.getElementById('platformNote');
+    if (note) note.hidden = platform !== 'vts';
+    if (window.sendHeight) window.sendHeight();
+  }
+
+  function initPlatformTabs() {
+    var wrap = document.getElementById('platformTabs');
+    if (!wrap) return;
+    wrap.querySelectorAll('.platform-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        wrap.querySelectorAll('.platform-tab').forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        applyApiPlatform(btn.dataset.platform);
+      });
+    });
   }
 
   function renderPropSection() {
@@ -2115,6 +2332,7 @@
     startAutoSlide(cardIndex);
   }
 
+  initPlatformTabs();
   renderList();
   renderPropSection();
   initPortfolio();
