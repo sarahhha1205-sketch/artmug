@@ -1777,15 +1777,9 @@
   function renderCard(item, index) {
     var uid = 'card-' + index;
     var platforms = 'warudo' + (item.vts ? ' vts' : '');
-    var cycleArrows = (item.vtsVideos && item.vtsVideos.length > 1)
-      ? '<div class="api-swipe-arrows video-cycle-arrows" data-warudo-hide="1" aria-hidden="true">'
-        +   '<button type="button" class="api-swipe-btn api-swipe-btn--prev video-cycle-btn" data-cycle-dir="-1" aria-label="이전 영상">‹</button>'
-        +   '<button type="button" class="api-swipe-btn api-swipe-btn--next video-cycle-btn" data-cycle-dir="1" aria-label="다음 영상">›</button>'
-        + '</div>'
-      : '';
     return ''
       + '<article class="api-card" data-platforms="' + platforms + '">'
-      +   '<div class="api-media">' + renderMedia(item, item.title) + cycleArrows + '</div>'
+      +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
       +     renderCardHead(item)
       +     '<p class="api-desc">' + item.desc + '</p>'
@@ -1975,30 +1969,48 @@
     initPropLightbox();
     initPropHintTip();
     initVideoCycle(el);
-    initVideoCycleArrows(el);
+    initVideoSwipeGesture(el);
     applyApiPlatform(currentApiPlatform);
   }
 
-  function initVideoCycleArrows(scopeEl) {
-    Array.prototype.forEach.call(scopeEl.querySelectorAll('.video-cycle-btn'), function (btn) {
-      if (btn.dataset.cycleBtnBound) return;
-      btn.dataset.cycleBtnBound = '1';
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var media = btn.closest('.api-media');
-        var v = media ? media.querySelector('.lazy-video[data-cycle-list]') : null;
-        if (!v) return;
-        var list = v.dataset.cycleList.split('|');
-        var dir = parseInt(btn.dataset.cycleDir, 10) || 1;
+  function cycleVideoTo(v, idx) {
+    var list = v.dataset.cycleList ? v.dataset.cycleList.split('|') : null;
+    if (!list || !list[idx]) return;
+    v.dataset.cycleIndex = String(idx);
+    var next = list[idx];
+    v.dataset.src = next;
+    v.src = next;
+    v.load();
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
+  function initVideoSwipeGesture(scopeEl) {
+    Array.prototype.forEach.call(scopeEl.querySelectorAll('.lazy-video[data-vts-list], .lazy-video[data-video-list]'), function (v) {
+      if (v.dataset.swipeBound) return;
+      v.dataset.swipeBound = '1';
+      var media = v.closest('.api-media');
+      if (!media) return;
+      var startX = 0;
+      var dragging = false;
+      var threshold = 40;
+      media.addEventListener('touchstart', function (e) {
+        if (!e.touches[0]) return;
+        startX = e.touches[0].clientX;
+        dragging = true;
+      }, { passive: true });
+      media.addEventListener('touchend', function (e) {
+        if (!dragging) return;
+        dragging = false;
+        var list = v.dataset.cycleList ? v.dataset.cycleList.split('|') : null;
+        if (!list || list.length < 2) return;
+        var endX = (e.changedTouches[0] || {}).clientX || startX;
+        var diff = endX - startX;
+        if (Math.abs(diff) < threshold) return;
+        var dir = diff < 0 ? 1 : -1;
         var idx = ((parseInt(v.dataset.cycleIndex || '0', 10) + dir) % list.length + list.length) % list.length;
-        v.dataset.cycleIndex = String(idx);
-        var next = list[idx];
-        v.dataset.src = next;
-        v.src = next;
-        v.load();
-        var p = v.play();
-        if (p && p.catch) p.catch(function () {});
-      });
+        cycleVideoTo(v, idx);
+      }, { passive: true });
     });
   }
 
