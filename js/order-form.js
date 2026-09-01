@@ -4,7 +4,8 @@
       {
         title: "던지기",
         desc: "캐릭터에게 물건을 던질 수 있습니다.",
-        price: "10,000"
+        price: "10,000",
+        vts: true
       },
       {
         title: "물맞기",
@@ -24,7 +25,8 @@
       {
         title: "쓰다듬기",
         desc: "캐릭터의 머리를 쓰다듬어줍니다.",
-        price: "20,000"
+        price: "20,000",
+        vts: true
       },
       {
         title: "머리쾅 (떨어지기)",
@@ -34,17 +36,20 @@
       {
         title: "머리쾅 (망치)",
         desc: "망치로 캐릭터의 머리를 강타합니다.",
-        price: "20,000"
+        price: "20,000",
+        vts: true
       },
       {
         title: "와르르",
         desc: "캐릭터에게 물건들이 쏟아집니다.",
-        price: "20,000"
+        price: "20,000",
+        vts: true
       },
       {
         title: "윙크",
         desc: "캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.",
-        price: "20,000"
+        price: "20,000",
+        vts: true
       },
       {
         title: "자동 잠자기",
@@ -54,7 +59,8 @@
       {
         title: "물음표",
         desc: "시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.",
-        price: "15,000"
+        price: "15,000",
+        vts: true
       }
     ],
     "api-custom": [
@@ -94,6 +100,12 @@
         title: "PROP 제작",
         desc: "와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.",
         price: "30,000"
+      },
+      {
+        title: "PROP 제작",
+        desc: "상호작용 가능한 로우폴리 소품을 제작해 드립니다.",
+        price: "20,000",
+        vtsOnly: true
       }
     ]
   };
@@ -125,7 +137,28 @@
   var form = document.getElementById("order-form");
   var preview = document.getElementById("order-preview");
   var copyBtn = document.getElementById("order-copy");
+  var platformTabs = document.getElementById("orderPlatformTabs");
   if (!form || !preview) return;
+
+  var orderPlatform = "warudo";
+
+  function vtsAdjustedPrice(item) {
+    if (orderPlatform !== "vts" || !item.vts) return item.price;
+    var n = parseAmount(item.price);
+    return (n + 10000).toLocaleString("ko-KR");
+  }
+
+  function getPlatformEntries(categoryKey) {
+    var items = PRICE_ITEMS[categoryKey] || [];
+    var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
+    if (categoryKey === "prop-production") {
+      return entries.filter(function (e) { return orderPlatform === "vts" ? !!e.item.vtsOnly : !e.item.vtsOnly; });
+    }
+    if (orderPlatform !== "vts") return entries;
+    if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts; });
+    if (categoryKey === "api-custom") return [];
+    return entries;
+  }
 
   function parseAmount(text) {
     if (!text) return 0;
@@ -198,7 +231,7 @@
   function getApiAmount(entry) {
     var item = entry.item;
     if (!item || String(item.price || "").includes("문의")) return 0;
-    var unit = parseAmount(item.price);
+    var unit = parseAmount(vtsAdjustedPrice(item));
     if (item.perVariantPricing && item.variants && item.variants.length) {
       return unit * (entry.variants ? entry.variants.length : 0);
     }
@@ -240,9 +273,11 @@
     );
   }
 
-  function createApiBlock(categoryKey, categoryLabel, items) {
-    if (!items.length) return "";
-    var blocks = items.map(function (item, index) {
+  function createApiBlock(categoryKey, categoryLabel, entries) {
+    if (!entries.length) return "";
+    var blocks = entries.map(function (entry) {
+      var item = entry.item;
+      var index = entry.idx;
       var apiId = categoryKey + "-" + index;
       return (
         '<div class="order-api-item">' +
@@ -254,7 +289,7 @@
               '<span class="order-api-name">' + escapeHtml(item.title) + "</span>" +
               (item.desc ? '<span class="order-api-desc">' + escapeHtml(item.desc) + "</span>" : "") +
             "</span>" +
-            '<span class="order-api-price">' + escapeHtml(formatOrderPrice(item.price)) + "</span>" +
+            '<span class="order-api-price">' + escapeHtml(formatOrderPrice(vtsAdjustedPrice(item))) + "</span>" +
           "</label>" +
           createVariantOptions(apiId, item.variants) +
         "</div>"
@@ -271,13 +306,13 @@
   function buildForm() {
     var cfg = ORDER_CONFIG;
     var apiSections = cfg.categories.map(function (cat) {
-      return createApiBlock(cat.key, cat.label, PRICE_ITEMS[cat.key] || []);
+      return createApiBlock(cat.key, cat.label, getPlatformEntries(cat.key));
     }).join("");
 
     form.innerHTML =
       '<section class="order-section">' +
         '<h3 class="order-section-title">기본 정보</h3>' +
-        createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions)) +
+        (orderPlatform === "vts" ? "" : createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions))) +
         createField(
           "방송 플랫폼",
           '<div class="order-platform-field">' +
@@ -407,7 +442,8 @@
     var isPrivate = form.querySelector('input[name="private"]:checked');
     var lines = ["[Rabbi API 주문서]", ""];
 
-    lines.push("■ Warudo: " + getRadioLabel("warudo"));
+    lines.push("■ 엔진: " + (orderPlatform === "vts" ? "VTube Studio" : "Warudo"));
+    if (orderPlatform !== "vts") lines.push("■ Warudo: " + getRadioLabel("warudo"));
     lines.push("■ 플랫폼: " + (getPlatformLabels().join(", ") || "(미선택)"));
     lines.push("■ 세팅: " + getRadioLabel("setup"));
     lines.push("■ 비공개: " + (isPrivate ? "예 (+20,000원)" : "아니오"));
@@ -491,6 +527,21 @@
       flashButton(copyBtn, "복사 완료!", "주문서 복사");
     });
   });
+
+  if (platformTabs) {
+    Array.prototype.forEach.call(platformTabs.querySelectorAll(".order-platform-tab"), function (btn) {
+      btn.addEventListener("click", function () {
+        if (btn.dataset.orderPlatform === orderPlatform) return;
+        Array.prototype.forEach.call(platformTabs.querySelectorAll(".order-platform-tab"), function (b) {
+          b.classList.remove("is-active");
+        });
+        btn.classList.add("is-active");
+        orderPlatform = btn.dataset.orderPlatform;
+        buildForm();
+        updateFormState();
+      });
+    });
+  }
 
   buildForm();
   updateFormState();
