@@ -1286,7 +1286,7 @@
       desc: '캐릭터에게 물건을 던질 수 있습니다.',
       price: '10,000원',
       vts: true,
-      vtsVideo: '2D/2D던지기.mkv',
+      vtsVideos: ['2D/2D던지기.mkv', '2D/2D치즈던지기.mkv'],
       video: VIDEO_THROW_ONE,
       objectPosition: '35% center',
       chips: THROW_CHIPS,
@@ -1514,47 +1514,12 @@
       video: 'Port/아티잠자기.mkv'
     },
     {
-      title: '쓰다듬기 API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '쓰다듬기',
+      title: '아티님 물맞기 API',
+      category: 'API 제작',
+      group: '물맞기',
       date: '2026.08',
-      video: '2D/2D쓰담쓰담.mkv'
+      video: 'Port/아티물맞기.mkv'
     },
-    {
-      title: '윙크 API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '윙크',
-      date: '2026.08',
-      video: '2D/2D윙크.mkv'
-    },
-    {
-      title: '머리쾅 (망치) API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '머리쾅 (망치)',
-      date: '2026.08',
-      video: '2D/2D뿅망치.mkv'
-    },
-    {
-      title: '와르르 API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '와르르',
-      date: '2026.08',
-      video: '2D/2D치즈와르르.mkv'
-    },
-    {
-      title: '던지기 API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '던지기',
-      date: '2026.08',
-      videos: ['2D/2D던지기.mkv', '2D/2D치즈던지기.mkv']
-    },
-    {
-      title: '물음표 API (VTube Studio)',
-      category: 'VTube Studio API',
-      group: '물음표',
-      date: '2026.08',
-      video: '2D/2D물음표.mkv'
-    }
   ];
 
   var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기', '머리쾅 (망치)', '와르르', '커스텀 제작'];
@@ -1662,6 +1627,7 @@
          scrolls into view (see the IntersectionObserver setup below). */
       return '<video class="lazy-video" data-src="' + video + '" data-warudo-src="' + video + '"'
         + (media && media.vtsVideo ? ' data-vts-src="' + media.vtsVideo + '"' : '')
+        + (media && media.vtsVideos && media.vtsVideos.length ? ' data-vts-list="' + media.vtsVideos.join('|') + '"' : '')
         + (videoList && videoList.length > 1 ? ' data-video-list="' + videoList.join('|') + '"' : '')
         + ' preload="none"'
         + (loop ? ' data-loop="1"' : '') + ' muted playsinline style="' + styleAttr + '"></video>';
@@ -1997,7 +1963,27 @@
     initFoldAccordions();
     initPropLightbox();
     initPropHintTip();
+    initVideoCycle(el);
     applyApiPlatform(currentApiPlatform);
+  }
+
+  function initVideoCycle(scopeEl) {
+    Array.prototype.forEach.call(scopeEl.querySelectorAll('.lazy-video'), function (v) {
+      if (v.dataset.cycleBound) return;
+      v.dataset.cycleBound = '1';
+      v.addEventListener('ended', function () {
+        var list = v.dataset.cycleList ? v.dataset.cycleList.split('|') : null;
+        if (!list || list.length < 2) return;
+        var idx = (parseInt(v.dataset.cycleIndex || '0', 10) + 1) % list.length;
+        v.dataset.cycleIndex = String(idx);
+        var next = list[idx];
+        v.dataset.src = next;
+        v.src = next;
+        v.load();
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    });
   }
 
   var currentApiPlatform = 'warudo';
@@ -2015,7 +2001,19 @@
       el.textContent = useVts ? el.getAttribute('data-vts-price') : el.getAttribute('data-base-price');
     });
     Array.prototype.forEach.call(listEl.querySelectorAll('.lazy-video[data-warudo-src]'), function (v) {
-      var target = (platform === 'vts' && v.dataset.vtsSrc) ? v.dataset.vtsSrc : v.dataset.warudoSrc;
+      var vtsList = v.dataset.vtsList ? v.dataset.vtsList.split('|') : null;
+      var target;
+      if (platform === 'vts' && vtsList && vtsList.length) {
+        target = vtsList[0];
+        v.dataset.cycleList = v.dataset.vtsList;
+        v.dataset.cycleIndex = '0';
+        v.loop = false;
+      } else {
+        target = (platform === 'vts' && v.dataset.vtsSrc) ? v.dataset.vtsSrc : v.dataset.warudoSrc;
+        v.removeAttribute('data-cycle-list');
+        v.removeAttribute('data-cycle-index');
+        v.loop = v.dataset.loop === '1';
+      }
       if (v.dataset.src === target) return;
       v.dataset.src = target;
       if (v.src || v.currentSrc) {

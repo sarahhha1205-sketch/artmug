@@ -463,6 +463,9 @@
       lines.push(note);
     }
 
+    lines.push("");
+    lines.push("■ 총 금액: " + formatWon(calculateEstimate(selectedApis, !!isPrivate)) + (hasVariableEstimate(selectedApis) ? " (일부 항목 문의)" : ""));
+
     return lines.join("\n");
   }
 
