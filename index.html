@@ -2044,6 +2044,22 @@
         s.hidden = s.getAttribute('data-prop-platform') !== platform;
       });
     });
+    API_ITEMS.forEach(function (item, i) {
+      if (!item.vtsSingle) return;
+      var card = listEl.querySelector('.api-card-swipe[data-swipe-id="' + i + '"]');
+      if (!card) return;
+      var hideControls = platform === 'vts';
+      Array.prototype.forEach.call(
+        card.querySelectorAll('.api-swipe-arrows, .api-swipe-index, .api-swipe-dots, .api-swipe-thumbs'),
+        function (el) { el.style.display = hideControls ? 'none' : ''; }
+      );
+      if (hideControls) {
+        pauseAutoSlide(i);
+        setSwipeSlide(i, 0, false);
+      } else {
+        startAutoSlide(i);
+      }
+    });
     var note = document.getElementById('platformNote');
     if (note) note.hidden = platform !== 'vts';
     if (window.sendHeight) window.sendHeight();
