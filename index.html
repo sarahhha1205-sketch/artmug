@@ -1166,14 +1166,18 @@
       desc: '캐릭터의 머리를 쓰다듬어줍니다.',
       price: '20,000원',
       vts: true,
-      vtsVideo: '2D/2D쓰담쓰담.mkv',
+      vtsVideos: ['2D/2D쓰담쓰담.mkv', '2D/2D쓰담쓰담2.mkv'],
       video: VIDEO_PAT,
-      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능'],
+      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', 'PROP'],
       vtsHideChips: ['상호작용 표정 설정 가능'],
       optionHints: {
         '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
         '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.'
-      }
+      },
+      propVtsOnly: true,
+      vtsProps: [
+        { name: '쓰담손', image: 'image2D/쓰담손.png' }
+      ]
     },
     {
       type: 'card',
@@ -1232,6 +1236,7 @@
       desc: '캐릭터에게 물건들이 쏟아집니다.',
       price: '20,000원',
       vts: true,
+      vtsSingle: true,
       variants: PILE_VARIANTS,
       titleMode: 'static',
       chips: PILE_CHIPS,
@@ -1704,12 +1709,12 @@
 
   function renderPropAccordion(item, uid) {
     if (!hasPropChange(item.chips)) return '';
-    var props = item.props && item.props.length ? item.props : DEFAULT_PROPS;
+    var props = item.propVtsOnly ? [] : (item.props && item.props.length ? item.props : DEFAULT_PROPS);
     var slots = props.map(renderPropSlot).join('');
     var vtsSlots = item.vtsProps && item.vtsProps.length ? item.vtsProps.map(renderPropSlot).join('') : '';
     var propLabel = item.propLabel || '변경 가능 물건 보기';
     return ''
-      + '<div class="api-fold api-prop" data-fold-root="' + uid + '-prop">'
+      + '<div class="api-fold api-prop" data-fold-root="' + uid + '-prop"' + (item.propVtsOnly ? ' data-warudo-hide="1"' : '') + '>'
       +   '<button type="button" class="api-fold-toggle" aria-expanded="false" aria-controls="prop-panel-' + uid + '">'
       +     '<span class="api-fold-toggle-label">' + propLabel + '</span>'
       +     '<span class="api-fold-chevron" aria-hidden="true"></span>'
@@ -2028,6 +2033,9 @@
     });
     Array.prototype.forEach.call(listEl.querySelectorAll('[data-vts-hide]'), function (el) {
       el.style.display = platform === 'vts' ? 'none' : '';
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('[data-warudo-hide]'), function (el) {
+      el.style.display = platform === 'warudo' ? 'none' : '';
     });
     Array.prototype.forEach.call(listEl.querySelectorAll('.api-fold-panel-inner'), function (panel) {
       var scrolls = panel.querySelectorAll('.api-prop-scroll[data-prop-platform]');
@@ -2566,7 +2574,7 @@
           if (entry.isIntersecting) {
             if (!v.src && v.dataset.src) {
               v.src = v.dataset.src;
-              if (v.dataset.loop === '1') v.loop = true;
+              if (v.dataset.loop === '1' && !v.dataset.cycleList) v.loop = true;
               v.load();
             }
             var playPromise = v.play();
