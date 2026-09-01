@@ -1173,6 +1173,9 @@
       titleMode: 'static',
       chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', 'PROP'],
       vtsHideChips: ['상호작용 표정 설정 가능'],
+      vtsChipLabels: {
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
+      },
       optionHints: {
         '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
         '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.'
@@ -1675,9 +1678,11 @@
     var hint = getOptionHint(item, label);
     var tip = hint ? '<span class="api-option-tip" role="tooltip">' + hint + '</span>' : '';
     var vtsHide = item.vtsHideChips && item.vtsHideChips.indexOf(label) !== -1;
+    var vtsLabel = item.vtsChipLabels && item.vtsChipLabels[label];
+    var labelAttrs = vtsLabel ? ' data-base-label="' + label + '" data-vts-label="' + vtsLabel + '"' : '';
     return ''
       + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + (vtsHide ? ' data-vts-hide="1"' : '') + '>'
-      +   label + tip
+      +   '<span class="api-option-label-text"' + labelAttrs + '>' + label + '</span>' + tip
       + '</span>';
   }
 
@@ -2080,6 +2085,9 @@
     });
     Array.prototype.forEach.call(listEl.querySelectorAll('[data-vts-hide]'), function (el) {
       el.style.display = platform === 'vts' ? 'none' : '';
+    });
+    Array.prototype.forEach.call(listEl.querySelectorAll('[data-base-label]'), function (el) {
+      el.textContent = platform === 'vts' ? el.getAttribute('data-vts-label') : el.getAttribute('data-base-label');
     });
     Array.prototype.forEach.call(listEl.querySelectorAll('[data-warudo-hide]'), function (el) {
       el.style.display = platform === 'warudo' ? 'none' : '';
