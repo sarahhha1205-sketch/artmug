@@ -1161,13 +1161,16 @@
       props: THROW_STICK_PROPS
     },
     {
-      type: 'card',
+      type: 'swipe',
       title: '쓰다듬기',
-      desc: '캐릭터의 머리를 쓰다듬어줍니다.',
       price: '20,000원',
       vts: true,
-      vtsVideos: ['2D/2D쓰담쓰담.mkv', '2D/2D쓰담쓰담2.mkv'],
-      video: VIDEO_PAT,
+      warudoSingle: true,
+      variants: [
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/2D쓰담쓰담.mkv' },
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/2D쓰담쓰담2.mkv' }
+      ],
+      titleMode: 'static',
       chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', 'PROP'],
       vtsHideChips: ['상호작용 표정 설정 가능'],
       optionHints: {
@@ -1286,14 +1289,16 @@
       }
     },
     {
-      type: 'card',
+      type: 'swipe',
       title: '던지기',
-      desc: '캐릭터에게 물건을 던질 수 있습니다.',
       price: '10,000원',
       vts: true,
-      vtsVideos: ['2D/2D던지기.mkv', '2D/2D치즈던지기.mkv'],
-      video: VIDEO_THROW_ONE,
-      objectPosition: '35% center',
+      warudoSingle: true,
+      variants: [
+        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D던지기.mkv', objectPosition: '35% center' },
+        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D치즈던지기.mkv', objectPosition: '35% center' }
+      ],
+      titleMode: 'static',
       chips: THROW_CHIPS,
       optionHints: THROW_OPTION_HINTS,
       props: THROW_STICK_PROPS,
