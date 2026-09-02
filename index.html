@@ -578,6 +578,13 @@
       .platform-tabs { margin: 16px auto 22px; gap: 8px; }
       .platform-tab { font-size: 14px; padding: 16px 12px; border-radius: 14px; }
     }
+    .api-custom-note {
+      margin: 10px auto 0; text-align: center; font-size: 16px; font-weight: 700;
+      color: var(--brand, #9b8cff);
+    }
+    @media (max-width: 560px) {
+      .api-custom-note { font-size: 13px; }
+    }
     .pf-tabs {
       display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch;
       flex-wrap: nowrap; margin-top: 22px; padding-bottom: 2px; scrollbar-width: none;
@@ -865,6 +872,7 @@
     <div class="sec-head" style="justify-content: center;">
       <div class="sec-head-copy" style="text-align: center; flex: none;">
         <h2>API 목록</h2>
+        <p class="api-custom-note">모든 API는 자유롭게 커스텀이 가능합니다!</p>
       </div>
     </div>
     <div class="platform-tabs" id="platformTabs">
@@ -968,10 +976,18 @@
   <section class="block light" id="sec-info">
     <h2>주의사항</h2>
     <p class="lead">주문·제작 전 아래 내용을 확인해 주세요.</p>
+    <div class="platform-tabs" id="infoPlatformTabs">
+      <button type="button" class="platform-tab is-active" data-info-platform="warudo">Warudo</button>
+      <button type="button" class="platform-tab" data-info-platform="vts">VTube Studio</button>
+    </div>
     <div class="info-list">
-      <div class="info-item">
+      <div class="info-item" data-info-platforms="warudo">
         <div class="info-item-head">릴툰 세팅</div>
         <p class="info-item-body">기본적으로 릴툰 세팅 기반으로 작업됩니다.</p>
+      </div>
+      <div class="info-item" data-info-platforms="vts">
+        <div class="info-item-head">OBS 오버레이 방식</div>
+        <p class="info-item-body">VTube Studio API는 OBS 오버레이 방식으로 동작합니다. VTube Studio 화면을 OBS에 오버레이로 얹어 방송 화면에 표시하는 구조이며, 세부 연동 방식은 상담을 통해 안내드립니다.</p>
       </div>
       <div class="info-item">
         <div class="info-item-head">저작권</div>
@@ -1171,14 +1187,16 @@
         { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/2D쓰담쓰담2.mkv' }
       ],
       titleMode: 'static',
-      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', 'PROP'],
+      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', '표정 (핫키) 연동 가능', 'PROP'],
       vtsHideChips: ['상호작용 표정 설정 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
       vtsChipLabels: {
         '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
       },
       optionHints: {
         '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
-        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.'
+        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
       propVtsOnly: true,
       vtsProps: [
@@ -1201,7 +1219,11 @@
       vts: true,
       vtsVideo: '2D/2D윙크.mkv',
       video: VIDEO_WINK,
-      chips: ['하트 모양 변경 가능']
+      chips: ['하트 모양 변경 가능', '표정 (핫키) 연동 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: {
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }
     },
     {
       type: 'card',
@@ -1211,7 +1233,11 @@
       vts: true,
       vtsVideo: '2D/2D물음표.mkv',
       video: VIDEO_QUESTION,
-      chips: ['사운드 추가 가능']
+      chips: ['사운드 추가 가능', '표정 (핫키) 연동 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: {
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }
     },
     {
       type: 'card',
@@ -1244,16 +1270,16 @@
       vts: true,
       variants: PILE_VARIANTS,
       titleMode: 'static',
-      chips: PILE_CHIPS,
-      optionHints: THROW_OPTION_HINTS,
+      chips: PILE_CHIPS.concat(['사운드 추가 가능', '표정 (핫키) 연동 가능']),
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
+        '사운드 추가 가능': '물건이 쏟아질 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }),
       props: THROW_STICK_PROPS,
       vtsProps: [
-        { name: '치즈', image: 'image2D/치즈.png' },
-        { name: '웃는 이모지', image: 'image2D/웃는이모지.png' },
-        { name: '하트 이모지', image: 'image2D/하트이모지.png' },
-        { name: '화난 이모지', image: 'image2D/화난이모지.png' },
-        { name: '선글라스 이모지', image: 'image2D/선글라스이모지.png' },
-        { name: '우는 이모지', image: 'image2D/우는이모지.png' }
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image2D/2d치즈.png' }
       ]
     },
     {
@@ -1264,10 +1290,12 @@
       vts: true,
       vtsVideo: '2D/2D뿅망치.mkv',
       video: VIDEO_HAMMER,
-      chips: ['망치 변경 가능', '상호작용 사운드 추가 가능', 'PROP'],
+      chips: ['망치 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
       optionHints: {
         '망치 변경 가능': '캐릭터를 강타하는 망치의 종류를 변경합니다.',
-        '상호작용 사운드 추가 가능': '망치로 강타할 때 나오는 효과음을 추가·변경합니다.'
+        '상호작용 사운드 추가 가능': '망치로 강타할 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
       props: [
         { name: '악마 망치', image: 'image/악마 망치.jpg' },
@@ -1301,16 +1329,15 @@
         { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D치즈던지기.mkv', objectPosition: '35% center' }
       ],
       titleMode: 'static',
-      chips: THROW_CHIPS,
-      optionHints: THROW_OPTION_HINTS,
+      chips: THROW_CHIPS.concat(['표정 (핫키) 연동 가능']),
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }),
       props: THROW_STICK_PROPS,
       vtsProps: [
-        { name: '치즈', image: 'image2D/치즈.png' },
-        { name: '웃는 이모지', image: 'image2D/웃는이모지.png' },
-        { name: '하트 이모지', image: 'image2D/하트이모지.png' },
-        { name: '화난 이모지', image: 'image2D/화난이모지.png' },
-        { name: '선글라스 이모지', image: 'image2D/선글라스이모지.png' },
-        { name: '우는 이모지', image: 'image2D/우는이모지.png' }
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image2D/2d치즈.png' }
       ]
     },
     {
@@ -1698,10 +1725,11 @@
     var hint = getOptionHint(item, label);
     var tip = hint ? '<span class="api-option-tip" role="tooltip">' + hint + '</span>' : '';
     var vtsHide = item.vtsHideChips && item.vtsHideChips.indexOf(label) !== -1;
+    var vtsOnly = item.vtsOnlyChips && item.vtsOnlyChips.indexOf(label) !== -1;
     var vtsLabel = item.vtsChipLabels && item.vtsChipLabels[label];
     var labelAttrs = vtsLabel ? ' data-base-label="' + label + '" data-vts-label="' + vtsLabel + '"' : '';
     return ''
-      + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + (vtsHide ? ' data-vts-hide="1"' : '') + '>'
+      + '<span class="api-option-item" data-opt="' + label + '"' + (hint ? ' tabindex="0"' : '') + (vtsHide ? ' data-vts-hide="1"' : '') + (vtsOnly ? ' data-warudo-hide="1"' : '') + '>'
       +   '<span class="api-option-label-text"' + labelAttrs + '>' + label + '</span>' + tip
       + '</span>';
   }
@@ -2152,6 +2180,25 @@
     });
   }
 
+  function initInfoPlatformTabs() {
+    var wrap = document.getElementById('infoPlatformTabs');
+    if (!wrap) return;
+    function apply(platform) {
+      document.querySelectorAll('#sec-info .info-item').forEach(function (el) {
+        var only = el.getAttribute('data-info-platforms');
+        el.style.display = (!only || only === platform) ? '' : 'none';
+      });
+    }
+    wrap.querySelectorAll('.platform-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        wrap.querySelectorAll('.platform-tab').forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        apply(btn.dataset.infoPlatform);
+      });
+    });
+    apply('warudo');
+  }
+
   function renderPropSection() {
     var el = document.getElementById('propList');
     if (!el) return;
@@ -2466,6 +2513,7 @@
   }
 
   initPlatformTabs();
+  initInfoPlatformTabs();
   renderList();
   renderPropSection();
   initPortfolio();
