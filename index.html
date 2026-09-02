@@ -2335,7 +2335,8 @@
     if (titleEl) titleEl.textContent = swipeCardTitle(item, slideIndex);
     if (priceEl && variant) {
       var price = variant.price || item.price;
-      priceEl.textContent = price;
+      var showVts = currentApiPlatform === 'vts' && item.vts && !variant.price;
+      priceEl.textContent = showVts ? vtsPriceText(price) : price;
       priceEl.className = price.indexOf('문의') >= 0 ? 'api-price muted' : 'api-price';
     }
     if (counterEl) counterEl.textContent = slideIndex + 1;
