@@ -1655,6 +1655,20 @@
       date: '2026.09',
       video: 'Port2D/쏠라2D와르르.mp4'
     },
+    {
+      title: '최얀미님 던지기 API',
+      category: 'VTube Studio API',
+      group: '던지기',
+      date: '2026.09',
+      video: 'Port2D/최얀미님2D던지기.mp4'
+    },
+    {
+      title: '최얀미님 물음표 API',
+      category: 'VTube Studio API',
+      group: '물음표',
+      date: '2026.09',
+      video: 'Port2D/최얀미님2D물음표.mp4'
+    },
   ];
 
   var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기', '머리쾅 (망치)', '와르르', '커스텀 제작'];
@@ -2359,8 +2373,9 @@
       listEl.innerHTML = items.map(renderPortfolioCard).join('');
     } else {
       listEl.className = 'pf-groups';
-      var orderedKeys = PORTFOLIO_GROUP_ORDER.filter(function (g) { return groupKeys.indexOf(g) !== -1; })
-        .concat(groupKeys.filter(function (g) { return PORTFOLIO_GROUP_ORDER.indexOf(g) === -1; }));
+      var orderedKeys = PORTFOLIO_GROUP_ORDER.filter(function (g) { return g !== '커스텀 제작' && groupKeys.indexOf(g) !== -1; })
+        .concat(groupKeys.filter(function (g) { return g !== '커스텀 제작' && PORTFOLIO_GROUP_ORDER.indexOf(g) === -1; }))
+        .concat(groupKeys.indexOf('커스텀 제작') !== -1 ? ['커스텀 제작'] : []);
       var html = orderedKeys.map(function (g) {
         return '<div class="pf-group">'
           + '<h3 class="pf-group-title">' + g + '</h3>'
