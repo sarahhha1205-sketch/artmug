@@ -1025,29 +1025,29 @@
 <script>
 (function () {
   /* 임시 영상 — 나중에 API·PROP별 영상으로 교체 */
-  var VIDEO_KISS = 'videos/뽀뽀.mkv';
+  var VIDEO_KISS = 'videos/뽀뽀.mp4';
   var VIDEO_KISS_VTS = '2D/2D뽀뽀.mp4';
-  var VIDEO_HAMMER = 'videos/망치.mkv';
-  var VIDEO_WEIGHT = 'videos/무게츄.mkv';
-  var VIDEO_PAT = 'videos/쓰담.mkv';
-  var VIDEO_VIEWER_THROW = 'videos/시청자던지기.mkv';
-  var VIDEO_THROW_MANY = 'videos/던지기여러개.mkv';
-  var VIDEO_FOLLOW = 'videos/따라!.mkv';
-  var VIDEO_KISS_2 = 'videos/뽀뽀2.mkv';
-  var VIDEO_PILE = 'videos/쏟아지기.mkv';
-  var VIDEO_PILE_2 = 'videos/쏟아지기2.mkv';
-  var VIDEO_WINK = 'videos/윙크.mkv';
-  var VIDEO_SLEEP = 'videos/잠자기.mkv';
-  var VIDEO_WINGS = 'videos/날개.mkv';
-  var VIDEO_WINGS_2 = 'videos/날개2.mkv';
+  var VIDEO_HAMMER = 'videos/망치.mp4';
+  var VIDEO_WEIGHT = 'videos/무게츄.mp4';
+  var VIDEO_PAT = 'videos/쓰담.mp4';
+  var VIDEO_VIEWER_THROW = 'videos/시청자던지기.mp4';
+  var VIDEO_THROW_MANY = 'videos/던지기여러개.mp4';
+  var VIDEO_FOLLOW = 'videos/따라!.mp4';
+  var VIDEO_KISS_2 = 'videos/뽀뽀2.mp4';
+  var VIDEO_PILE = 'videos/쏟아지기.mp4';
+  var VIDEO_PILE_2 = 'videos/쏟아지기2.mp4';
+  var VIDEO_WINK = 'videos/윙크.mp4';
+  var VIDEO_SLEEP = 'videos/잠자기.mp4';
+  var VIDEO_WINGS = 'videos/날개.mp4';
+  var VIDEO_WINGS_2 = 'videos/날개2.mp4';
   var WINGS_VARIANTS = [
     { label: '천사 날개 1', desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS },
     { label: '천사 날개 2', desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.', video: VIDEO_WINGS_2 }
   ];
-  var VIDEO_MAGIC = 'videos/마법.mkv';
-  var VIDEO_QUESTION = 'videos/물음표.mkv';
-  var VIDEO_FLYAWAY = 'videos/날아기기.mkv';
-  var VIDEO_FOLLOW_2 = 'videos/팬캐릭터 따라가기 2.mkv';
+  var VIDEO_MAGIC = 'videos/마법.mp4';
+  var VIDEO_QUESTION = 'videos/물음표.mp4';
+  var VIDEO_FLYAWAY = 'videos/날아기기.mp4';
+  var VIDEO_FOLLOW_2 = 'videos/팬캐릭터 따라가기 2.mp4';
 
   var FOLLOW_VARIANTS = [
     { label: '따라다니기 Type 1', desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.', video: VIDEO_FOLLOW },
@@ -1058,9 +1058,9 @@
     { label: '뽀뽀 Type 1', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.', video: VIDEO_KISS, vtsVideo: VIDEO_KISS_VTS },
     { label: '뽀뽀 Type 2', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.', video: VIDEO_KISS_2 }
   ];
-  var VIDEO_THROW_ONE = 'videos/1개던지기.mkv';
-  var VIDEO_WATER = 'videos/물쏘기.mkv';
-  var VIDEO_STICK = 'videos/달라붙기.mkv';
+  var VIDEO_THROW_ONE = 'videos/1개던지기.mp4';
+  var VIDEO_WATER = 'videos/물쏘기.mp4';
+  var VIDEO_STICK = 'videos/달라붙기.mp4';
 
   var THROW_VARIANTS = [
     { label: '한 개 던지기', desc: '캐릭터에게 물건을 한 개 던질 수 있습니다.', video: VIDEO_THROW_ONE, objectPosition: '35% center' },
@@ -1081,8 +1081,8 @@
   var PILE_CHIPS = THROW_CHIPS;
 
   var PILE_VARIANTS = [
-    { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE, vtsVideo: '2D/2D치즈와르르.mkv' },
-    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2, vtsVideo: '2D/2D와르르2.mkv' }
+    { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE, vtsVideo: '2D/2D치즈와르르.mp4' },
+    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2, vtsVideo: '2D/2D와르르2.mp4' }
   ];
 
   var OPTION_HINTS = {
@@ -1236,7 +1236,7 @@
       desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
       price: '15,000원',
       vts: true,
-      vtsVideo: '2D/2D물음표.mkv',
+      vtsVideo: '2D/2D물음표.mp4',
       video: VIDEO_QUESTION,
       chips: ['사운드 추가 가능', '표정 (핫키) 연동 가능'],
       vtsOnlyChips: ['표정 (핫키) 연동 가능'],
@@ -1330,8 +1330,8 @@
       vts: true,
       warudoSingle: true,
       variants: [
-        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D던지기.mkv', objectPosition: '35% center' },
-        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D치즈던지기.mkv', objectPosition: '35% center' }
+        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D던지기.mp4', objectPosition: '35% center' },
+        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D치즈던지기.mp4', objectPosition: '35% center' }
       ],
       titleMode: 'static',
       chips: THROW_CHIPS.concat(['표정 (핫키) 연동 가능']),
@@ -1429,7 +1429,7 @@
       category: 'API 제작',
       group: '팬캐릭터 뽀뽀',
       date: '2026.08',
-      video: 'Port/쿠쿠양님.mkv'
+      video: 'Port/쿠쿠양님.mp4'
     },
     {
       title: '양망치',
@@ -1478,35 +1478,35 @@
       category: 'API 제작',
       group: '물음표',
       date: '2026.08',
-      video: 'Port/아미아네에나님_포트폴리오(물음표).mkv'
+      video: 'Port/아미아네에나님_포트폴리오(물음표).mp4'
     },
     {
       title: '도라니님 던지기 API',
       category: 'API 제작',
       group: '던지기',
       date: '2026.08',
-      video: 'Port/도라니님 던지기.mkv.mkv'
+      video: 'Port/도라니님 던지기.mkv.mp4'
     },
     {
       title: '이뽀님 자동 잠자기 API',
       category: 'API 제작',
       group: '자동 잠자기',
       date: '2026.08',
-      video: 'Port/이뽀님 잠들기 포트폴리오.mkv'
+      video: 'Port/이뽀님 잠들기 포트폴리오.mp4'
     },
     {
       title: '이뽀님 윙크 API',
       category: 'API 제작',
       group: '윙크',
       date: '2026.08',
-      video: 'Port/이뽀님 윙크 포트폴리오.mkv'
+      video: 'Port/이뽀님 윙크 포트폴리오.mp4'
     },
     {
       title: '지한이또님 쓰다듬기 API',
       category: 'API 제작',
       group: '쓰다듬기',
       date: '2026.08',
-      video: 'Port/지한이또 쓰담쓰담.mkv'
+      video: 'Port/지한이또 쓰담쓰담.mp4'
     },
     {
       title: '지한이또님 커스텀 API<br>콧물 주르륵',
@@ -1520,70 +1520,70 @@
       category: 'API 제작',
       group: '던지기',
       date: '2026.08',
-      video: 'Port/우누님 던지기 + 팬캐릭터.mkv'
+      video: 'Port/우누님 던지기 + 팬캐릭터.mp4'
     },
     {
       title: '우누님 팬 캐릭터',
       category: '팬 캐릭터 제작',
       desc: '우누님 팬 캐릭터 제작 작업입니다.',
       date: '2026.08',
-      video: 'Port/우누님 던지기 + 팬캐릭터.mkv'
+      video: 'Port/우누님 던지기 + 팬캐릭터.mp4'
     },
     {
       title: '달아님 쓰다듬기 API',
       category: 'API 제작',
       group: '쓰다듬기',
       date: '2026.08',
-      video: 'Port/쓰담쓰담달아님.mkv'
+      video: 'Port/쓰담쓰담달아님.mp4'
     },
     {
       title: '달아님 물음표 API',
       category: 'API 제작',
       group: '물음표',
       date: '2026.08',
-      video: 'Port/물음표 달아님.mkv'
+      video: 'Port/물음표 달아님.mp4'
     },
     {
       title: '달아님 커스텀 API<br>웅이아범',
       category: 'API 제작',
       group: '커스텀 제작',
       date: '2026.08',
-      video: 'Port/웅이아범달아님.mkv'
+      video: 'Port/웅이아범달아님.mp4'
     },
     {
       title: '아티님 자동 잠자기 API',
       category: 'API 제작',
       group: '자동 잠자기',
       date: '2026.08',
-      video: 'Port/아티잠자기.mkv'
+      video: 'Port/아티잠자기.mp4'
     },
     {
       title: '아티님 물맞기 API',
       category: 'API 제작',
       group: '물맞기',
       date: '2026.08',
-      video: 'Port/아티물맞기.mkv'
+      video: 'Port/아티물맞기.mp4'
     },
     {
       title: '짜구님 던지기 API (VTube Studio)',
       category: 'VTube Studio API',
       group: '던지기',
       date: '2026.08',
-      video: 'Port2D/짜구님 2D던지기.mkv'
+      video: 'Port2D/짜구님 2D던지기.mp4'
     },
     {
       title: '짜구님 와르르 API (VTube Studio)',
       category: 'VTube Studio API',
       group: '와르르',
       date: '2026.08',
-      video: 'Port2D/짜구님2D와르르.mkv'
+      video: 'Port2D/짜구님2D와르르.mp4'
     },
     {
       title: '짜구님 쓰다듬기 API (VTube Studio)',
       category: 'VTube Studio API',
       group: '쓰다듬기',
       date: '2026.08',
-      video: 'Port2D/짜구님2D쓰담쓰담.mkv'
+      video: 'Port2D/짜구님2D쓰담쓰담.mp4'
     },
     {
       title: '비올라님 던지기 API (VTube Studio)',
