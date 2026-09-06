@@ -1585,6 +1585,27 @@
       date: '2026.08',
       video: 'Port2D/짜구님2D쓰담쓰담.mkv'
     },
+    {
+      title: '비올라님 던지기 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '던지기',
+      date: '2026.09',
+      video: 'Port2D/비올라님2D던지기.mp4'
+    },
+    {
+      title: '뭉냥이님 물음표 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '물음표',
+      date: '2026.09',
+      video: 'Port2D/뭉냥이2D물음표.mp4'
+    },
+    {
+      title: '박환몽님 팬 캐릭터 뽀뽀 API (VTube Studio)',
+      category: 'VTube Studio API',
+      group: '팬캐릭터 뽀뽀',
+      date: '2026.09',
+      video: 'Port2D/박환몽님2D팬캐릭터뽀뽀.mp4'
+    },
   ];
 
   var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기', '머리쾅 (망치)', '와르르', '커스텀 제작'];
@@ -2409,7 +2430,7 @@
     if (priceEl && variant) {
       var price = variant.price || item.price;
       var showVts = currentApiPlatform === 'vts' && item.vts && !variant.price;
-      priceEl.textContent = showVts ? vtsPriceText(price) : price;
+      priceEl.textContent = showVts ? (variant.vtsPrice || item.vtsPrice || vtsPriceText(price)) : price;
       priceEl.className = price.indexOf('문의') >= 0 ? 'api-price muted' : 'api-price';
     }
     if (counterEl) counterEl.textContent = slideIndex + 1;
