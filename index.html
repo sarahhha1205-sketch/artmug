@@ -1382,7 +1382,8 @@
       { label: '팬캐릭터3', desc: FANCHAR_DESC, image: 'image/3번.png' },
       { label: '팬캐릭터4', desc: FANCHAR_DESC, image: 'image/4번.png' },
       { label: '팬캐릭터5', desc: FANCHAR_DESC, image: 'image/5번.png' },
-      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번.jpg' }
+      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번.jpg' },
+      { label: '팬캐릭터10', desc: FANCHAR_DESC, image: 'image/팬캐릭터10.png' }
     ]
   };
 
@@ -2520,6 +2521,12 @@
     if (window.sendHeight) sendHeight();
   }
 
+  function isSwipeLocked(cardIndex) {
+    var item = getSwipeItem(cardIndex);
+    if (!item || (!item.vtsSingle && !item.warudoSingle)) return false;
+    return item.vtsSingle ? currentApiPlatform === 'vts' : currentApiPlatform === 'warudo';
+  }
+
   function initSwipe(cardIndex) {
     var root = document.querySelector('.api-swipe[data-swipe="' + cardIndex + '"]');
     if (!root) return;
@@ -2530,7 +2537,7 @@
 
     function bumpAutoSlide() {
       pauseAutoSlide(cardIndex);
-      startAutoSlide(cardIndex);
+      if (!isSwipeLocked(cardIndex)) startAutoSlide(cardIndex);
     }
 
     root.addEventListener('touchstart', function (e) {
@@ -2545,6 +2552,7 @@
       if (!dragging) return;
       dragging = false;
       root.classList.remove('is-active');
+      if (isSwipeLocked(cardIndex)) return;
       var endX = (e.changedTouches[0] || {}).clientX || startX;
       var diff = endX - startX;
       if (Math.abs(diff) >= threshold) {
@@ -2559,7 +2567,7 @@
     });
     root.addEventListener('mouseleave', function () {
       root.classList.remove('is-active');
-      startAutoSlide(cardIndex);
+      if (!isSwipeLocked(cardIndex)) startAutoSlide(cardIndex);
     });
     root.addEventListener('focusin', function () {
       root.classList.add('is-active');
@@ -2568,7 +2576,7 @@
     root.addEventListener('focusout', function () {
       if (!root.contains(document.activeElement)) {
         root.classList.remove('is-active');
-        startAutoSlide(cardIndex);
+        if (!isSwipeLocked(cardIndex)) startAutoSlide(cardIndex);
       }
     });
 
