@@ -94,20 +94,20 @@
     ],
     "prop-production": [
       {
-        title: "팬캐릭터 제작",
-        desc: "와루도에서 상호작용 가능한 단순한 팬 캐릭터를 제작해 드립니다.",
+        title: "3D 팬캐릭터 제작",
+        desc: "상호작용 가능한 3D 팬 캐릭터를 제작해 드립니다.",
         price: "50,000"
       },
       {
-        title: "PROP 제작",
-        desc: "와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.",
-        price: "30,000"
+        title: "3D 팬캐릭터 리깅",
+        desc: "제작된 3D 팬 캐릭터에 리깅 작업을 진행합니다. (Warudo 전용)",
+        price: "30,000",
+        warudoOnly: true
       },
       {
-        title: "PROP 제작",
-        desc: "상호작용 가능한 로우폴리 소품을 제작해 드립니다.",
-        price: "20,000",
-        vtsOnly: true
+        title: "3D 소품 제작",
+        desc: "상호작용 가능한 3D 소품을 제작해 드립니다.",
+        price: "30,000"
       }
     ]
   };
@@ -155,7 +155,7 @@
     var items = PRICE_ITEMS[categoryKey] || [];
     var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
     if (categoryKey === "prop-production") {
-      return entries.filter(function (e) { return orderPlatform === "vts" ? !!e.item.vtsOnly : !e.item.vtsOnly; });
+      return entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : true; });
     }
     if (orderPlatform !== "vts") return entries;
     if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts; });
