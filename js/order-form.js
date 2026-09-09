@@ -72,7 +72,9 @@
       {
         title: "팬 캐릭터 뽀뽀",
         desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.",
-        price: "50,000"
+        price: "50,000",
+        vts: true,
+        vtsPrice: "80,000"
       },
       {
         title: "천사 / 악마 변신",
@@ -144,6 +146,7 @@
 
   function vtsAdjustedPrice(item) {
     if (orderPlatform !== "vts" || !item.vts) return item.price;
+    if (item.vtsPrice) return item.vtsPrice;
     var n = parseAmount(item.price);
     return (n + 10000).toLocaleString("ko-KR");
   }
@@ -156,7 +159,7 @@
     }
     if (orderPlatform !== "vts") return entries;
     if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts; });
-    if (categoryKey === "api-custom") return [];
+    if (categoryKey === "api-custom") return entries.filter(function (e) { return e.item.vts; });
     return entries;
   }
 
