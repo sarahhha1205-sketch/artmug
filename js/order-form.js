@@ -77,6 +77,12 @@
         vtsPrice: "80,000"
       },
       {
+        title: "팬 캐릭터 망치",
+        desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.",
+        price: "80,000",
+        vtsOnly: true
+      },
+      {
         title: "천사 / 악마 변신",
         desc: "캐릭터가 날개를 달며 날아오릅니다. 날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.",
         price: "50,000"
@@ -154,12 +160,11 @@
   function getPlatformEntries(categoryKey) {
     var items = PRICE_ITEMS[categoryKey] || [];
     var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
-    if (categoryKey === "prop-production") {
-      return entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : true; });
-    }
+    entries = entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : !e.item.vtsOnly; });
+    if (categoryKey === "prop-production") return entries;
     if (orderPlatform !== "vts") return entries;
-    if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts; });
-    if (categoryKey === "api-custom") return entries.filter(function (e) { return e.item.vts; });
+    if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
+    if (categoryKey === "api-custom") return entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
     return entries;
   }
 
