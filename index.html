@@ -1153,6 +1153,14 @@
       }
     },
     {
+      type: 'card',
+      title: '팬 캐릭터 망치',
+      desc: '팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.',
+      price: '80,000원',
+      vtsOnly: true,
+      video: '2D/2D팬캐릭터망치.mp4'
+    },
+    {
       type: 'swipe',
       title: '천사 / 악마 변신',
       desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.',
@@ -1941,7 +1949,7 @@
 
   function renderCard(item, index) {
     var uid = 'card-' + index;
-    var platforms = 'warudo' + (item.vts ? ' vts' : '');
+    var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card" data-platforms="' + platforms + '">'
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
@@ -1980,7 +1988,7 @@
         + '</button>';
     }).join('') : '';
     var mediaStyle = item.mediaAspectRatio ? ' style="aspect-ratio:' + item.mediaAspectRatio + '"' : '';
-    var platforms = 'warudo' + (item.vts ? ' vts' : '');
+    var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '" data-platforms="' + platforms + '">'
       +   '<div class="api-media api-swipe" data-swipe="' + index + '" tabindex="0" role="region" aria-label="' + item.title + ' 미리보기"' + mediaStyle + '>'
