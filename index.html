@@ -1100,7 +1100,7 @@
 
   var PILE_VARIANTS = [
     { label: '와르르 Type 1', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE, vtsVideo: '2D/2D치즈와르르.mp4' },
-    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2, vtsVideo: '2D/2D와르르2.mp4' }
+    { label: '와르르 Type 2', desc: '캐릭터에게 물건들이 쏟아집니다.', video: VIDEO_PILE_2, vtsVideo: '2D/2D와르르2 .mp4' }
   ];
 
   var OPTION_HINTS = {
@@ -2039,7 +2039,7 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card" data-platforms="' + platforms + '">'
-      +   (item.isNew ? '<span class="api-badge-new">NEW</span>' : '')
+      +   (item.isNew ? '<span class="api-badge-new" data-warudo-hide="1">NEW</span>' : '')
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
       +     renderCardHead(item)
@@ -2079,7 +2079,7 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '" data-platforms="' + platforms + '">'
-      +   (item.isNew ? '<span class="api-badge-new">NEW</span>' : '')
+      +   (item.isNew ? '<span class="api-badge-new" data-warudo-hide="1">NEW</span>' : '')
       +   '<div class="api-media api-swipe" data-swipe="' + index + '" tabindex="0" role="region" aria-label="' + item.title + ' 미리보기"' + mediaStyle + '>'
       +     '<div class="api-swipe-track">' + slides + '</div>'
       +     '<div class="api-swipe-arrows" aria-hidden="true">'
