@@ -1266,11 +1266,16 @@
       title: '붙이기',
       desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
       price: '20,000원',
+      vts: true,
+      vtsVideo: '2D/2D붙이기.mp4',
+      vtsPrice: '40,000원',
       video: VIDEO_STICK,
-      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', 'PROP'],
+      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
       optionHints: {
         '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
-        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.'
+        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
       props: THROW_STICK_PROPS
     },
@@ -1346,9 +1351,10 @@
       price: '10,000원',
       vts: true,
       warudoSingle: true,
+      vtsSingle: true,
       variants: [
         { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D던지기.mp4', objectPosition: '35% center' },
-        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, vtsVideo: '2D/2D치즈던지기.mp4', objectPosition: '35% center' }
+        { label: '던지기', desc: '캐릭터에게 물건을 던질 수 있습니다.', video: VIDEO_THROW_ONE, objectPosition: '35% center' }
       ],
       titleMode: 'static',
       chips: THROW_CHIPS.concat(['표정 (핫키) 연동 가능']),
@@ -2317,7 +2323,7 @@
       if (!item.vtsSingle && !item.warudoSingle) return;
       var card = listEl.querySelector('.api-card-swipe[data-swipe-id="' + i + '"]');
       if (!card) return;
-      var hideControls = item.vtsSingle ? platform === 'vts' : platform === 'warudo';
+      var hideControls = (item.vtsSingle && platform === 'vts') || (item.warudoSingle && platform === 'warudo');
       Array.prototype.forEach.call(
         card.querySelectorAll('.api-swipe-arrows, .api-swipe-index, .api-swipe-dots, .api-swipe-thumbs'),
         function (el) { el.style.display = hideControls ? 'none' : ''; }
@@ -2608,7 +2614,7 @@
   function isSwipeLocked(cardIndex) {
     var item = getSwipeItem(cardIndex);
     if (!item || (!item.vtsSingle && !item.warudoSingle)) return false;
-    return item.vtsSingle ? currentApiPlatform === 'vts' : currentApiPlatform === 'warudo';
+    return (item.vtsSingle && currentApiPlatform === 'vts') || (item.warudoSingle && currentApiPlatform === 'warudo');
   }
 
   function initSwipe(cardIndex) {
