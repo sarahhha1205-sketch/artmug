@@ -1174,6 +1174,18 @@
     },
     {
       type: 'swipe',
+      title: '전광판',
+      price: '50,000원',
+      isNew: true,
+      vtsOnly: true,
+      variants: [
+        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판.mp4' },
+        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판2.mp4' }
+      ],
+      titleMode: 'static'
+    },
+    {
+      type: 'swipe',
       title: '천사 / 악마 변신',
       desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.',
       price: '50,000원',
@@ -1227,7 +1239,17 @@
         '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
         '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
-      props: THROW_STICK_PROPS
+      props: [
+        { name: '치즈', image: 'image/치즈.jpg' },
+        { name: '하트', image: 'image/하트.png', hint: '색상 변경 가능' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
+      ],
+      vtsProps: [
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
+      ]
     },
     {
       type: 'card',
@@ -1319,7 +1341,9 @@
       props: THROW_STICK_PROPS,
       vtsProps: [
         { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image/egg.png' }
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
       ]
     },
     {
@@ -1378,7 +1402,9 @@
       props: THROW_STICK_PROPS,
       vtsProps: [
         { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image/egg.png' }
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
       ]
     },
     {
