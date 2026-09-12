@@ -228,10 +228,10 @@
       position: relative;
     }
     .api-badge-new {
-      position: absolute; top: -10px; right: -10px; z-index: 6;
+      position: absolute; top: 12px; right: 12px; z-index: 6;
       background: linear-gradient(135deg, #ff5c8a, #ff8a5c);
-      color: #fff; font-size: 12px; font-weight: 800; letter-spacing: 0.02em;
-      padding: 4px 10px; border-radius: 999px;
+      color: #fff; font-size: 14px; font-weight: 800; letter-spacing: 0.03em;
+      padding: 6px 14px; border-radius: 999px;
       box-shadow: 0 6px 16px rgba(255, 92, 138, 0.45);
       pointer-events: none;
     }
@@ -1116,6 +1116,7 @@
   /* PROP 목록 — image: '' 비워두면 placeholder (나중에 images/props/xxx.png 등 입력) */
   var THROW_STICK_PROPS = [
     { name: '치즈', image: 'image/치즈.jpg' },
+    { name: '하트', image: 'image/하트.png', hint: '색상 변경 가능' },
     { name: '실버 하트', image: 'image/실버하트.png', hint: '색상 변경 가능' },
     { name: '보석 하트', image: 'image/보석하트.png', hint: '색상 변경 가능' },
     { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
@@ -1318,7 +1319,7 @@
       props: THROW_STICK_PROPS,
       vtsProps: [
         { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image2D/2d치즈.png' }
+        { name: '2D치즈', image: 'image/egg.png' }
       ]
     },
     {
@@ -1377,7 +1378,7 @@
       props: THROW_STICK_PROPS,
       vtsProps: [
         { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image2D/2d치즈.png' }
+        { name: '2D치즈', image: 'image/egg.png' }
       ]
     },
     {
