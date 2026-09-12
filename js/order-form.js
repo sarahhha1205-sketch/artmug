@@ -62,7 +62,8 @@
         title: "물음표",
         desc: "시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.",
         price: "15,000",
-        vts: true
+        vts: true,
+        vtsPrice: "30,000"
       }
     ],
     "api-custom": [
