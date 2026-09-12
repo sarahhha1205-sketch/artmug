@@ -225,6 +225,15 @@
       color: var(--text-dark);
       display: flex; flex-direction: column; height: 100%;
       contain: layout;
+      position: relative;
+    }
+    .api-badge-new {
+      position: absolute; top: -10px; right: -10px; z-index: 6;
+      background: linear-gradient(135deg, #ff5c8a, #ff8a5c);
+      color: #fff; font-size: 12px; font-weight: 800; letter-spacing: 0.02em;
+      padding: 4px 10px; border-radius: 999px;
+      box-shadow: 0 6px 16px rgba(255, 92, 138, 0.45);
+      pointer-events: none;
     }
     .api-card:hover {
       border-color: var(--border-light-hover);
@@ -1141,6 +1150,7 @@
       title: '팬 캐릭터 뽀뽀',
       desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.',
       price: '50,000원',
+      isNew: true,
       vts: true,
       vtsSingle: true,
       vtsPrice: '80,000원',
@@ -1157,6 +1167,7 @@
       title: '팬 캐릭터 망치',
       desc: '팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.',
       price: '80,000원',
+      isNew: true,
       vtsOnly: true,
       video: '2D/2D팬캐릭터망치.mp4'
     },
@@ -1199,31 +1210,23 @@
       props: THROW_STICK_PROPS
     },
     {
-      type: 'swipe',
-      title: '쓰다듬기',
+      type: 'card',
+      title: '붙이기',
+      desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
       price: '20,000원',
+      isNew: true,
       vts: true,
-      warudoSingle: true,
-      variants: [
-        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담.mp4' },
-        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담2.mp4' }
-      ],
-      titleMode: 'static',
-      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', '표정 (핫키) 연동 가능', 'PROP'],
-      vtsHideChips: ['상호작용 표정 설정 가능'],
+      vtsVideo: '2D/2D붙이기.mp4',
+      vtsPrice: '40,000원',
+      video: VIDEO_STICK,
+      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
       vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      vtsChipLabels: {
-        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
-      },
       optionHints: {
-        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
-        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.',
+        '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
+        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
         '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
-      propVtsOnly: true,
-      vtsProps: [
-        { name: '쓰담손', image: 'image2D/쓰담손.png' }
-      ]
+      props: THROW_STICK_PROPS
     },
     {
       type: 'card',
@@ -1262,22 +1265,31 @@
       }
     },
     {
-      type: 'card',
-      title: '붙이기',
-      desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
+      type: 'swipe',
+      title: '쓰다듬기',
       price: '20,000원',
       vts: true,
-      vtsVideo: '2D/2D붙이기.mp4',
-      vtsPrice: '40,000원',
-      video: VIDEO_STICK,
-      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      warudoSingle: true,
+      variants: [
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담.mp4' },
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담2.mp4' }
+      ],
+      titleMode: 'static',
+      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      vtsHideChips: ['상호작용 표정 설정 가능'],
       vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      vtsChipLabels: {
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
+      },
       optionHints: {
-        '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
-        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
+        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.',
         '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       },
-      props: THROW_STICK_PROPS
+      propVtsOnly: true,
+      vtsProps: [
+        { name: '쓰담손', image: 'image2D/쓰담손.png' }
+      ]
     },
     {
       type: 'card',
@@ -1700,7 +1712,8 @@
       category: 'Live2D API',
       group: '와르르',
       date: '2026.09',
-      video: 'Port2D/쏠라2D와르르.mp4'
+      video: 'Port2D/쏠라2D와르르.mp4',
+      objectPosition: '35% center'
     },
     {
       title: '최얀미님 던지기 API',
@@ -1756,7 +1769,9 @@
       category: 'Live2D API',
       group: '붙이기',
       date: '2026.09',
-      video: 'Port2D/웹냥이2D붙이기.mp4'
+      video: 'Port2D/웹냥이2D붙이기.mp4',
+      objectPosition: 'left 100%',
+      zoom: 1.15
     },
     {
       title: '웹냥이님 와르르 API',
@@ -2023,6 +2038,7 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card" data-platforms="' + platforms + '">'
+      +   (item.isNew ? '<span class="api-badge-new">NEW</span>' : '')
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
       +     renderCardHead(item)
@@ -2062,6 +2078,7 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '" data-platforms="' + platforms + '">'
+      +   (item.isNew ? '<span class="api-badge-new">NEW</span>' : '')
       +   '<div class="api-media api-swipe" data-swipe="' + index + '" tabindex="0" role="region" aria-label="' + item.title + ' 미리보기"' + mediaStyle + '>'
       +     '<div class="api-swipe-track">' + slides + '</div>'
       +     '<div class="api-swipe-arrows" aria-hidden="true">'
