@@ -22,7 +22,7 @@
         desc: "원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.",
         price: "20,000",
         vts: true,
-        vtsPrice: "40,000"
+        vtsPrice: "30,000"
       },
       {
         title: "쓰다듬기",
@@ -77,18 +77,18 @@
         desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.",
         price: "50,000",
         vts: true,
-        vtsPrice: "65,000"
+        vtsPrice: "70,000"
       },
       {
         title: "팬 캐릭터 망치",
         desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.",
-        price: "65,000",
+        price: "70,000",
         vtsOnly: true
       },
       {
         title: "전광판",
         desc: "화면에 전광판이 나타나 원하는 문구를 표시합니다.",
-        price: "50,000",
+        price: "30,000",
         vtsOnly: true
       },
       {
