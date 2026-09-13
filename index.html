@@ -236,7 +236,7 @@
       pointer-events: none;
     }
     .api-badge-sale {
-      position: absolute; top: 12px; left: 76px; z-index: 6;
+      position: absolute; top: 12px; left: 84px; z-index: 6;
       background: linear-gradient(135deg, #ffd23f, #ff9a3f);
       color: #3a1e00; font-size: 14px; font-weight: 800; letter-spacing: 0.03em;
       padding: 6px 14px; border-radius: 999px;
@@ -1183,6 +1183,14 @@
       video: '2D/2D팬캐릭터망치.mp4'
     },
     {
+      type: 'card',
+      title: '아봉',
+      desc: '일정 시간동안 캐릭터의 입을 막습니다.',
+      price: '30,000원',
+      isNew: true,
+      video: 'videos/아봉.mp4'
+    },
+    {
       type: 'swipe',
       title: '전광판',
       price: '30,000원',
@@ -1480,7 +1488,7 @@
       { label: '양망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/양망치.jpg' },
       { label: '별풍선', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/하늘별풍.jpg' },
       { label: '보석 하트', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/보석하트.png' },
-      { label: '달걀', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', video: 'Port/와루도달걀.mp4' }
+      { label: '달걀', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', video: 'Port/와루도달걀.mp4', image: 'image/egg.png' }
     ]
   };
 
@@ -1636,9 +1644,40 @@
     {
       title: 'FRY님 프랍 제작',
       category: '팬캐릭터,PROP제작',
-      desc: 'FRY님 커스텀 프랍(달걀) 제작 작업입니다.',
+      desc: 'FRY님 커스텀 프랍(와루도 동작) 제작 작업입니다.',
       date: '2026.09',
-      video: 'Port/와루도달걀.mp4'
+      video: 'Port/와루도달걀.mp4',
+      panX: 8,
+      zoom: 1.08,
+      letterboxColor: '#000'
+    },
+    {
+      title: '냥님 커스텀 API<br>아봉',
+      category: '와루도 3D API',
+      group: '커스텀 제작',
+      date: '2026.09',
+      video: 'Port/냥님아봉.mp4'
+    },
+    {
+      title: '냥님 날아가기 API',
+      category: '와루도 3D API',
+      group: '날아가기',
+      date: '2026.09',
+      video: 'Port/냥님날아가기.mp4'
+    },
+    {
+      title: '별로우님 팬캐릭터 뽀뽀 API',
+      category: '와루도 3D API',
+      group: '팬캐릭터 뽀뽀',
+      date: '2026.09',
+      video: 'Port/별로우님팬캐릭터뽀뽀.mp4'
+    },
+    {
+      title: '별로우님 자동 잠자기 API',
+      category: '와루도 3D API',
+      group: '자동 잠자기',
+      date: '2026.09',
+      video: 'Port/별로우잠자기.mp4'
     },
     {
       title: '달아님 쓰다듬기 API',
@@ -1947,7 +1986,7 @@
     }
     var letterboxColor = (media && media.letterboxColor) || 'var(--color-media)';
     var styleAttr = 'object-position:' + pos + ';object-fit:' + fit
-      + (fit === 'contain' ? ';background:' + letterboxColor : '')
+      + (fit === 'contain' || media && media.letterboxColor ? ';background:' + letterboxColor : '')
       + transformStr;
     label = label || (media && media.label) || '';
     if (loop === undefined) loop = true;
