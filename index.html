@@ -800,12 +800,18 @@
       flex: 1; min-width: 120px; padding: 12px 14px; border: 1px solid var(--border-light);
       border-radius: 10px; background: var(--surface-muted);
       color: var(--text-dark-soft); font-size: 13px; font-weight: 800; cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; justify-content: center; text-align: center;
+      text-decoration: none; box-sizing: border-box;
     }
     .order-action-btn--primary {
       background: var(--brand); border-color: var(--brand); color: #fff;
     }
+    .order-action-btn--contact {
+      background: #18181b; border-color: #18181b; color: #fff;
+    }
     .order-action-btn:hover { border-color: var(--border-light-hover); color: var(--text-dark); background: var(--surface-white); }
     .order-action-btn--primary:hover { background: #7a6be0; color: #fff; }
+    .order-action-btn--contact:hover { background: #303038; border-color: #303038; color: #fff; }
 
     @media (max-width: 560px) {
       .hero { padding: 32px 20px 28px; }
@@ -932,6 +938,7 @@
         <textarea class="order-preview" id="order-preview" rows="12" readonly></textarea>
         <div class="order-actions">
           <button type="button" class="order-action-btn order-action-btn--primary" id="order-copy">주문서 복사</button>
+          <button type="button" class="order-action-btn order-action-btn--contact" id="order-contact">문의하기</button>
         </div>
       </div>
     </div>
@@ -1960,6 +1967,20 @@
       group: '쓰다듬기',
       date: '2026.09',
       video: 'Port/유세라쓰담쓰담.mp4'
+    },
+    {
+      title: '차원랑님 머리쾅 (망치) API',
+      category: 'Live2D API',
+      group: '머리쾅 (망치)',
+      date: '2026.09',
+      video: 'Port2D/차원랑2D뿅망치.mp4'
+    },
+    {
+      title: '차원랑님 팬 캐릭터 뽀뽀 API',
+      category: 'Live2D API',
+      group: '팬캐릭터 뽀뽀',
+      date: '2026.09',
+      video: 'Port2D/차원랑2D팬캐릭뽀뽀.mp4'
     },
   ];
 
@@ -3083,6 +3104,18 @@
   updateGnb();
   if (isEmbed) {
     window.parent.postMessage({ type: 'requestParentScroll' }, '*');
+  }
+
+  var ARTMUG_GOODS_NUMBER = '59239';
+  var orderContactBtn = document.getElementById('order-contact');
+  if (orderContactBtn) {
+    orderContactBtn.addEventListener('click', function () {
+      if (isEmbed) {
+        window.parent.postMessage({ type: 'artmugQna', number: ARTMUG_GOODS_NUMBER }, '*');
+      } else {
+        window.open('https://artmug.kr/index.php?channel=view&uid=' + ARTMUG_GOODS_NUMBER + '#ankerQ', '_blank');
+      }
+    });
   }
 
   updateEmbedLayout();
