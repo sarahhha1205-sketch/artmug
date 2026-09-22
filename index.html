@@ -1069,6 +1069,7 @@
   var VIDEO_KISS_2 = 'videos/뽀뽀2.mp4';
   var VIDEO_PILE = 'videos/쏟아지기.mp4';
   var VIDEO_PILE_2 = 'videos/쏟아지기2.mp4';
+  var VIDEO_PILE_3 = 'videos/치즈깔리기.mp4';
   var VIDEO_WINK = 'videos/윙크.mp4';
   var VIDEO_SLEEP = 'videos/잠자기.mp4';
   var VIDEO_WINGS = 'videos/날개.mp4';
@@ -1094,6 +1095,7 @@
   var VIDEO_THROW_ONE = 'videos/1개던지기.mp4';
   var VIDEO_WATER = 'videos/물쏘기.mp4';
   var VIDEO_STICK = 'videos/달라붙기.mp4';
+  var VIDEO_LOCK = 'videos/자물쇠.mp4';
 
   var THROW_VARIANTS = [
     { label: '한 개 던지기', desc: '캐릭터에게 물건을 한 개 던질 수 있습니다.', video: VIDEO_THROW_ONE, objectPosition: '35% center' },
@@ -1178,6 +1180,28 @@
         '위치 변경 가능': '캐릭터가 뽀뽀하는 위치를 설정합니다.',
         '효과 변경 가능': '파티클·사운드 효과를 변경합니다.'
       }
+    },
+    {
+      type: 'card',
+      title: '깔리기',
+      desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
+      price: '30,000원',
+      isNew: true,
+      video: VIDEO_PILE_3,
+      chips: ['물건 변경 가능', '효과 변경 가능', '사운드 추가 가능'],
+      optionHints: {
+        '물건 변경 가능': '캐릭터를 깔아뭉개는 물건의 종류를 변경합니다.',
+        '효과 변경 가능': '파티클 효과를 추가·변경합니다.',
+        '사운드 추가 가능': '물건이 떨어질 때 나오는 효과음을 추가·변경합니다.'
+      }
+    },
+    {
+      type: 'card',
+      title: '안경 자물쇠',
+      desc: '캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.',
+      price: '40,000원',
+      isNew: true,
+      video: VIDEO_LOCK
     },
     {
       type: 'card',
@@ -1271,6 +1295,7 @@
       desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
       price: '20,000원',
       isNew: true,
+      newVtsOnly: true,
       vts: true,
       vtsVideo: '2D/2D붙이기.mp4',
       vtsPrice: '30,000원',
@@ -1369,28 +1394,6 @@
       props: THROW_STICK_PROPS
     },
     {
-      type: 'swipe',
-      title: '와르르',
-      desc: '캐릭터에게 물건들이 쏟아집니다.',
-      price: '20,000원',
-      vts: true,
-      variants: PILE_VARIANTS,
-      titleMode: 'static',
-      chips: PILE_CHIPS.concat(['사운드 추가 가능', '표정 (핫키) 연동 가능']),
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
-        '사운드 추가 가능': '물건이 쏟아질 때 나오는 효과음을 추가·변경합니다.',
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      }),
-      props: THROW_STICK_PROPS,
-      vtsProps: [
-        { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image/egg.png' },
-        { name: '3D하트', image: 'image/하트.png' },
-        { name: '별풍선', image: 'image/하늘별풍.jpg' }
-      ]
-    },
-    {
       type: 'card',
       title: '머리쾅 (망치)',
       desc: '망치로 캐릭터의 머리를 강타합니다.',
@@ -1468,6 +1471,28 @@
       chips: THROW_CHIPS,
       optionHints: THROW_OPTION_HINTS,
       props: BONK_DROP_PROPS
+    },
+    {
+      type: 'swipe',
+      title: '와르르',
+      desc: '캐릭터에게 물건들이 쏟아집니다.',
+      price: '20,000원',
+      vts: true,
+      variants: PILE_VARIANTS,
+      titleMode: 'static',
+      chips: PILE_CHIPS.concat(['사운드 추가 가능', '표정 (핫키) 연동 가능']),
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
+        '사운드 추가 가능': '물건이 쏟아질 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }),
+      props: THROW_STICK_PROPS,
+      vtsProps: [
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
+      ]
     }
   ];
 
@@ -2016,6 +2041,27 @@
       date: '2026.09',
       video: 'Port2D/헤쯔2D윙크.mp4'
     },
+    {
+      title: '사과쨈님 물음표 API',
+      category: 'Live2D API',
+      group: '물음표',
+      date: '2026.09',
+      video: 'Port2D/사과쩀님2D물음표.mp4'
+    },
+    {
+      title: '사과쨈님 머리쾅 (망치) API',
+      category: 'Live2D API',
+      group: '머리쾅 (망치)',
+      date: '2026.09',
+      video: 'Port2D/사과쨈님2D머리쾅.mp4'
+    },
+    {
+      title: '양망양님 팬 캐릭터 망치 API',
+      category: 'Live2D API',
+      group: '팬 캐릭터 망치',
+      date: '2026.09',
+      video: 'Port2D/양망양팬캐릭터망치.mp4'
+    },
   ];
 
   var PORTFOLIO_GROUP_ORDER = ['팬캐릭터 뽀뽀', '윙크', '던지기', '물음표', '자동 잠자기', '쓰다듬기', '머리쾅 (망치)', '와르르', '커스텀 제작'];
@@ -2274,8 +2320,8 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card" data-platforms="' + platforms + '">'
-      +   (item.isNew ? '<span class="api-badge-new" data-warudo-hide="1">NEW</span>' : '')
-      +   (item.isSale ? '<span class="api-badge-sale" data-warudo-hide="1">SALE</span>' : '')
+      +   (item.isNew ? '<span class="api-badge-new"' + (item.newVtsOnly ? ' data-warudo-hide="1"' : '') + '>NEW</span>' : '')
+      +   (item.isSale ? '<span class="api-badge-sale">SALE</span>' : '')
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
       +   '<div class="api-body">'
       +     renderCardHead(item)
@@ -2315,8 +2361,8 @@
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
       + '<article class="api-card api-card-swipe" data-swipe-id="' + index + '" data-platforms="' + platforms + '">'
-      +   (item.isNew ? '<span class="api-badge-new" data-warudo-hide="1">NEW</span>' : '')
-      +   (item.isSale ? '<span class="api-badge-sale" data-warudo-hide="1">SALE</span>' : '')
+      +   (item.isNew ? '<span class="api-badge-new"' + (item.newVtsOnly ? ' data-warudo-hide="1"' : '') + '>NEW</span>' : '')
+      +   (item.isSale ? '<span class="api-badge-sale">SALE</span>' : '')
       +   '<div class="api-media api-swipe" data-swipe="' + index + '" tabindex="0" role="region" aria-label="' + item.title + ' 미리보기"' + mediaStyle + '>'
       +     '<div class="api-swipe-track">' + slides + '</div>'
       +     '<div class="api-swipe-arrows" aria-hidden="true">'
