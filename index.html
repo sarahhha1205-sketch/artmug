@@ -1096,6 +1096,7 @@
   var VIDEO_WATER = 'videos/물쏘기.mp4';
   var VIDEO_STICK = 'videos/달라붙기.mp4';
   var VIDEO_LOCK = 'videos/자물쇠.mp4';
+  var VIDEO_CHEEK_PULL = 'videos/팬캐릭터뺨당기기.mp4';
 
   var THROW_VARIANTS = [
     { label: '한 개 던지기', desc: '캐릭터에게 물건을 한 개 던질 수 있습니다.', video: VIDEO_THROW_ONE, objectPosition: '35% center' },
@@ -1183,6 +1184,111 @@
     },
     {
       type: 'card',
+      title: '팬 캐릭터 뺨 당기기',
+      desc: '팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.',
+      price: '50,000원',
+      isNew: true,
+      video: VIDEO_CHEEK_PULL
+    },
+    {
+      type: 'swipe',
+      title: '팬 캐릭터 따라다니기',
+      desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.',
+      price: '20,000원',
+      variants: FOLLOW_VARIANTS,
+      titleMode: 'static',
+      chips: ['따라다니는 속도 변경 가능']
+    },
+    {
+      type: 'card',
+      title: '아봉',
+      desc: '일정 시간동안 캐릭터의 입을 막습니다.',
+      price: '30,000원',
+      isNew: true,
+      video: 'videos/아봉.mp4'
+    },
+    {
+      type: 'swipe',
+      title: '천사 / 악마 변신',
+      desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.',
+      price: '50,000원',
+      variants: WINGS_VARIANTS,
+      titleMode: 'static',
+      chips: ['날개 변경 가능', '포즈 변경 가능', '효과 변경 가능', 'PROP'],
+      props: WING_PROPS,
+      propLabel: '변경 가능 날개 보기',
+      optionHints: {
+        '날개 변경 가능': '날개의 모양이나 색상을 변경합니다.',
+        '포즈 변경 가능': '캐릭터의 포즈를 변경합니다.',
+        '효과 변경 가능': '파티클·사운드 효과를 변경합니다.'
+      }
+    },
+    {
+      type: 'card',
+      title: '자동 잠자기',
+      desc: '자리를 비우면 캐릭터가 잠드는 모션을 취합니다.',
+      price: '20,000원',
+      video: VIDEO_SLEEP,
+      chips: ['잠드는 표정 변경 가능']
+    },
+    {
+      type: 'card',
+      title: '물음표',
+      desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
+      price: '15,000원',
+      vts: true,
+      vtsPrice: '30,000원',
+      vtsVideo: '2D/2D물음표.mp4',
+      video: VIDEO_QUESTION,
+      chips: ['사운드 추가 가능', '표정 (핫키) 연동 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: {
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }
+    },
+    {
+      type: 'card',
+      title: '윙크',
+      desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
+      price: '20,000원',
+      vts: true,
+      vtsVideo: '2D/2D윙크.mp4',
+      video: VIDEO_WINK,
+      chips: ['하트 모양 변경 가능', '표정 (핫키) 연동 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: {
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }
+    },
+    {
+      type: 'swipe',
+      title: '쓰다듬기',
+      price: '20,000원',
+      vts: true,
+      warudoSingle: true,
+      variants: [
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담.mp4' },
+        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담2.mp4' }
+      ],
+      titleMode: 'static',
+      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      vtsHideChips: ['상호작용 표정 설정 가능'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      vtsChipLabels: {
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
+      },
+      optionHints: {
+        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
+        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      },
+      propVtsOnly: true,
+      vtsProps: [
+        { name: '쓰담손', image: 'image2D/쓰담손.png' }
+      ]
+    },
+    {
+      type: 'card',
       title: '깔리기',
       desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
       price: '30,000원',
@@ -1214,14 +1320,6 @@
       video: '2D/2D팬캐릭터망치.mp4'
     },
     {
-      type: 'card',
-      title: '아봉',
-      desc: '일정 시간동안 캐릭터의 입을 막습니다.',
-      price: '30,000원',
-      isNew: true,
-      video: 'videos/아봉.mp4'
-    },
-    {
       type: 'swipe',
       title: '전광판',
       price: '30,000원',
@@ -1240,22 +1338,6 @@
       }
     },
     {
-      type: 'swipe',
-      title: '천사 / 악마 변신',
-      desc: '캐릭터가 날개를 달며 날아오릅니다.<br>날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.',
-      price: '50,000원',
-      variants: WINGS_VARIANTS,
-      titleMode: 'static',
-      chips: ['날개 변경 가능', '포즈 변경 가능', '효과 변경 가능', 'PROP'],
-      props: WING_PROPS,
-      propLabel: '변경 가능 날개 보기',
-      optionHints: {
-        '날개 변경 가능': '날개의 모양이나 색상을 변경합니다.',
-        '포즈 변경 가능': '캐릭터의 포즈를 변경합니다.',
-        '효과 변경 가능': '파티클·사운드 효과를 변경합니다.'
-      }
-    },
-    {
       type: 'card',
       title: '폴댄스',
       desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
@@ -1266,15 +1348,6 @@
       optionHints: {
         '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
       }
-    },
-    {
-      type: 'swipe',
-      title: '팬 캐릭터 따라다니기',
-      desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.',
-      price: '10,000원',
-      variants: FOLLOW_VARIANTS,
-      titleMode: 'static',
-      chips: ['따라다니는 속도 변경 가능']
     },
     {
       type: 'card',
@@ -1317,70 +1390,6 @@
         { name: '2D치즈', image: 'image/egg.png' },
         { name: '3D하트', image: 'image/하트.png' },
         { name: '별풍선', image: 'image/하늘별풍.jpg' }
-      ]
-    },
-    {
-      type: 'card',
-      title: '자동 잠자기',
-      desc: '자리를 비우면 캐릭터가 잠드는 모션을 취합니다.',
-      price: '20,000원',
-      video: VIDEO_SLEEP,
-      chips: ['잠드는 표정 변경 가능']
-    },
-    {
-      type: 'card',
-      title: '윙크',
-      desc: '캐릭터가 한쪽 눈을 감을 경우, 자동으로 눈가에 하트 파티클이 출력됩니다.',
-      price: '20,000원',
-      vts: true,
-      vtsVideo: '2D/2D윙크.mp4',
-      video: VIDEO_WINK,
-      chips: ['하트 모양 변경 가능', '표정 (핫키) 연동 가능'],
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      optionHints: {
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      }
-    },
-    {
-      type: 'card',
-      title: '물음표',
-      desc: '시청자의 ? 채팅에 반응해 화면에 물음표를 띄웁니다.',
-      price: '15,000원',
-      vts: true,
-      vtsPrice: '30,000원',
-      vtsVideo: '2D/2D물음표.mp4',
-      video: VIDEO_QUESTION,
-      chips: ['사운드 추가 가능', '표정 (핫키) 연동 가능'],
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      optionHints: {
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      }
-    },
-    {
-      type: 'swipe',
-      title: '쓰다듬기',
-      price: '20,000원',
-      vts: true,
-      warudoSingle: true,
-      variants: [
-        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담.mp4' },
-        { label: '쓰다듬기', desc: '캐릭터의 머리를 쓰다듬어줍니다.', video: VIDEO_PAT, vtsVideo: '2D/쓰담2.mp4' }
-      ],
-      titleMode: 'static',
-      chips: ['쓰다듬는 손의 색상 변경 가능', '상호작용 표정 설정 가능', '표정 (핫키) 연동 가능', 'PROP'],
-      vtsHideChips: ['상호작용 표정 설정 가능'],
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      vtsChipLabels: {
-        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손 모양 변경 가능'
-      },
-      optionHints: {
-        '쓰다듬는 손의 색상 변경 가능': '쓰다듬는 손의 색상을 변경합니다.',
-        '상호작용 표정 설정 가능': '쓰다듬을 때 캐릭터의 표정을 설정합니다.',
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      },
-      propVtsOnly: true,
-      vtsProps: [
-        { name: '쓰담손', image: 'image2D/쓰담손.png' }
       ]
     },
     {
