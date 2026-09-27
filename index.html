@@ -866,15 +866,15 @@
 <div class="container" id="page-root">
 
   <header class="hero" id="top">
-    <div class="hero-tag">WARUDO · API</div>
-    <h1>원하는 <em>Warudo API</em><br>세팅해 드립니다!</h1>
+    <div class="hero-tag">WARUDO · LIVE2D API</div>
+    <h1>원하는 <em>Warudo · Live2D API</em><br>세팅해 드립니다!</h1>
     <p>SOOP · 치지직 · 투네이션 후원 연동 &nbsp;/&nbsp; 자체제작 연출 &nbsp;/&nbsp; 맞춤 구성 문의 &nbsp;/&nbsp; 원격 직접 세팅</p>
   </header>
 
   <section class="block light" id="sec-intro">
     <div class="intro-box">
       <strong><span class="intro-line1">와루도 API 세팅 해드립니다!</span> <span class="intro-line2" style="color:#5a3fc0;">빠른 마감 / 당일 세팅 가능!</span></strong>
-      <p>채팅, 도네이션에 반응하는 모든 API 제작이 가능합니다.</p>
+      <p>채팅, 구독, 도네이션에 반응하는 모든 API 제작이 가능합니다.</p>
       <p>원하는 <span class="pastel-purple">팬 캐릭터</span>, <span class="pastel-purple">소품</span>도 제작해 드립니다!</p>
       <p>세팅을 어려워 하시는 분을 위해 <span class="hl">원격 세팅</span>도 기본적으로 제공해 드립니다.</p>
       <p>상담 후 원하는 API 주문제작도 가능합니다.</p>
@@ -1167,7 +1167,7 @@
     {
       type: 'swipe',
       title: '팬 캐릭터 뽀뽀',
-      desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.',
+      desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '50,000원',
       isNew: true,
       isSale: true,
@@ -1185,10 +1185,15 @@
     {
       type: 'card',
       title: '팬 캐릭터 뺨 당기기',
-      desc: '팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.',
+      desc: '팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '50,000원',
       isNew: true,
-      video: VIDEO_CHEEK_PULL
+      video: VIDEO_CHEEK_PULL,
+      chips: ['속도 조절 가능', '뺨 당기는 정도 조절 가능'],
+      optionHints: {
+        '속도 조절 가능': '뺨을 당기는 속도를 조절합니다.',
+        '뺨 당기는 정도 조절 가능': '뺨이 당겨지는 정도를 조절합니다.'
+      }
     },
     {
       type: 'swipe',
@@ -1339,17 +1344,6 @@
     },
     {
       type: 'card',
-      title: '폴댄스',
-      desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
-      price: '50,000원',
-      isNew: true,
-      video: 'videos/폴댄스API.mp4',
-      chips: ['음악 추가 가능'],
-      optionHints: {
-        '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
-      }
-    },
-    {
       type: 'card',
       title: '시청자 던지기',
       desc: '도네이션을 한 시청자의 이름이 던지기 프랍에 들어갑니다.',
@@ -1361,6 +1355,28 @@
         '던지는 물건 변경 가능': '던지는 물건의 종류를 변경합니다.'
       },
       props: THROW_STICK_PROPS
+    },
+    {
+      type: 'swipe',
+      title: '와르르',
+      desc: '캐릭터에게 물건들이 쏟아집니다.',
+      price: '20,000원',
+      vts: true,
+      variants: PILE_VARIANTS,
+      titleMode: 'static',
+      chips: PILE_CHIPS.concat(['사운드 추가 가능', '표정 (핫키) 연동 가능']),
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
+        '사운드 추가 가능': '물건이 쏟아질 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      }),
+      props: THROW_STICK_PROPS,
+      vtsProps: [
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
+      ]
     },
     {
       type: 'card',
@@ -1482,26 +1498,16 @@
       props: BONK_DROP_PROPS
     },
     {
-      type: 'swipe',
-      title: '와르르',
-      desc: '캐릭터에게 물건들이 쏟아집니다.',
-      price: '20,000원',
-      vts: true,
-      variants: PILE_VARIANTS,
-      titleMode: 'static',
-      chips: PILE_CHIPS.concat(['사운드 추가 가능', '표정 (핫키) 연동 가능']),
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      optionHints: Object.assign({}, THROW_OPTION_HINTS, {
-        '사운드 추가 가능': '물건이 쏟아질 때 나오는 효과음을 추가·변경합니다.',
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      }),
-      props: THROW_STICK_PROPS,
-      vtsProps: [
-        { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image/egg.png' },
-        { name: '3D하트', image: 'image/하트.png' },
-        { name: '별풍선', image: 'image/하늘별풍.jpg' }
-      ]
+      type: 'card',
+      title: '폴댄스',
+      desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/폴댄스API.mp4',
+      chips: ['음악 추가 가능'],
+      optionHints: {
+        '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
+      }
     }
   ];
 
@@ -1711,6 +1717,13 @@
       panX: 8,
       zoom: 1.08,
       letterboxColor: '#000'
+    },
+    {
+      title: '빙하유님 오리지널 소품',
+      category: '팬캐릭터,PROP제작',
+      desc: '빙하유님 오리지널 소품 제작 작업입니다.',
+      date: '2026.09',
+      image: 'Port/빙하유님오리지널소품.png'
     },
     {
       title: '냥님 커스텀 API<br>아봉',
@@ -2023,6 +2036,13 @@
       video: 'Port/유세라쓰담쓰담.mp4'
     },
     {
+      title: '유세라님 안경 자물쇠 API',
+      category: '와루도 3D API',
+      group: '안경 자물쇠',
+      date: '2026.09',
+      video: 'Port/유세라님안경자물쇠.mp4'
+    },
+    {
       title: '민초아가씨님 팬 캐릭터 뽀뽀 API',
       category: '와루도 3D API',
       group: '팬캐릭터 뽀뽀',
@@ -2030,9 +2050,9 @@
       video: 'Port/민초아가씨팬캐릭터뽀뽀.mp4'
     },
     {
-      title: '차원랑님 머리쾅 (망치) API',
+      title: '차원랑님 팬 캐릭터 망치 API',
       category: 'Live2D API',
-      group: '머리쾅 (망치)',
+      group: '팬 캐릭터 망치',
       date: '2026.09',
       video: 'Port2D/차원랑2D뿅망치.mp4'
     },
