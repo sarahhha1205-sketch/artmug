@@ -47,11 +47,6 @@
         price: "30,000"
       },
       {
-        title: "안경 자물쇠",
-        desc: "캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.",
-        price: "40,000"
-      },
-      {
         title: "와르르",
         desc: "캐릭터에게 물건들이 쏟아집니다.",
         price: "20,000",
@@ -78,25 +73,40 @@
     ],
     "api-custom": [
       {
+        title: "안경 자물쇠",
+        desc: "캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.",
+        price: "40,000"
+      },
+      {
         title: "마법",
         desc: "캐릭터의 손에서 마법이 나갑니다.",
         price: "30,000"
       },
       {
+        title: "번개 맞기",
+        desc: "캐릭터가 번개를 맞습니다.",
+        price: "40,000"
+      },
+      {
+        title: "랜덤 가챠 가방",
+        desc: "가방을 열면 폭탄 가방 혹은 돈가방이 확률적으로 나옵니다. 폭탄 가방을 맞으면 캐릭터가 날아갑니다.",
+        price: "70,000"
+      },
+      {
         title: "팬 캐릭터 뽀뽀",
-        desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.",
+        desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
         price: "50,000",
         vts: true,
         vtsPrice: "70,000"
       },
       {
         title: "팬 캐릭터 뺨 당기기",
-        desc: "팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.",
+        desc: "팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
         price: "50,000"
       },
       {
         title: "팬 캐릭터 망치",
-        desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.",
+        desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
         price: "70,000",
         vtsOnly: true
       },
@@ -137,12 +147,6 @@
         title: "3D 팬캐릭터 제작",
         desc: "상호작용 가능한 3D 팬 캐릭터를 제작해 드립니다.",
         price: "50,000"
-      },
-      {
-        title: "3D 팬캐릭터 리깅",
-        desc: "제작된 3D 팬 캐릭터에 리깅 작업을 진행합니다. (Warudo 전용)",
-        price: "30,000",
-        warudoOnly: true
       },
       {
         title: "3D 소품 제작",
@@ -195,11 +199,17 @@
     var items = PRICE_ITEMS[categoryKey] || [];
     var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
     entries = entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : !e.item.vtsOnly; });
-    if (categoryKey === "prop-production") return entries;
-    if (orderPlatform !== "vts") return entries;
-    if (categoryKey === "api-basic") return entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
-    if (categoryKey === "api-custom") return entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
-    return entries;
+    if (categoryKey === "prop-production") return sortByPrice(entries);
+    if (orderPlatform !== "vts") return sortByPrice(entries);
+    if (categoryKey === "api-basic") entries = entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
+    if (categoryKey === "api-custom") entries = entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
+    return sortByPrice(entries);
+  }
+
+  function sortByPrice(entries) {
+    return entries.slice().sort(function (a, b) {
+      return parseAmount(vtsAdjustedPrice(a.item)) - parseAmount(vtsAdjustedPrice(b.item));
+    });
   }
 
   function parseAmount(text) {
@@ -225,6 +235,10 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function escapeHtmlBr(text) {
+    return escapeHtml(text).replace(/\n/g, "<br>");
   }
 
   function createField(label, html) {
@@ -329,7 +343,7 @@
               (item.variants && item.variants.length ? ' data-has-variants="true"' : "") + ">" +
             '<span class="order-api-info">' +
               '<span class="order-api-name">' + escapeHtml(item.title) + "</span>" +
-              (item.desc ? '<span class="order-api-desc">' + escapeHtml(item.desc) + "</span>" : "") +
+              (item.desc ? '<span class="order-api-desc">' + escapeHtmlBr(item.desc) + "</span>" : "") +
             "</span>" +
             '<span class="order-api-price">' + escapeHtml(formatOrderPrice(vtsAdjustedPrice(item))) + "</span>" +
           "</label>" +
