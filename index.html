@@ -1196,6 +1196,16 @@
       }
     },
     {
+      type: 'card',
+      title: '팬 캐릭터 망치',
+      desc: '팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
+      price: '70,000원',
+      isNew: true,
+      isSale: true,
+      vtsOnly: true,
+      video: '2D/2D팬캐릭터망치.mp4'
+    },
+    {
       type: 'swipe',
       title: '팬 캐릭터 따라다니기',
       desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.',
@@ -1206,11 +1216,117 @@
     },
     {
       type: 'card',
+      title: '번개 맞기',
+      desc: '캐릭터가 번개를 맞습니다.',
+      price: '40,000원',
+      isNew: true,
+      video: 'videos/번개맞기api.mp4'
+    },
+    {
+      type: 'swipe',
+      title: '랜덤 가챠 가방',
+      desc: '가방을 열면 폭탄 가방 혹은 돈가방이 확률적으로 나옵니다. 폭탄 가방을 맞으면 캐릭터가 날아갑니다.',
+      price: '70,000원',
+      isNew: true,
+      titleMode: 'static',
+      variants: [
+        { label: '돈가방', desc: '가방을 열면 돈이 나옵니다.', video: 'videos/랜덤가챠가방.mp4' },
+        { label: '폭탄', desc: '가방을 열면 폭탄이 나옵니다.', video: 'videos/랜덤가챠가방_폭탄.mp4' }
+      ],
+      chips: ['핸드 트래킹 필요'],
+      optionHints: {
+        '핸드 트래킹 필요': '이 연출은 핸드 트래킹 장비가 있어야 정상 작동합니다.'
+      }
+    },
+    {
+      type: 'card',
       title: '아봉',
       desc: '일정 시간동안 캐릭터의 입을 막습니다.',
       price: '30,000원',
       isNew: true,
       video: 'videos/아봉.mp4'
+    },
+    {
+      type: 'card',
+      title: '깔리기',
+      desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
+      price: '30,000원',
+      isNew: true,
+      video: VIDEO_PILE_3,
+      chips: ['물건 변경 가능', '효과 변경 가능', '사운드 추가 가능'],
+      optionHints: {
+        '물건 변경 가능': '캐릭터를 깔아뭉개는 물건의 종류를 변경합니다.',
+        '효과 변경 가능': '파티클 효과를 추가·변경합니다.',
+        '사운드 추가 가능': '물건이 떨어질 때 나오는 효과음을 추가·변경합니다.'
+      }
+    },
+    {
+      type: 'card',
+      title: '안경 자물쇠',
+      desc: '캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.',
+      price: '40,000원',
+      isNew: true,
+      video: VIDEO_LOCK
+    },
+    {
+      type: 'swipe',
+      title: '전광판',
+      price: '30,000원',
+      isNew: true,
+      vtsOnly: true,
+      variants: [
+        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판.mp4' },
+        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판2.mp4' }
+      ],
+      titleMode: 'static',
+      chips: ['전광판 글씨 변경 가능', '전광판 내용 변경 가능', '전광판 시청자 닉네임·후원금액 연동 가능'],
+      optionHints: {
+        '전광판 글씨 변경 가능': '전광판에 표시되는 글씨체·색상을 변경합니다.',
+        '전광판 내용 변경 가능': '전광판에 표시되는 문구를 원하는 대로 변경합니다.',
+        '전광판 시청자 닉네임·후원금액 연동 가능': '도네이션한 시청자의 닉네임과 후원 금액을 전광판에 자동으로 표시합니다.'
+      }
+    },
+    {
+      type: 'card',
+      title: '붙이기',
+      desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
+      price: '20,000원',
+      isNew: true,
+      newVtsOnly: true,
+      vts: true,
+      vtsVideo: '2D/2D붙이기.mp4',
+      vtsPrice: '30,000원',
+      video: VIDEO_STICK,
+      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
+      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
+      optionHints: {
+        '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
+        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
+        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
+      },
+      props: [
+        { name: '치즈', image: 'image/치즈.jpg' },
+        { name: '하트', image: 'image/하트.png', hint: '색상 변경 가능' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
+      ],
+      vtsProps: [
+        { name: '3D치즈', image: 'image2D/치즈.png' },
+        { name: '2D치즈', image: 'image/egg.png' },
+        { name: '3D하트', image: 'image/하트.png' },
+        { name: '별풍선', image: 'image/하늘별풍.jpg' }
+      ]
+    },
+    {
+      type: 'card',
+      title: '폴댄스',
+      desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/폴댄스API.mp4',
+      chips: ['음악 추가 가능'],
+      optionHints: {
+        '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
+      }
     },
     {
       type: 'swipe',
@@ -1294,56 +1410,6 @@
     },
     {
       type: 'card',
-      title: '깔리기',
-      desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
-      price: '30,000원',
-      isNew: true,
-      video: VIDEO_PILE_3,
-      chips: ['물건 변경 가능', '효과 변경 가능', '사운드 추가 가능'],
-      optionHints: {
-        '물건 변경 가능': '캐릭터를 깔아뭉개는 물건의 종류를 변경합니다.',
-        '효과 변경 가능': '파티클 효과를 추가·변경합니다.',
-        '사운드 추가 가능': '물건이 떨어질 때 나오는 효과음을 추가·변경합니다.'
-      }
-    },
-    {
-      type: 'card',
-      title: '안경 자물쇠',
-      desc: '캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.',
-      price: '40,000원',
-      isNew: true,
-      video: VIDEO_LOCK
-    },
-    {
-      type: 'card',
-      title: '팬 캐릭터 망치',
-      desc: '팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
-      price: '70,000원',
-      isNew: true,
-      isSale: true,
-      vtsOnly: true,
-      video: '2D/2D팬캐릭터망치.mp4'
-    },
-    {
-      type: 'swipe',
-      title: '전광판',
-      price: '30,000원',
-      isNew: true,
-      vtsOnly: true,
-      variants: [
-        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판.mp4' },
-        { label: '전광판', desc: '화면에 전광판이 나타나 원하는 문구를 표시합니다.', video: '2D/2D전광판2.mp4' }
-      ],
-      titleMode: 'static',
-      chips: ['전광판 글씨 변경 가능', '전광판 내용 변경 가능', '전광판 시청자 닉네임·후원금액 연동 가능'],
-      optionHints: {
-        '전광판 글씨 변경 가능': '전광판에 표시되는 글씨체·색상을 변경합니다.',
-        '전광판 내용 변경 가능': '전광판에 표시되는 문구를 원하는 대로 변경합니다.',
-        '전광판 시청자 닉네임·후원금액 연동 가능': '도네이션한 시청자의 닉네임과 후원 금액을 전광판에 자동으로 표시합니다.'
-      }
-    },
-    {
-      type: 'card',
       type: 'card',
       title: '시청자 던지기',
       desc: '도네이션을 한 시청자의 이름이 던지기 프랍에 들어갑니다.',
@@ -1371,36 +1437,6 @@
         '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
       }),
       props: THROW_STICK_PROPS,
-      vtsProps: [
-        { name: '3D치즈', image: 'image2D/치즈.png' },
-        { name: '2D치즈', image: 'image/egg.png' },
-        { name: '3D하트', image: 'image/하트.png' },
-        { name: '별풍선', image: 'image/하늘별풍.jpg' }
-      ]
-    },
-    {
-      type: 'card',
-      title: '붙이기',
-      desc: '원하는 물건이 날아와 캐릭터의 몸에 달라붙습니다.',
-      price: '20,000원',
-      isNew: true,
-      newVtsOnly: true,
-      vts: true,
-      vtsVideo: '2D/2D붙이기.mp4',
-      vtsPrice: '30,000원',
-      video: VIDEO_STICK,
-      chips: ['붙는 물건 변경 가능', '상호작용 사운드 추가 가능', '표정 (핫키) 연동 가능', 'PROP'],
-      vtsOnlyChips: ['표정 (핫키) 연동 가능'],
-      optionHints: {
-        '붙는 물건 변경 가능': '캐릭터에게 붙는 물건의 종류를 변경합니다.',
-        '상호작용 사운드 추가 가능': '물건이 붙을 때 나오는 효과음을 추가·변경합니다.',
-        '표정 (핫키) 연동 가능': 'VTube Studio 핫키와 연동해 표정을 자동으로 전환합니다.'
-      },
-      props: [
-        { name: '치즈', image: 'image/치즈.jpg' },
-        { name: '하트', image: 'image/하트.png', hint: '색상 변경 가능' },
-        { name: '별풍선', image: 'image/하늘별풍.jpg', hint: '색상 변경 가능' }
-      ],
       vtsProps: [
         { name: '3D치즈', image: 'image2D/치즈.png' },
         { name: '2D치즈', image: 'image/egg.png' },
@@ -1496,18 +1532,6 @@
       chips: THROW_CHIPS,
       optionHints: THROW_OPTION_HINTS,
       props: BONK_DROP_PROPS
-    },
-    {
-      type: 'card',
-      title: '폴댄스',
-      desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
-      price: '50,000원',
-      isNew: true,
-      video: 'videos/폴댄스API.mp4',
-      chips: ['음악 추가 가능'],
-      optionHints: {
-        '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
-      }
     }
   ];
 
@@ -1532,7 +1556,12 @@
       { label: '팬캐릭터3', desc: FANCHAR_DESC, image: 'image/3번.png' },
       { label: '팬캐릭터4', desc: FANCHAR_DESC, image: 'image/4번.png' },
       { label: '팬캐릭터5', desc: FANCHAR_DESC, image: 'image/5번.png' },
-      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번.jpg' }
+      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번.jpg' },
+      { label: '팬캐릭터14', desc: FANCHAR_DESC, image: 'Port/카우리님 팬 캐릭터.jpg' },
+      { label: '팬캐릭터15', desc: FANCHAR_DESC, image: 'Port/나들희님 팬 캐릭터.png' },
+      { label: '팬캐릭터16', desc: FANCHAR_DESC, image: 'Port/쿠쿠양님 팬 캐릭터.png' },
+      { label: '팬캐릭터17', desc: FANCHAR_DESC, image: 'image/바박수님 팬캐릭터.png' },
+      { label: '팬캐릭터18', desc: FANCHAR_DESC, image: 'image/누먕님팬캐릭터.png', fit: 'contain' }
     ]
   };
 
@@ -1548,7 +1577,8 @@
       { label: '양망치', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/양망치.jpg' },
       { label: '별풍선', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/하늘별풍.jpg' },
       { label: '보석 하트', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'image/보석하트.png' },
-      { label: '달걀', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', video: 'Port/와루도달걀.mp4', image: 'image/egg.png' }
+      { label: '달걀', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', video: 'Port/와루도달걀.mp4', image: 'image/egg.png' },
+      { label: '오리지널 소품', desc: '와루도에서 상호작용 가능한 독창적인 소품을 제작해 드립니다.', image: 'Port/빙하유님오리지널소품.png' }
     ]
   };
 
@@ -1650,7 +1680,8 @@
       category: '팬캐릭터,PROP제작',
       desc: '누먕님 팬 캐릭터 제작 작업입니다.',
       date: '2026.09',
-      image: 'image/누먕님팬캐릭터.png'
+      image: 'image/누먕님팬캐릭터.png',
+      fit: 'contain'
     },
     {
       title: '서무무님 윙크 API',
