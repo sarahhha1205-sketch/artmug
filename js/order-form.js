@@ -1,5 +1,30 @@
 (function () {
   var PRICE_ITEMS = {
+    "api-fan": [
+      {
+        title: "팬 캐릭터 뽀뽀",
+        desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
+        price: "50,000",
+        vts: true,
+        vtsPrice: "70,000"
+      },
+      {
+        title: "팬 캐릭터 뺨 당기기",
+        desc: "팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
+        price: "50,000"
+      },
+      {
+        title: "팬 캐릭터 망치",
+        desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
+        price: "70,000",
+        vtsOnly: true
+      },
+      {
+        title: "팬 캐릭터 따라다니기",
+        desc: "팬 캐릭터가 따라다니게 할 수 있는 기능입니다.",
+        price: "20,000"
+      }
+    ],
     "api-basic": [
       {
         title: "던지기",
@@ -42,11 +67,6 @@
         vts: true
       },
       {
-        title: "깔리기",
-        desc: "커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.",
-        price: "30,000"
-      },
-      {
         title: "와르르",
         desc: "캐릭터에게 물건들이 쏟아집니다.",
         price: "20,000",
@@ -73,6 +93,11 @@
     ],
     "api-custom": [
       {
+        title: "깔리기",
+        desc: "커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.",
+        price: "30,000"
+      },
+      {
         title: "안경 자물쇠",
         desc: "캐릭터에게 자물쇠가 채워진 안경을 씌워줍니다.",
         price: "40,000"
@@ -89,26 +114,8 @@
       },
       {
         title: "랜덤 가챠 가방",
-        desc: "가방을 열면 폭탄이나 돈이 나옵니다.",
+        desc: "폭탄 혹은 돈이 랜덤으로 나옵니다.",
         price: "70,000"
-      },
-      {
-        title: "팬 캐릭터 뽀뽀",
-        desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
-        price: "50,000",
-        vts: true,
-        vtsPrice: "70,000"
-      },
-      {
-        title: "팬 캐릭터 뺨 당기기",
-        desc: "팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
-        price: "50,000"
-      },
-      {
-        title: "팬 캐릭터 망치",
-        desc: "팬 캐릭터가 나타나 캐릭터의 머리를 망치로 강타합니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
-        price: "70,000",
-        vtsOnly: true
       },
       {
         title: "아봉",
@@ -136,11 +143,6 @@
         title: "천사 / 악마 변신",
         desc: "캐릭터가 날개를 달며 날아오릅니다. 날개 종류를 바꾸거나 뿔, 헤일로를 추가할 수 있습니다.",
         price: "50,000"
-      },
-      {
-        title: "팬 캐릭터 따라다니기",
-        desc: "팬 캐릭터가 따라다니게 할 수 있는 기능입니다.",
-        price: "20,000"
       },
       {
         title: "시청자 던지기",
@@ -180,8 +182,9 @@
       { id: "file", label: "파일 전달 (숙련자)" }
     ],
     categories: [
+      { key: "api-fan", label: "팬 캐릭터 API" },
       { key: "api-basic", label: "기본 API" },
-      { key: "api-custom", label: "커스텀 API" },
+      { key: "api-custom", label: "특수 API" },
       { key: "prop-production", label: "PROP 제작" }
     ]
   };
@@ -207,6 +210,7 @@
     entries = entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : !e.item.vtsOnly; });
     if (categoryKey === "prop-production") return sortByPrice(entries);
     if (orderPlatform !== "vts") return sortByPrice(entries);
+    if (categoryKey === "api-fan") entries = entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
     if (categoryKey === "api-basic") entries = entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
     if (categoryKey === "api-custom") entries = entries.filter(function (e) { return e.item.vts || e.item.vtsOnly; });
     return sortByPrice(entries);
@@ -496,7 +500,7 @@
     var note = form.elements.note ? form.elements.note.value.trim() : "";
     var selectedApis = getSelectedApis();
     var apiEntries = selectedApis.filter(function (entry) {
-      return entry.category === "api-basic" || entry.category === "api-custom";
+      return entry.category === "api-fan" || entry.category === "api-basic" || entry.category === "api-custom";
     });
     var propEntries = selectedApis.filter(function (entry) {
       return entry.category === "prop-production";
