@@ -211,6 +211,20 @@
     .sec-head-copy h2 { margin-bottom: 6px; }
     .sec-head-copy .lead { margin-bottom: 0; }
 
+    .api-jump { display: flex; justify-content: center; gap: 16px; margin: -12px auto 32px; max-width: 1200px; }
+    .api-jump-btn {
+      flex: 1 1 0; font-family: inherit; cursor: pointer; white-space: nowrap; text-align: center;
+      padding: 18px 16px; border-radius: 18px; font-size: 24px; font-weight: 900;
+      border: 1px solid var(--border-dark-hover); background: var(--surface-elevated); color: var(--text-soft);
+      transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .api-jump-btn:hover { border-color: var(--brand-border); color: var(--text); transform: translateY(-1px); }
+    @media (max-width: 560px) { .api-jump { gap: 8px; margin: -4px auto 20px; } .api-jump-btn { font-size: 14px; padding: 13px 6px; border-radius: 14px; } }
+    .api-section-title {
+      font-size: 18px; font-weight: 900; color: var(--accent);
+      grid-column: 1 / -1;
+      margin: 18px 0 4px; padding-left: 12px; border-left: 3px solid var(--brand);
+    }
     .api-stack { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
     @container (min-width: 1000px) {
       .api-stack { grid-template-columns: repeat(2, 1fr); }
@@ -903,6 +917,11 @@
       <button type="button" class="platform-tab is-active" data-platform="warudo">Warudo</button>
       <button type="button" class="platform-tab" data-platform="vts">VTube Studio</button>
     </div>
+    <div class="api-jump" id="apiJump">
+      <button type="button" class="api-jump-btn" data-jump="팬 캐릭터 API">팬 캐릭터 API</button>
+      <button type="button" class="api-jump-btn" data-jump="기본 API">기본 API</button>
+      <button type="button" class="api-jump-btn" data-jump="특수 API">특수 API</button>
+    </div>
     <div class="api-stack" id="apiList"></div>
     <p class="api-custom-note" id="platformNote" hidden>모델 출처 : 김정폭님(@dickbomber) 제작 LIVE2d 모델 "사보텐" 협찬</p>
   </section>
@@ -1225,7 +1244,7 @@
     {
       type: 'swipe',
       title: '랜덤 가챠 가방',
-      desc: '가방을 열면 폭탄 가방 혹은 돈가방이 확률적으로 나옵니다. 폭탄 가방을 맞으면 캐릭터가 날아갑니다.',
+      desc: '가방을 열면 폭탄이나 돈이 나옵니다.',
       price: '70,000원',
       isNew: true,
       titleMode: 'static',
@@ -1267,6 +1286,18 @@
       price: '40,000원',
       isNew: true,
       video: VIDEO_LOCK
+    },
+    {
+      type: 'swipe',
+      title: '동전 / 치즈 먹기',
+      price: '30,000원',
+      isNew: true,
+      vtsOnly: true,
+      variants: [
+        { label: '동전 먹기', desc: '캐릭터가 동전을 먹습니다.', video: '2D/2D동전먹기.mp4' },
+        { label: '치즈 먹기', desc: '캐릭터가 치즈를 먹습니다.', video: '2D/2D치즈먹기.mp4' }
+      ],
+      titleMode: 'static'
     },
     {
       type: 'swipe',
@@ -2581,8 +2612,31 @@
   function renderList() {
     var el = document.getElementById('apiList');
     if (!el) return;
-    el.innerHTML = API_ITEMS.map(function (item, i) {
-      return item.type === 'swipe' ? renderSwipeCard(item, i) : renderCard(item, i);
+    function sectionOf(item) {
+      if (/^팬 캐릭터/.test(item.title)) return '팬 캐릭터 API';
+      return parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) <= 20000 ? '기본 API' : '특수 API';
+    }
+    function platsOf(item) { return item.vtsOnly ? ['vts'] : (item.vts ? ['warudo', 'vts'] : ['warudo']); }
+    var secPlats = {};
+    API_ITEMS.forEach(function (item) {
+      var sec = sectionOf(item);
+      secPlats[sec] = secPlats[sec] || [];
+      platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
+    });
+    var secOrder = ['팬 캐릭터 API', '기본 API', '특수 API'];
+    var ordered = API_ITEMS.map(function (item, i) { return { item: item, i: i }; }).sort(function (a, b) {
+      return (secOrder.indexOf(sectionOf(a.item)) - secOrder.indexOf(sectionOf(b.item))) || ((b.item.isNew ? 1 : 0) - (a.item.isNew ? 1 : 0)) || (a.i - b.i);
+    });
+    var lastSec = '';
+    el.innerHTML = ordered.map(function (entry) {
+      var item = entry.item, i = entry.i;
+      var sec = sectionOf(item);
+      var head = '';
+      if (sec !== lastSec) {
+        lastSec = sec;
+        head = '<h3 class="api-section-title" data-platforms="' + secPlats[sec].join(' ') + '">' + sec + '</h3>';
+      }
+      return head + (item.type === 'swipe' ? renderSwipeCard(item, i) : renderCard(item, i));
     }).join('');
     initFoldAccordions();
     initPropLightbox();
@@ -2590,6 +2644,7 @@
     initVideoCycle(el);
     initVideoSwipeGesture(el);
     applyApiPlatform(currentApiPlatform);
+    updateApiJump();
   }
 
   function cycleVideoTo(v, idx) {
@@ -2653,6 +2708,32 @@
   }
 
   var currentApiPlatform = 'warudo';
+
+  function updateApiJump() {
+    var jump = document.getElementById('apiJump');
+    var listEl = document.getElementById('apiList');
+    if (!jump || !listEl) return;
+    var heads = listEl.querySelectorAll('.api-section-title');
+    Array.prototype.forEach.call(jump.querySelectorAll('.api-jump-btn'), function (btn) {
+      var found = Array.prototype.some.call(heads, function (h) { return h.textContent === btn.dataset.jump && h.style.display !== 'none'; });
+      btn.style.display = found ? '' : 'none';
+    });
+  }
+  (function () {
+    var jump = document.getElementById('apiJump');
+    if (!jump) return;
+    jump.addEventListener('click', function (e) {
+      var btn = e.target.closest('.api-jump-btn');
+      if (!btn) return;
+      var heads = document.querySelectorAll('#apiList .api-section-title');
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].textContent === btn.dataset.jump && heads[i].style.display !== 'none') {
+          heads[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          break;
+        }
+      }
+    });
+  })();
 
   function applyApiPlatform(platform) {
     currentApiPlatform = platform;
@@ -2737,6 +2818,7 @@
         wrap.querySelectorAll('.platform-tab').forEach(function (b) { b.classList.remove('is-active'); });
         btn.classList.add('is-active');
         applyApiPlatform(btn.dataset.platform);
+        updateApiJump();
       });
     });
   }
