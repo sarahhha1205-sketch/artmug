@@ -3086,7 +3086,16 @@
       if (!v) return;
       if (i === slideIndex) {
         v.classList.remove('is-inactive-slide');
-        v.currentTime = 0;
+        v.muted = true;
+        v.playsInline = true;
+        /* lazy clips may not have been fetched yet (preload=none): load now */
+        if (!v.getAttribute('src') && v.dataset.src) {
+          v.src = v.dataset.src;
+          if (v.dataset.loop === '1' && !v.dataset.cycleList) v.loop = true;
+          v.load();
+        } else {
+          v.currentTime = 0;
+        }
         var p = v.play();
         if (p && p.catch) p.catch(function () {});
       } else {
@@ -3401,13 +3410,26 @@
         entries.forEach(function (entry) {
           var v = entry.target;
           if (entry.isIntersecting) {
+            /* iOS/in-app webviews only autoplay when muted/playsinline are set as
+               properties, and may reject play() until the data has loaded. */
+            v.muted = true;
+            v.defaultMuted = true;
+            v.playsInline = true;
+            v.setAttribute('webkit-playsinline', '');
             if (!v.src && v.dataset.src) {
               v.src = v.dataset.src;
               if (v.dataset.loop === '1' && !v.dataset.cycleList) v.loop = true;
               v.load();
             }
-            var playPromise = v.play();
-            if (playPromise && playPromise.catch) playPromise.catch(function () {});
+            var tryPlay = function () {
+              var pp = v.play();
+              if (pp && pp.catch) pp.catch(function () {});
+            };
+            tryPlay();
+            if (v.readyState < 3) v.addEventListener('canplay', function onCan() {
+              v.removeEventListener('canplay', onCan);
+              if (v.paused && entry.target.dataset.src) tryPlay();
+            });
           } else {
             v.pause();
           }
@@ -3432,6 +3454,18 @@
   }
 
   observeLazyVideos(document);
+  /* Fallback: if the browser blocked autoplay (low-power mode, data saver),
+     start every on-screen clip on the first touch. */
+  document.addEventListener('touchstart', function () {
+    document.querySelectorAll('.lazy-video').forEach(function (v) {
+      var r = v.getBoundingClientRect();
+      if (v.paused && v.src && r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth) {
+        v.muted = true;
+        var pp = v.play();
+        if (pp && pp.catch) pp.catch(function () {});
+      }
+    });
+  }, { passive: true, once: true });
   if (window.MutationObserver) {
     var pageRootForVideos = document.getElementById('page-root');
     if (pageRootForVideos) {
