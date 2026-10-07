@@ -257,6 +257,8 @@
       box-shadow: 0 6px 16px rgba(255, 154, 63, 0.45);
       pointer-events: none;
     }
+    .api-card-wide { grid-column: 1 / -1; }
+    .api-card-wide .api-media { aspect-ratio: 16 / 9; }
     .api-card:hover {
       border-color: var(--border-light-hover);
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
@@ -373,6 +375,14 @@
       color: var(--text-dark-soft); font-size: 12px; font-weight: 800;
       background: var(--surface-inset); border-color: var(--border-light);
     }
+    .api-head-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .api-result-btn {
+      padding: 7px 14px; border: 0; border-radius: 999px; cursor: pointer;
+      background: linear-gradient(135deg, #ff5c8a, #ff8a5c); color: #fff;
+      font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(255, 92, 138, 0.35);
+    }
+    .api-result-btn:hover { filter: brightness(1.08); }
     .api-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
     .api-chip {
       font-size: 10px; font-weight: 600; color: var(--text-dark-soft);
@@ -541,7 +551,7 @@
     }
     .prop-lightbox-dialog {
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      z-index: 1; width: min(520px, calc(100% - 32px));
+      z-index: 1; width: min(640px, calc(100% - 32px));
       background: var(--surface-white); border: 1px solid var(--border-light);
       border-radius: 16px; padding: 16px; box-shadow: var(--shadow);
     }
@@ -552,7 +562,7 @@
       font-size: 20px; line-height: 1; cursor: pointer; font-family: inherit;
     }
     .prop-lightbox-img {
-      width: 100%; max-height: min(70vh, 520px); object-fit: contain;
+      width: 100%; max-height: min(82vh, 780px); object-fit: contain; display: block;
       border-radius: 12px; background: var(--surface-muted);
     }
     .prop-lightbox-title { display: none; }
@@ -1413,7 +1423,9 @@
       desc: '다양한 필터와 스티커를 커스텀하여 나만의 방셀을 찍을 수 있습니다.<br>기본 고양이, 안경, 해골 필터가 있으며 원하는 필터 하나를 무료로 제작해 드립니다.',
       price: '50,000원',
       isNew: true,
-      video: 'videos/4컷사진.mp4'
+      video: 'videos/4컷사진.mp4',
+      wide: true,
+      resultImage: 'videos/20261008_012553_846_사냥단.png'
     },
     {
       type: 'swipe',
@@ -2456,7 +2468,10 @@
     return ''
       + '<div class="api-head">'
       +   '<h3 class="api-title">' + item.title + '</h3>'
-      +   '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
+      +   (item.resultImage
+        ? '<div class="api-head-side"><span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
+          + '<button type="button" class="api-result-btn" data-prop-name="' + item.title + ' 결과물" data-prop-image="' + item.resultImage + '">결과물 보기</button></div>'
+        : '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>')
       + '</div>';
   }
 
@@ -2487,7 +2502,7 @@
     var uid = 'card-' + index;
     var platforms = item.vtsOnly ? 'vts' : ('warudo' + (item.vts ? ' vts' : ''));
     return ''
-      + '<article class="api-card" data-platforms="' + platforms + '">'
+      + '<article class="api-card' + (item.wide ? ' api-card-wide' : '') + '" data-platforms="' + platforms + '">'
       +   (item.isNew ? '<span class="api-badge-new"' + (item.newVtsOnly ? ' data-warudo-hide="1"' : '') + '>NEW</span>' : '')
       +   (item.isSale ? '<span class="api-badge-sale">SALE</span>' : '')
       +   '<div class="api-media">' + renderMedia(item, item.title) + '</div>'
@@ -2615,21 +2630,36 @@
       box.hidden = false;
       box.setAttribute('aria-hidden', 'false');
 
+      /* backdrop must cover the whole document, not just the first screen */
+      var docH = Math.max(document.documentElement.scrollHeight, window.innerHeight);
+      box.style.height = docH + 'px';
+
       if (dialog) {
-        var centerY = window.innerHeight / 2;
-        if (originEl && originEl.getBoundingClientRect) {
-          var rect = originEl.getBoundingClientRect();
-          centerY = rect.top + rect.height / 2;
+        var embedded = window.parent !== window;
+        var centerY;
+        if (!embedded) {
+          /* standalone: center in the visible screen */
+          centerY = (window.pageYOffset || 0) + window.innerHeight / 2;
+        } else {
+          centerY = window.innerHeight / 2;
+          if (originEl && originEl.getBoundingClientRect) {
+            var rect = originEl.getBoundingClientRect();
+            centerY = rect.top + rect.height / 2;
+          }
         }
-        var docH = Math.max(document.documentElement.scrollHeight, window.innerHeight);
-        var half = Math.min(360, dialog.offsetHeight ? dialog.offsetHeight / 2 : 240);
+        var half = (dialog.offsetHeight || 480) / 2;
         centerY = Math.max(half + 16, Math.min(centerY, docH - half - 16));
         dialog.style.top = centerY + 'px';
+        /* image size is known only after it loads: re-clamp then */
+        img.onload = function () {
+          var h = (dialog.offsetHeight || 480) / 2;
+          dialog.style.top = Math.max(h + 16, Math.min(centerY, docH - h - 16)) + 'px';
+        };
       }
     }
 
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('.api-prop-slot--zoom, .prop-product-media--zoom');
+      var btn = e.target.closest('.api-prop-slot--zoom, .prop-product-media--zoom, .api-result-btn');
       if (btn) {
         openLightbox(btn.dataset.propName || '', btn.dataset.propImage || '', btn);
         return;
