@@ -375,7 +375,9 @@
       color: var(--text-dark-soft); font-size: 12px; font-weight: 800;
       background: var(--surface-inset); border-color: var(--border-light);
     }
-    .api-result-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+    .api-head--result { position: relative; }
+    .api-head--result .api-result-btn { position: absolute; right: 0; top: calc(100% + 6px); }
+    .api-head--result + .api-desc { padding-right: 150px; min-height: 40px; }
     .api-result-btn {
       padding: 7px 14px; border: 0; border-radius: 999px; cursor: pointer;
       background: linear-gradient(135deg, #ff5c8a, #ff8a5c); color: #fff;
@@ -2466,13 +2468,13 @@
       ? ' data-base-price="' + item.price + '" data-vts-price="' + (item.vtsPrice || vtsPriceText(item.price)) + '"'
       : ' data-base-price="' + item.price + '"';
     return ''
-      + '<div class="api-head">'
+      + '<div class="api-head' + (item.resultImage ? ' api-head--result' : '') + '">'
       +   '<h3 class="api-title">' + item.title + '</h3>'
       +   '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
-      + '</div>'
-      + (item.resultImage
-        ? '<div class="api-result-row"><button type="button" class="api-result-btn" data-prop-name="' + item.title + ' 찍힌 사진" data-prop-image="' + item.resultImage + '">찍힌 사진 보기</button></div>'
-        : '');
+      +   (item.resultImage
+        ? '<button type="button" class="api-result-btn" data-prop-name="' + item.title + ' 찍힌 사진" data-prop-image="' + item.resultImage + '">찍힌 사진 보기</button>'
+        : '')
+      + '</div>';
   }
 
   function swipeCardTitle(item, slideIndex) {
