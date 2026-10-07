@@ -375,7 +375,7 @@
       color: var(--text-dark-soft); font-size: 12px; font-weight: 800;
       background: var(--surface-inset); border-color: var(--border-light);
     }
-    .api-head-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .api-result-row { display: flex; justify-content: flex-end; margin-top: 8px; }
     .api-result-btn {
       padding: 7px 14px; border: 0; border-radius: 999px; cursor: pointer;
       background: linear-gradient(135deg, #ff5c8a, #ff8a5c); color: #fff;
@@ -1420,7 +1420,7 @@
     {
       type: 'card',
       title: '4컷 사진',
-      desc: '다양한 필터와 스티커를 커스텀하여 나만의 방셀을 찍을 수 있습니다.<br>기본 고양이, 안경, 해골 필터가 있으며 원하는 필터 하나를 무료로 제작해 드립니다.',
+      desc: '다양한 필터와 스티커를 커스텀하여 나만의 방셀을 찍을 수 있습니다.<br>기본 고양이, 안경, 해골 필터가 있으며 원하는 필터 하나를 무료로 제작해 드립니다.<br>도네한 시청자의 이름을 사진 아래에 넣을 수 있고, 찍은 사진은 별도 폴더에 저장됩니다.',
       price: '50,000원',
       isNew: true,
       video: 'videos/4컷사진.mp4',
@@ -2468,11 +2468,11 @@
     return ''
       + '<div class="api-head">'
       +   '<h3 class="api-title">' + item.title + '</h3>'
-      +   (item.resultImage
-        ? '<div class="api-head-side"><span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
-          + '<button type="button" class="api-result-btn" data-prop-name="' + item.title + ' 결과물" data-prop-image="' + item.resultImage + '">결과물 보기</button></div>'
-        : '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>')
-      + '</div>';
+      +   '<span class="' + priceClass + '"' + priceAttrs + '>' + item.price + '</span>'
+      + '</div>'
+      + (item.resultImage
+        ? '<div class="api-result-row"><button type="button" class="api-result-btn" data-prop-name="' + item.title + ' 찍힌 사진" data-prop-image="' + item.resultImage + '">찍힌 사진 보기</button></div>'
+        : '');
   }
 
   function swipeCardTitle(item, slideIndex) {
