@@ -567,6 +567,8 @@
       width: 100%; max-height: min(82vh, 780px); object-fit: contain; display: block;
       border-radius: 12px; background: var(--surface-muted);
     }
+    .prop-lightbox.is-photo .prop-lightbox-dialog { width: min(632px, calc(100% - 32px)); }
+    .prop-lightbox.is-photo .prop-lightbox-img { width: 100%; max-height: none; height: auto; margin: 0 auto; background: transparent; }
     .prop-lightbox-title { display: none; }
 
     /* 포트폴리오 — 전체를 아코디언으로 열고, 카테고리는 버튼으로 선택 */
@@ -2626,6 +2628,7 @@
        뜨는 문제가 있었음. 그래서 클릭한 요소의 실제 문서상 위치를 기준으로
        팝업을 배치해서, 사용자가 지금 보고 있는 위치 근처에 뜨도록 함. */
     function openLightbox(name, src, originEl) {
+      box.classList.toggle('is-photo', !!(originEl && originEl.classList && originEl.classList.contains('api-result-btn')));
       img.src = src;
       img.alt = name;
       title.textContent = name;
@@ -2649,14 +2652,18 @@
             centerY = rect.top + rect.height / 2;
           }
         }
-        var half = (dialog.offsetHeight || 480) / 2;
-        centerY = Math.max(half + 16, Math.min(centerY, docH - half - 16));
-        dialog.style.top = centerY + 'px';
-        /* image size is known only after it loads: re-clamp then */
-        img.onload = function () {
+        var place = function () {
           var h = (dialog.offsetHeight || 480) / 2;
-          dialog.style.top = Math.max(h + 16, Math.min(centerY, docH - h - 16)) + 'px';
+          var top = Math.max(h + 16, Math.min(centerY, docH - h - 16));
+          /* taller than the screen (standalone): start at the top of the view, page scrolls */
+          if (!embedded && h * 2 + 32 > window.innerHeight) top = (window.pageYOffset || 0) + h + 16;
+          dialog.style.top = top + 'px';
+          var need = top + h + 16;
+          if (need > box.offsetHeight) box.style.height = need + 'px';
         };
+        place();
+        /* image size is known only after it loads: re-place then */
+        img.onload = place;
       }
     }
 
