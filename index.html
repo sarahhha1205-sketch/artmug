@@ -1423,6 +1423,14 @@
     },
     {
       type: 'card',
+      title: '천사 강림',
+      desc: '하늘에서 강림하는 느낌으로 천사 날개와 헤일로를 장착한 캐릭터가 등장합니다.<br>빛줄기 색, 등장 효과, 날개 색상, 포즈나 표정을 자유롭게 커스텀할 수 있습니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'Port/천사강림.mp4'
+    },
+    {
+      type: 'card',
       title: '대포 발사',
       desc: '캐릭터가 대포 속으로 들어가 화면 밖으로 발사됩니다.',
       price: '50,000원',
@@ -1697,6 +1705,13 @@
       desc: '다양한 필터와 스티커로 나만의 방셀을 찍는 4컷 사진 API입니다.',
       date: '2026.10',
       video: 'videos/4컷사진.mp4'
+    },
+    {
+      title: '천사 강림 API',
+      category: '와루도 3D API',
+      group: '천사 강림',
+      date: '2026.10',
+      video: 'Port/천사강림.mp4'
     },
     {
       title: '나들희님 팬캐릭터 뽀뽀 API',
@@ -2716,7 +2731,7 @@
       platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
     });
     var secOrder = ['특수 API', '팬 캐릭터 API', '기본 API'];
-    var topOrder = ['4컷 사진', '번개 맞기', '악마 소환'];
+    var topOrder = ['4컷 사진', '번개 맞기', '악마 소환', '천사 강림'];
     var bottomOrder = ['랜덤 가챠 가방'];
     function topRank(item) {
       var r = topOrder.indexOf(item.title);
@@ -2726,6 +2741,13 @@
     var ordered = API_ITEMS.map(function (item, i) { return { item: item, i: i }; }).sort(function (a, b) {
       return (secOrder.indexOf(sectionOf(a.item)) - secOrder.indexOf(sectionOf(b.item))) || (topRank(a.item) - topRank(b.item)) || ((b.item.isNew ? 1 : 0) - (a.item.isNew ? 1 : 0)) || (a.i - b.i);
     });
+    /* 대포 발사는 아봉 바로 다음에 배치 */
+    var cannonAt = ordered.findIndex(function (e) { return e.item.title === '대포 발사'; });
+    if (cannonAt !== -1) {
+      var cannon = ordered.splice(cannonAt, 1)[0];
+      var abongAt = ordered.findIndex(function (e) { return e.item.title === '아봉'; });
+      ordered.splice(abongAt === -1 ? cannonAt : abongAt + 1, 0, cannon);
+    }
     var lastSec = '';
     el.innerHTML = ordered.map(function (entry) {
       var item = entry.item, i = entry.i;
