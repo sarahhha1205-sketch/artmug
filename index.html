@@ -1324,6 +1324,7 @@
     {
       type: 'card',
       title: '깔리기',
+      section: '기본 API',
       desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
       price: '30,000원',
       isNew: true,
@@ -1440,7 +1441,7 @@
     {
       type: 'card',
       title: '운세 뽑기',
-      desc: '카드가 펼쳐지고 한 장을 뽑으면 오늘의 운세가 나타납니다.',
+      desc: '카드가 펼쳐지고 한 장을 뽑으면 오늘의 운세가 나타납니다.<br>카드 문구와 폰트 색상, 카드 뒷면의 색상을 자유롭게 커스텀할 수 있습니다.',
       price: '50,000원',
       isNew: true,
       video: 'videos/운세뽑기.mp4'
@@ -2721,6 +2722,7 @@
     if (!el) return;
     function sectionOf(item) {
       if (/^팬 캐릭터/.test(item.title)) return '팬 캐릭터 API';
+      if (item.section) return item.section;
       return parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) <= 20000 ? '기본 API' : '특수 API';
     }
     function platsOf(item) { return item.vtsOnly ? ['vts'] : (item.vts ? ['warudo', 'vts'] : ['warudo']); }
