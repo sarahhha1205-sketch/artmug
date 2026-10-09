@@ -1316,7 +1316,7 @@
     {
       type: 'card',
       title: '아봉',
-      desc: '일정 시간동안 캐릭터의 입을 막습니다.',
+      desc: '일정 시간동안 캐릭터의 입을 막습니다.<br>특정 키 입력으로도 동작하게 할 수 있습니다.',
       price: '30,000원',
       isNew: true,
       video: 'videos/아봉.mp4'
@@ -1324,6 +1324,7 @@
     {
       type: 'card',
       title: '깔리기',
+      section: '기본 API',
       desc: '커다란 물건이 내려와 캐릭터의 몸을 깔아뭉갭니다.',
       price: '30,000원',
       isNew: true,
@@ -1405,18 +1406,6 @@
     },
     {
       type: 'card',
-      title: '폴댄스',
-      desc: '캐릭터가 봉을 잡고 폴댄스를 춥니다.',
-      price: '50,000원',
-      isNew: true,
-      video: 'videos/폴댄스API.mp4',
-      chips: ['음악 추가 가능'],
-      optionHints: {
-        '음악 추가 가능': '폴댄스에 맞춰 나오는 음악을 추가·변경합니다.'
-      }
-    },
-    {
-      type: 'card',
       title: '4컷 사진',
       desc: '다양한 필터와 스티커를 커스텀하여 나만의 방셀을 찍을 수 있습니다.<br>기본 고양이, 안경, 해골 필터가 있으며 원하는 필터 하나를 무료로 제작해 드립니다.<br>도네한 시청자의 이름을 사진 아래에 넣을 수 있고, 찍은 사진은 별도 폴더에 고화질로 저장됩니다.',
       price: '50,000원',
@@ -1428,10 +1417,44 @@
     {
       type: 'card',
       title: '악마 소환',
-      desc: '마법진에서 소환되는 느낌으로 악마뿔과 날개를 장착한 캐릭터가 등장합니다.',
+      desc: '마법진에서 소환되는 느낌으로 악마뿔과 날개를 장착한 캐릭터가 등장합니다.<br>마법진 색, 등장 효과, 날개 색상, 포즈나 표정을 자유롭게 커스텀할 수 있습니다.',
       price: '50,000원',
       isNew: true,
       video: 'videos/악마등장.mp4'
+    },
+    {
+      type: 'card',
+      title: '천사 강림',
+      desc: '하늘에서 강림하는 느낌으로 천사 날개와 헤일로를 장착한 캐릭터가 등장합니다.<br>빛줄기 색, 등장 효과, 날개 색상, 포즈나 표정을 자유롭게 커스텀할 수 있습니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/천사강림.mp4',
+      zoom: 1.2,
+      panY: -8
+    },
+    {
+      type: 'card',
+      title: '대포 발사',
+      desc: '캐릭터가 대포 속으로 들어가 화면 밖으로 발사됩니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/대포발사.mp4'
+    },
+    {
+      type: 'card',
+      title: '운세 뽑기',
+      desc: '카드가 펼쳐지고 한 장을 뽑으면 오늘의 운세가 나타납니다.<br>카드 문구와 폰트 색상, 카드 뒷면의 색상을 자유롭게 커스텀할 수 있습니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/운세뽑기.mp4'
+    },
+    {
+      type: 'card',
+      title: '무대 공연',
+      desc: '캐릭터가 춤 애니메이션에 맞추어 춤을 춥니다.<br>무대의 색상, 뒷배경 영상, 파티클 등 다양한 효과를 추가하거나 커스텀할 수 있습니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/무대공연.mp4'
     },
     {
       type: 'card',
@@ -1693,6 +1716,13 @@
       desc: '다양한 필터와 스티커로 나만의 방셀을 찍는 4컷 사진 API입니다.',
       date: '2026.10',
       video: 'videos/4컷사진.mp4'
+    },
+    {
+      title: '천사 강림 API',
+      category: '와루도 3D API',
+      group: '천사 강림',
+      date: '2026.10',
+      video: 'videos/천사강림.mp4'
     },
     {
       title: '나들희님 팬캐릭터 뽀뽀 API',
@@ -2702,6 +2732,7 @@
     if (!el) return;
     function sectionOf(item) {
       if (/^팬 캐릭터/.test(item.title)) return '팬 캐릭터 API';
+      if (item.section) return item.section;
       return parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) <= 20000 ? '기본 API' : '특수 API';
     }
     function platsOf(item) { return item.vtsOnly ? ['vts'] : (item.vts ? ['warudo', 'vts'] : ['warudo']); }
@@ -2712,11 +2743,23 @@
       platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
     });
     var secOrder = ['특수 API', '팬 캐릭터 API', '기본 API'];
-    var topOrder = ['4컷 사진', '번개 맞기', '악마 소환'];
-    function topRank(item) { var r = topOrder.indexOf(item.title); return r === -1 ? topOrder.length : r; }
+    var topOrder = ['4컷 사진', '번개 맞기', '악마 소환', '천사 강림'];
+    var bottomOrder = ['랜덤 가챠 가방'];
+    function topRank(item) {
+      var r = topOrder.indexOf(item.title);
+      if (r !== -1) return r;
+      return bottomOrder.indexOf(item.title) !== -1 ? topOrder.length + 2 : topOrder.length;
+    }
     var ordered = API_ITEMS.map(function (item, i) { return { item: item, i: i }; }).sort(function (a, b) {
       return (secOrder.indexOf(sectionOf(a.item)) - secOrder.indexOf(sectionOf(b.item))) || (topRank(a.item) - topRank(b.item)) || ((b.item.isNew ? 1 : 0) - (a.item.isNew ? 1 : 0)) || (a.i - b.i);
     });
+    /* 대포 발사는 아봉 바로 다음에 배치 */
+    var cannonAt = ordered.findIndex(function (e) { return e.item.title === '대포 발사'; });
+    if (cannonAt !== -1) {
+      var cannon = ordered.splice(cannonAt, 1)[0];
+      var abongAt = ordered.findIndex(function (e) { return e.item.title === '아봉'; });
+      ordered.splice(abongAt === -1 ? cannonAt : abongAt + 1, 0, cannon);
+    }
     var lastSec = '';
     el.innerHTML = ordered.map(function (entry) {
       var item = entry.item, i = entry.i;
