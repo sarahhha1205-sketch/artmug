@@ -1434,6 +1434,14 @@
     },
     {
       type: 'card',
+      title: '마법소녀 변신',
+      desc: '의상, 헤어를 교체하며 변신합니다.',
+      price: '60,000원',
+      isNew: true,
+      video: 'videos/마법소녀변신.mp4'
+    },
+    {
+      type: 'card',
       title: '대포 발사',
       desc: '캐릭터가 대포 속으로 들어가 화면 밖으로 발사됩니다.',
       price: '50,000원',
@@ -1719,18 +1727,19 @@
       video: 'videos/4컷사진.mp4'
     },
     {
-      title: '마법소녀 변신 API',
-      category: '와루도 3D API',
-      group: '마법소녀 변신',
-      date: '2026.10',
-      video: 'videos/마법소녀변신.mp4'
-    },
-    {
       title: '천사 강림 API',
       category: '와루도 3D API',
       group: '천사 강림',
       date: '2026.10',
       video: 'videos/천사강림.mp4'
+    },
+    {
+      title: '마법소녀 변신 API',
+      category: '와루도 3D API',
+      group: '마법소녀 변신',
+      desc: '의상, 헤어를 교체하며 변신합니다.',
+      date: '2026.10',
+      video: 'videos/마법소녀변신.mp4'
     },
     {
       title: '나들희님 팬캐릭터 뽀뽀 API',
@@ -2751,7 +2760,7 @@
       platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
     });
     var secOrder = ['특수 API', '팬 캐릭터 API', '기본 API'];
-    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '대포 발사', '운세 뽑기'];
+    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '대포 발사', '운세 뽑기'];
     var bottomOrder = ['랜덤 가챠 가방'];
     function topRank(item) {
       var r = topOrder.indexOf(item.title);
