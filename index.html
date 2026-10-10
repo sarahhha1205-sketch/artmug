@@ -1484,8 +1484,8 @@
     {
       type: 'card',
       title: '인형뽑기',
-      desc: '인형뽑기 기계 안에 캐릭터 인형이 가득 쌓이고, 집게가 하나를 뽑아 출구로 떨어뜨리면 캐릭터가 등장합니다.<br>가짜 캐릭터를 뽑을 수 있습니다. 캐릭터와 원하는 소품을 섞어서 배치할 수 있습니다.',
-      price: '문의',
+      desc: '인형뽑기 기계 안에 캐릭터 인형이 가득 쌓이고, 집게가 하나를 뽑아 출구로 떨어뜨리면 캐릭터가 등장합니다.<br>가짜 캐릭터를 뽑을 수 있습니다. 캐릭터와 원하는 소품을 섞어서 배치할 수 있습니다. 뽑기 확률도 자유롭게 설정할 수 있습니다.',
+      price: '80,000원',
       video: 'videos/인형뽑기진.mp4'
     },
     {
@@ -2783,7 +2783,7 @@
       platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
     });
     var secOrder = ['특수 API', '팬 캐릭터 API', '기본 API'];
-    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '선물상자 짜잔', '불꽃놀이', '대포 발사', '운세 뽑기'];
+    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '인형뽑기', '선물상자 짜잔', '불꽃놀이', '대포 발사', '운세 뽑기'];
     var bottomOrder = ['랜덤 가챠 가방'];
     function topRank(item) {
       var r = topOrder.indexOf(item.title);
