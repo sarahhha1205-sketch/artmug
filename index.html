@@ -1435,10 +1435,26 @@
     {
       type: 'card',
       title: '마법소녀 변신',
-      desc: '의상, 헤어를 교체하며 변신합니다.',
+      desc: '의상, 헤어를 교체하며 변신합니다.<br>변신 파티클, 변신 자세, 변신 시 실루엣 색상 등을 자유롭게 커스텀할 수 있습니다.',
       price: '60,000원',
       isNew: true,
       video: 'videos/마법소녀변신.mp4'
+    },
+    {
+      type: 'card',
+      title: '선물상자 짜잔',
+      desc: '선물상자가 열리며 캐릭터가 짜잔 하고 등장합니다.',
+      price: '30,000원',
+      isNew: true,
+      video: 'videos/선물상자짜잔.mp4'
+    },
+    {
+      type: 'card',
+      title: '불꽃놀이',
+      desc: '화면에 불꽃이 터지며 화려한 불꽃놀이가 펼쳐집니다.',
+      price: '40,000원',
+      isNew: true,
+      video: 'videos/불꽃놀이.mp4'
     },
     {
       type: 'card',
@@ -1737,7 +1753,7 @@
       title: '마법소녀 변신 API',
       category: '와루도 3D API',
       group: '마법소녀 변신',
-      desc: '의상, 헤어를 교체하며 변신합니다.',
+      desc: '의상, 헤어를 교체하며 변신합니다. 변신 파티클, 변신 자세, 변신 시 실루엣 색상 등을 자유롭게 커스텀할 수 있습니다.',
       date: '2026.10',
       video: 'videos/마법소녀변신.mp4'
     },
@@ -2760,7 +2776,7 @@
       platsOf(item).forEach(function (p) { if (secPlats[sec].indexOf(p) === -1) secPlats[sec].push(p); });
     });
     var secOrder = ['특수 API', '팬 캐릭터 API', '기본 API'];
-    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '대포 발사', '운세 뽑기'];
+    var topOrder = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '선물상자 짜잔', '불꽃놀이', '대포 발사', '운세 뽑기'];
     var bottomOrder = ['랜덤 가챠 가방'];
     function topRank(item) {
       var r = topOrder.indexOf(item.title);
