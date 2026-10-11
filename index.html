@@ -8,7 +8,7 @@
 <meta name="description" content="Warudo · Live2D(VTube Studio) 커스텀 API, 팬캐릭터, PROP 제작">
 <style>
 @font-face{font-family:'Jalnan2';src:url('https://raw.githubusercontent.com/sarahhha1205-sketch/artmug/main/Jalnan2TTF.ttf') format('truetype'),url('https://raw.githubusercontent.com/sarahhha1205-sketch/artmug/main/Jalnan2.otf') format('opentype');font-display:swap}
-@font-face{font-family:'Pretendard';src:url('../Pretendard-Medium.ttf') format('truetype');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Pretendard';src:url('https://raw.githubusercontent.com/rabbbibot/portfolio/main/Pretendard-Medium.ttf') format('truetype');font-weight:400 700;font-display:swap}
 :root{
   --bg:#0d0b14;--bg2:#14111e;--card:#1a1627;--line:rgba(255,255,255,.09);
   --text:#f1eff7;--soft:#a6a2bc;--dim:#6f6b86;--brand:#8b7cf6;--brand2:#c4a8ff;--pink:#ff8ac6;
@@ -1834,7 +1834,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     if (/^data:/.test(p)) return p;
     var e = encodeURI(p);
     if (LOCAL) return '../../' + e;
-    return /^image\//.test(p) ? '../' + e : RAW + e;   // image/ 는 같은 저장소, 그 외는 raw
+    return /^image\//.test(p) ? e : RAW + e;   // image/ 는 같은 저장소, 그 외는 raw
   };
   var plat = 'warudo';
   var lbOpen = false;
