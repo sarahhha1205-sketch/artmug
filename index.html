@@ -2316,6 +2316,16 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     links.forEach(function (a, i) { a.classList.toggle('on', i === cur); });
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ── 부모(artmug.kr) 리모콘에서 오는 스크롤 요청 ── */
+  addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || d.type !== 'scrollToSection' || typeof d.id !== 'string') return;
+    var el = document.getElementById(d.id);
+    if (!el) return;
+    /* iframe이 본문 높이로 늘어나 부모 페이지가 스크롤되는 경우도 있어 scrollIntoView 사용 (모든 상위 스크롤 영역이 함께 이동) */
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 })();
 </script>
 <script>
