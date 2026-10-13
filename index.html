@@ -19,7 +19,7 @@
   --text-dark:#18181b;--text-dark-soft:#52525b;--text-dark-dim:#71717a;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'Jalnan2','Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
 h1,h2,h3,h4{font-weight:400;letter-spacing:0;text-wrap:balance}
 *{font-weight:400!important}
@@ -403,6 +403,24 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
 @media(max-width:600px){
   .grid,.grid.two,.pgrid{grid-template-columns:1fr}
   .head h3{font-size:16px}
+  /* 모바일: 카드 제목·가격·버튼이 한 줄에 눌리지 않도록 줄바꿈 허용 */
+  .head{flex-wrap:wrap;height:auto;row-gap:8px}
+  .head h3{flex:1 1 auto;min-width:0;white-space:nowrap}
+  .head .btn-sm{margin-left:0;order:3}
+  .body{padding:16px 16px 18px}
+  .desc{font-size:12.5px;line-height:1.65}
+  .opts li{font-size:12px}
+  .chip{font-size:11px;padding:3px 9px}
+  .head h3{font-size:15px}
+  .btn-sm{font-size:12px;padding:0 13px}
+  .sec-head p{font-size:13.5px}
+  .price{font-size:14px;padding:6px 13px}
+  /* 상단 메뉴: 좁은 화면에서 항목이 덜 잘리도록 */
+  .nav.scrolled{background:rgba(13,11,20,.96)}
+  .nav .wrap{gap:10px;padding:0 12px}
+  .menu{gap:2px}
+  .menu a{padding:7px 10px;font-size:13px}
+  .lang button{padding:0 10px;height:28px;font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -990,6 +1008,14 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       desc: '캐릭터가 폴을 잡고 다양한 폴댄스 동작을 선보입니다.',
       price: '문의',
       video: 'videos/폴댄스API.mp4'
+    },
+    {
+      type: 'card',
+      title: '빔',
+      desc: '캐릭터가 입을 벌리면 빔과 함께 표정이 나옵니다.',
+      price: '30,000원',
+      video: 'videos/빔.mp4',
+      chips: ['빔 색상 변경 가능']
     },
     {
       type: 'card',
@@ -2317,15 +2343,33 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ── 부모(artmug.kr) 리모콘에서 오는 스크롤 요청 ── */
-  addEventListener('message', function (e) {
-    var d = e.data;
-    if (!d || d.type !== 'scrollToSection' || typeof d.id !== 'string') return;
-    var el = document.getElementById(d.id);
-    if (!el) return;
-    /* iframe이 본문 높이로 늘어나 부모 페이지가 스크롤되는 경우도 있어 scrollIntoView 사용 (모든 상위 스크롤 영역이 함께 이동) */
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  /* ── 아트머그 부모 페이지 연동 (iframe 임베드 시) ──
+     1) 문서 높이를 부모에 알려 iframe 높이를 맞춘다 ({height})
+     2) 리모콘이 보낸 {type:'scrollToSection', id}를 받아, 섹션 위치를 부모에 {top}으로 돌려보내 부모가 스크롤한다 */
+  if (window.self !== window.top) {
+    var lastH = 0;
+    var postHeight = function () {
+      var h = Math.ceil(document.documentElement.getBoundingClientRect().height);
+      if (h && h !== lastH) { lastH = h; window.parent.postMessage({ height: h }, '*'); }
+    };
+    addEventListener('load', postHeight);
+    addEventListener('resize', postHeight);
+    if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+    setInterval(postHeight, 1000);
+    postHeight();
+
+    addEventListener('message', function (e) {
+      var d = e.data;
+      if (!d || d.type !== 'scrollToSection' || typeof d.id !== 'string') return;
+      var el = document.getElementById(d.id);
+      if (!el) return;
+      window.parent.postMessage({
+        type: 'scrollToSection',
+        top: el.getBoundingClientRect().top + scrollY,
+        offset: 0
+      }, '*');
+    });
+  }
 })();
 </script>
 <script>
