@@ -212,6 +212,11 @@ details.props[open] summary::after{content:"－"}
 .cf-meta{text-align:center;margin-top:4px;min-height:48px}
 .cf-label{font-size:18px}
 .cf-count{color:var(--dim);font-size:13px;margin-top:2px;letter-spacing:.08em}
+.cf-thumbs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:920px;margin:22px auto 0;padding:0 12px}
+.cf-thumb{flex:0 0 76px;height:76px;border-radius:14px;overflow:hidden;background:#0b0912;border:2px solid var(--line);opacity:.6;padding:0;transition:.2s}
+.cf-thumb:hover{opacity:1;border-color:rgba(196,168,255,.5)}
+.cf-thumb.on{opacity:1;border-color:var(--brand2)}
+.cf-thumb img{width:100%;height:100%;object-fit:contain;padding:4px}
 .cf-dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .cf-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18);transition:.25s}
 .cf-dot.on{width:22px;border-radius:99px;background:var(--brand2)}
@@ -397,6 +402,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   .links{grid-template-columns:1fr}
   .intro-profile{flex-direction:column;text-align:center;gap:14px}
   .info-item{grid-template-columns:1fr;row-gap:6px;padding:20px 18px}
+  .cf-thumb{flex-basis:58px;height:58px;border-radius:12px}.cf-thumbs{gap:8px}
   .cf-stage{height:340px}.cf-item{width:230px;height:276px;margin:-138px 0 0 -115px}.cf-btn{width:40px;height:40px;margin-top:-20px}
   .step{grid-template-columns:56px 1fr;column-gap:16px;padding:20px 18px}.step-num{font-size:26px}
   .hero .wrap{grid-template-columns:1fr}.hero-visual{margin:10px auto 0;max-width:300px}.stats{gap:28px}
@@ -1270,7 +1276,9 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       { label: '팬캐릭터5', desc: FANCHAR_DESC, image: 'image/5번.png' },
       { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번-Photoroom.png' },
       { label: '팬캐릭터17', desc: FANCHAR_DESC, image: 'image/바박수님 팬캐릭터.png' },
-      { label: '팬캐릭터18', desc: FANCHAR_DESC, image: 'image/누먕님팬캐릭터.png', fit: 'contain' }
+      { label: '팬캐릭터18', desc: FANCHAR_DESC, image: 'image/누먕님팬캐릭터.png', fit: 'contain' },
+      { label: '팬캐릭터19', desc: FANCHAR_DESC, image: 'image/팬캐릭터19.png', fit: 'contain' },
+      { label: '팬캐릭터20', desc: FANCHAR_DESC, image: 'image/팬캐릭터20.png', fit: 'contain' }
     ]
   };
 
@@ -2137,10 +2145,11 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var items = vs.map(function (v, i) {
       return '<div class="cf-item" data-cfi="' + i + '"><div class="imgbox"><img class="ifg" src="' + enc(v.image) + '" alt="' + T(v.label || '') + '" loading="lazy" draggable="false"></div></div>';
     }).join('');
-    var dots = vs.length <= 12 ? '<div class="cf-dots">' + vs.map(function (_, i) { return '<span class="cf-dot' + (i ? '' : ' on') + '"></span>'; }).join('') + '</div>' : '';
+    var thumbs = '<div class="cf-thumbs">' + vs.map(function (v, i) { return '<button type="button" class="cf-thumb' + (i ? '' : ' on') + '" data-cft="' + i + '" aria-label="' + (i + 1) + '"><img src="' + enc(v.image) + '" alt="" loading="lazy" draggable="false"></button>'; }).join('') + '</div>';
+    var dots = false ? '<div class="cf-dots">' + vs.map(function (_, i) { return '<span class="cf-dot' + (i ? '' : ' on') + '"></span>'; }).join('') + '</div>' : '';
     return '<div class="cf" data-cf="' + key + '"><div class="cf-head"><h3>' + T(it.title) + '</h3>' + (it.price ? '<div class="cf-price">' + fmtPrice(it.price) + '</div>' : '') + '<p>' + T(it.variants[0].desc) + '</p></div>'
       + '<div class="cf-stage"><button class="cf-btn prev" data-cfgo="-1" aria-label="이전"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="cf-btn next" data-cfgo="1" aria-label="다음"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>' + items + '</div>'
-      + '<div class="cf-meta"><div class="cf-label" data-cfl></div><div class="cf-count" data-cfc></div></div>' + dots + '</div>';
+      + '<div class="cf-meta"><div class="cf-label" data-cfl></div><div class="cf-count" data-cfc></div></div>' + dots + thumbs + '</div>';
   }
   function cfUpdate(box) {
     var s = CF[box.dataset.cf], n = s.n, half = n / 2;
@@ -2161,6 +2170,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     $('[data-cfl]', box).textContent = meaningful ? T(v.label) : '';
     $('[data-cfc]', box).textContent = (s.i + 1) + ' / ' + n;
     $$('.cf-dot', box).forEach(function (el, i) { el.classList.toggle('on', i === s.i); });
+    $$('.cf-thumb', box).forEach(function (el, i) { el.classList.toggle('on', i === s.i); });
   }
   function cfGo(box, i) { var s = CF[box.dataset.cf]; s.i = (i + s.n) % s.n; cfUpdate(box); }
   function renderProps() {
@@ -2177,6 +2187,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     list.addEventListener('click', function (e) {
       if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; return; }
       var box = e.target.closest('.cf'); if (!box) return;
+      var th = e.target.closest('[data-cft]');
+      if (th) { cfGo(box, +th.dataset.cft); return; }
       var g = e.target.closest('[data-cfgo]');
       if (g) { cfGo(box, CF[box.dataset.cf].i + +g.dataset.cfgo); return; }
       var it = e.target.closest('.cf-item');
