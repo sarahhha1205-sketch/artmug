@@ -188,6 +188,8 @@ details.props[open] summary::after{content:"－"}
 .pf-group h3{font-size:24px;padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
 .pcard{cursor:pointer}
+.pcard.wide{grid-column:1/-1}
+.pcard.wide .pmedia{aspect-ratio:16/9}
 .pmedia{aspect-ratio:1/1;border-radius:var(--r);overflow:hidden;background:var(--card);border:1px solid var(--line);transition:.3s}
 .pcard:hover .pmedia{border-color:rgba(196,168,255,.5);transform:translateY(-4px)}
 .pmedia video,.pmedia img{width:100%;height:100%;object-fit:cover}
@@ -1026,6 +1028,14 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     },
     {
       type: 'card',
+      title: '화살 쏘기',
+      desc: '날아오는 장난감 화살에 맞습니다.',
+      price: '50,000원',
+      isNew: true,
+      video: 'videos/화살쏘기.mp4'
+    },
+    {
+      type: 'card',
       title: '뽀잉눈',
       section: '캐릭터 필터',
       desc: '와루도에서 노드만으로 단순한 뽀잉눈을 구현할 수 있습니다.',
@@ -1298,34 +1308,12 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
      ───────────────────────────────────────────── */
   var PORTFOLIO_ITEMS = [
     {
-      title: '팬 캐릭터 통통 API',
+      title: '하루네님 무대 공연 API',
       category: '와루도 3D API',
-      group: '팬 캐릭터 통통',
-      desc: '팬 캐릭터가 캐릭터 머리 위에서 통통 뜁니다. (50,000원)',
+      group: '무대 공연',
+      wide: true,
       date: '2026.10',
-      video: 'videos/팬캐릭터통통.mp4'
-    },
-    {
-      title: '4컷 사진 API',
-      category: '와루도 3D API',
-      desc: '다양한 필터와 스티커로 나만의 방셀을 찍는 4컷 사진 API입니다.',
-      date: '2026.10',
-      video: 'videos/4컷사진.mp4'
-    },
-    {
-      title: '천사 강림 API',
-      category: '와루도 3D API',
-      group: '천사 강림',
-      date: '2026.10',
-      video: 'videos/천사강림.mp4'
-    },
-    {
-      title: '마법소녀 변신 API',
-      category: '와루도 3D API',
-      group: '마법소녀 변신',
-      desc: '의상, 헤어를 교체하며 변신합니다. 변신 파티클, 변신 자세, 변신 시 실루엣 색상 등을 자유롭게 커스텀할 수 있습니다.',
-      date: '2026.10',
-      video: 'videos/마법소녀변신.mp4'
+      video: 'Port/무대 공연 하루네.mp4'
     },
     {
       title: '나들희님 팬캐릭터 뽀뽀 API',
@@ -1448,13 +1436,6 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       video: 'Port/이뽀님 윙크 포트폴리오.mp4'
     },
     {
-      title: '윙크 API',
-      category: '와루도 3D API',
-      group: '윙크',
-      date: '2026.10',
-      video: 'videos/윙크2.mp4'
-    },
-    {
       title: '지한이또님 쓰다듬기 API',
       category: '와루도 3D API',
       group: '쓰다듬기',
@@ -1507,9 +1488,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       image: 'Port/빙하유님오리지널소품.png'
     },
     {
-      title: '냥님 커스텀 API<br>아봉',
-      category: '와루도 3D API',
-      group: '커스텀 제작',
+      title: '냥님 아봉 API',
+      category: '아봉',
       date: '2026.09',
       video: 'Port/냥님아봉.mp4'
     },
@@ -1780,13 +1760,6 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       group: '팬 캐릭터 따라다니기',
       date: '2026.09',
       video: 'Port/김막댕님팬캐릭터따라.mp4'
-    },
-    {
-      title: '김막댕님 천사 / 악마 변신 API',
-      category: '와루도 3D API',
-      group: '천사 / 악마 변신',
-      date: '2026.09',
-      video: 'Port/김막댕천사.mp4'
     },
     {
       title: '유세라님 던지기 API',
@@ -2230,7 +2203,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var m = it.video || (it.videos && it.videos[0]);
     var zoom = m ? 'data-zoom-video="' + enc(m) + '"' : (it.image ? 'data-zoom-img="' + enc(it.image) + '"' : '');
     var tt = tPf(it.title).replace(/<br>/g, ' ');
-    return '<article class="pcard" ' + zoom + ' data-zoom-title="' + tt + '"><div class="pmedia">' + mediaHtml(it, tt) + '</div>'
+    return '<article class="pcard' + (it.wide ? ' wide' : '') + '" ' + zoom + ' data-zoom-title="' + tt + '"><div class="pmedia">' + mediaHtml(it, tt) + '</div>'
       + '<div class="pbody"><h4>' + tPf(it.title) + '</h4>' + (it.desc ? '<p>' + T(it.desc) + '</p>' : '') + '</div></article>';
   }
   function renderPf() {
