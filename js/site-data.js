@@ -19,13 +19,13 @@
   var VIDEO_FOLLOW_2 = 'videos/팬캐릭터 따라가기 2.mp4';
 
   var FOLLOW_VARIANTS = [
-    { label: '따라다니기 Type 1', desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.', video: VIDEO_FOLLOW },
-    { label: '따라다니기 Type 2', desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.', video: VIDEO_FOLLOW_2, objectPosition: '70% center' }
+    { label: '따라다니기 Type 1', desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)', video: VIDEO_FOLLOW },
+    { label: '따라다니기 Type 2', desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)', video: VIDEO_FOLLOW_2, objectPosition: '70% center' }
   ];
 
   var KISS_VARIANTS = [
-    { label: '뽀뽀 Type 1', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.', video: VIDEO_KISS, vtsVideo: VIDEO_KISS_VTS },
-    { label: '뽀뽀 Type 2', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.', video: VIDEO_KISS_2 }
+    { label: '뽀뽀 Type 1', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)', video: VIDEO_KISS, vtsVideo: VIDEO_KISS_VTS },
+    { label: '뽀뽀 Type 2', desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)', video: VIDEO_KISS_2 }
   ];
   var VIDEO_THROW_ONE = 'videos/1개던지기.mp4';
   var VIDEO_WATER = 'videos/물쏘기.mp4';
@@ -97,6 +97,7 @@
     {
       type: 'swipe',
       title: '팬 캐릭터 뽀뽀',
+      optText: '뽀뽀하는 위치나 효과를 커스텀할 수 있습니다.',
       desc: '팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '50,000원',
       isNew: true,
@@ -115,6 +116,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 뺨 당기기',
+      optText: '뺨을 당기는 속도나 강도를 커스텀할 수 있습니다.',
       desc: '팬 캐릭터가 나타나 캐릭터의 뺨을 당깁니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '50,000원',
       isNew: true,
@@ -138,7 +140,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 돌아다니기',
-      desc: '팬 캐릭터가 캐릭터 주변을 돌아다닙니다.<br>도네이션한 시청자의 닉네임을 가진 팬 캐릭터가 나타나 돌아다니게 할 수 있습니다.',
+      desc: '팬 캐릭터가 캐릭터 주변을 돌아다닙니다.<br>도네이션한 시청자의 닉네임을 가진 팬 캐릭터가 나타나 돌아다니게 할 수 있습니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '50,000원',
       isNew: true,
       video: 'videos/팬캐릭터 배회.mp4'
@@ -146,7 +148,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 옆에서 둥둥',
-      desc: '팬 캐릭터가 캐릭터 옆에서 둥둥 떠다닙니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.',
+      desc: '팬 캐릭터가 캐릭터 옆에서 둥둥 떠다닙니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '+20,000원',
       isNew: true,
       video: 'videos/팬캐릭터옆에서둥둥.mp4'
@@ -154,7 +156,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 머리 위에서 뛰기',
-      desc: '팬 캐릭터가 캐릭터 머리 위에서 통통 뜁니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.',
+      desc: '팬 캐릭터가 캐릭터 머리 위에서 통통 뜁니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '+20,000원',
       isNew: true,
       video: 'videos/팬캐릭터통통튀기.mp4'
@@ -162,7 +164,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 던지기',
-      desc: '팬 캐릭터를 던질 수 있는 기능입니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.',
+      desc: '팬 캐릭터를 던질 수 있는 기능입니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '+20,000원',
       isNew: true,
       video: 'videos/팬캐릭터던지기.mp4'
@@ -170,7 +172,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 납작',
-      desc: '팬 캐릭터를 손바닥으로 눌러 납작하게 만듭니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.',
+      desc: '팬 캐릭터를 손바닥으로 눌러 납작하게 만듭니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '+20,000원',
       isNew: true,
       video: 'videos/팬캐릭터납작.mp4'
@@ -178,7 +180,7 @@
     {
       type: 'card',
       title: '팬 캐릭터 물건 던지기',
-      desc: '팬 캐릭터가 나를 향해 물건을 던집니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.',
+      desc: '팬 캐릭터가 나를 향해 물건을 던집니다.<br>팬 캐릭터 돌아다니기에 추가할 수 있는 옵션입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '+20,000원',
       isNew: true,
       video: 'videos/팬캐릭터가던지기.mp4'
@@ -186,7 +188,8 @@
     {
       type: 'swipe',
       title: '팬 캐릭터 따라다니기',
-      desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.',
+      optText: '따라다니는 속도 등을 커스텀할 수 있습니다.',
+      desc: '팬 캐릭터가 따라다니게 할 수 있는 기능입니다.<br>팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)',
       price: '20,000원',
       variants: FOLLOW_VARIANTS,
       titleMode: 'static',
@@ -198,6 +201,7 @@
       desc: '캐릭터가 번개를 맞습니다.',
       price: '40,000원',
       isNew: true,
+      notForSale: true,
       video: 'videos/번개맞기api.mp4'
     },
     {
@@ -371,8 +375,8 @@
     {
       type: 'card',
       title: '인형뽑기',
-      desc: '인형뽑기 기계 안에 캐릭터 인형이 가득 쌓이고, 집게가 하나를 뽑아 출구로 떨어뜨리면 캐릭터가 등장합니다.<br>가짜 캐릭터를 뽑을 수 있습니다. 캐릭터와 원하는 소품을 섞어서 배치할 수 있습니다.',
-      price: '문의',
+      desc: '인형뽑기 기계 안에 캐릭터 인형이 가득 쌓이고, 집게가 하나를 뽑아 출구로 떨어뜨리면 캐릭터가 등장합니다.<br>가짜 캐릭터를 뽑을 수 있습니다. 캐릭터와 원하는 소품을 섞어서 배치할 수 있습니다. 뽑기 확률도 자유롭게 설정할 수 있습니다.',
+      price: '80,000원',
       video: 'videos/인형뽑기진.mp4'
     },
     {
@@ -381,6 +385,23 @@
       desc: '캐릭터가 폴을 잡고 다양한 폴댄스 동작을 선보입니다.',
       price: '문의',
       video: 'videos/폴댄스API.mp4'
+    },
+    {
+      type: 'card',
+      title: '뽀잉눈',
+      section: '캐릭터 필터',
+      desc: '와루도에서 노드만으로 단순한 뽀잉눈을 구현할 수 있습니다.',
+      price: '20,000원',
+      video: 'videos/간단뽀잉눈.mp4'
+    },
+    {
+      type: 'card',
+      title: '릴툰 쉐이더',
+      section: '캐릭터 필터',
+      desc: '와루도 노드만으로 기존 릴툰에 간단한 쉐이더를 추가합니다.',
+      price: '20,000원',
+      image: 'image/릴툰쉐이더-전후.webp'
+      /* video: 'videos/릴툰쉐이더.mp4' */
     },
     {
       type: 'card',
@@ -450,6 +471,7 @@
       type: 'card',
       type: 'card',
       title: '시청자 던지기',
+      optText: '텍스트 색상이나 던지는 물건을 커스텀할 수 있습니다.',
       desc: '도네이션을 한 시청자의 이름이 던지기 프랍에 들어갑니다.',
       price: '30,000원',
       video: VIDEO_VIEWER_THROW,
@@ -518,6 +540,7 @@
     {
       type: 'card',
       title: '마법',
+      optText: '손에서 나가는 마법의 종류를 커스텀할 수 있습니다.<br>※ 핸드 트래킹 장비가 있어야 정상 작동합니다.',
       desc: '캐릭터의 손에서 마법이 나갑니다.',
       price: '30,000원',
       video: VIDEO_MAGIC,
@@ -588,16 +611,13 @@
       { label: '팬캐릭터12', desc: FANCHAR_DESC, image: 'image/사과쨈님팬캐릭터.png' },
       { label: '팬캐릭터13', desc: FANCHAR_DESC, image: 'image/0번 아탕님 팬캐릭터.png' },
       { label: '팬캐릭터0', desc: FANCHAR_DESC, image: 'image/0번.png' },
-      { label: '팬캐릭터1', desc: FANCHAR_DESC, image: 'image/1번.png' },
+      { label: '팬캐릭터1', desc: FANCHAR_DESC, image: 'image/1번-Photoroom.png' },
       { label: '팬캐릭터1-1', desc: FANCHAR_DESC, image: 'image/1-1번.png' },
-      { label: '팬캐릭터2', desc: FANCHAR_DESC, image: 'image/2번.jpg' },
-      { label: '팬캐릭터3', desc: FANCHAR_DESC, image: 'image/3번.png' },
+      { label: '팬캐릭터2', desc: FANCHAR_DESC, image: 'image/2번-Photoroom.png' },
+      { label: '팬캐릭터3', desc: FANCHAR_DESC, image: 'image/3번-Photoroom.png' },
       { label: '팬캐릭터4', desc: FANCHAR_DESC, image: 'image/4번.png' },
       { label: '팬캐릭터5', desc: FANCHAR_DESC, image: 'image/5번.png' },
-      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번.jpg' },
-      { label: '팬캐릭터14', desc: FANCHAR_DESC, image: 'Port/카우리님 팬 캐릭터.jpg' },
-      { label: '팬캐릭터15', desc: FANCHAR_DESC, image: 'Port/나들희님 팬 캐릭터.png' },
-      { label: '팬캐릭터16', desc: FANCHAR_DESC, image: 'Port/쿠쿠양님 팬 캐릭터.png' },
+      { label: '팬캐릭터6', desc: FANCHAR_DESC, image: 'image/6번-Photoroom.png' },
       { label: '팬캐릭터17', desc: FANCHAR_DESC, image: 'image/바박수님 팬캐릭터.png' },
       { label: '팬캐릭터18', desc: FANCHAR_DESC, image: 'image/누먕님팬캐릭터.png', fit: 'contain' }
     ]
