@@ -1,0 +1,37 @@
+<style>
+/* 메인 테마(index.html)의 .card / .btn.primary / .btn.ghost / .menu 스타일을 그대로 따른 리모콘
+   → 아트머그 부모 페이지 HTML의 <style> 블록을 이 내용으로 교체 (HTML·script는 그대로) */
+.amcm-nav{
+  --bg:#0d0b14;--card:#1a1627;--line:rgba(255,255,255,.09);--text:#f1eff7;--soft:#a6a2bc;--dim:#6f6b86;--brand:#8b7cf6;--brand2:#c4a8ff;
+  width:152px;
+  position:fixed; top:180px; right:24px; z-index:99999;
+  background:var(--card);
+  border:1px solid var(--line);border-radius:20px;padding:20px 12px 12px;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  display:flex;flex-direction:column;gap:4px;
+  font-family:'Jalnan2','Pretendard',-apple-system,sans-serif;
+  box-sizing:border-box;
+  transition:border-color .3s;
+}
+.amcm-nav:hover{border-color:rgba(196,168,255,.45);}
+.amcm-nav *{box-sizing:border-box;font-weight:400 !important;}
+.amcm-label{text-align:center;font-size:13px;color:var(--brand2);margin-bottom:10px;letter-spacing:.2em;text-transform:uppercase;}
+.amcm-nav button{
+  width:100%;background:none;border:1px solid transparent;padding:9px 0;border-radius:99px;
+  font-family:inherit;font-size:14px;color:var(--soft);cursor:pointer;
+  transition:.2s;text-align:center;white-space:nowrap;
+}
+.amcm-nav button:hover{color:var(--text);background:rgba(139,124,246,.18);}
+/* 주문서 작성 = 메인의 .btn.primary */
+.amcm-nav button.accent{background:linear-gradient(100deg,var(--brand),#a77bff);color:#fff;box-shadow:0 8px 24px rgba(139,124,246,.35);margin-top:4px;}
+.amcm-nav button.accent:hover{transform:translateY(-2px);background:linear-gradient(100deg,var(--brand),#a77bff);}
+/* 문의하기 = 메인의 .btn.ghost */
+.amcm-nav button#amcmContact{background:rgba(255,255,255,.04);border-color:var(--line);color:var(--text);box-shadow:none;margin-top:0;}
+.amcm-nav button#amcmContact:hover{border-color:var(--brand2);transform:none;background:rgba(255,255,255,.04);}
+.amcm-top{color:var(--dim) !important;font-size:12px !important;margin-top:8px;border-radius:0 !important;border-top:1px solid var(--line) !important;padding-top:12px !important;}
+.amcm-top:hover{background:none !important;color:var(--brand2) !important;}
+
+@media (max-width:1000px){
+  .amcm-nav{display:none !important;}
+}
+</style>
