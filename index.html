@@ -922,6 +922,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     {
       type: 'card',
       title: '손 추가 (맨손)',
+      section: '2D 손',
       desc: '웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.<br>피부색, 외곽선 두께와 색을 변경할 수 있습니다.',
       optText: '추가 옵션<br>· 간단한 악세사리 추가 : +10,000원<br>· 의상 변경 : +30,000원',
       price: '40,000원',
@@ -935,6 +936,36 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
         '악세사리 추가 (+10,000원)': '손에 간단한 악세사리를 추가합니다.',
         '의상 변경 (+30,000원)': '손의 의상을 원하는 대로 변경합니다.'
       }
+    },
+    {
+      type: 'card',
+      title: '쪽지 붙이기',
+      section: '2D 손',
+      desc: '손으로 캐릭터에게 쪽지를 붙입니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
+      price: '+30,000원',
+      isNew: true,
+      vtsOnly: true,
+      video: '2D/쪽지때기.mp4'
+    },
+    {
+      type: 'card',
+      title: '하트총',
+      section: '2D 손',
+      desc: '손으로 하트총을 쏩니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
+      price: '+15,000원',
+      isNew: true,
+      vtsOnly: true,
+      video: '2D/하트총.mp4'
+    },
+    {
+      type: 'card',
+      title: '뻐큐 모자이크',
+      section: '2D 손',
+      desc: '뻐큐를 하면 손에 모자이크가 씌워집니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
+      price: '+10,000원',
+      isNew: true,
+      vtsOnly: true,
+      video: '2D/뻐큐시모자이크.mp4'
     },
     {
       type: 'card',
@@ -2156,7 +2187,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   function hsInit(root) { $$('.hs', root).forEach(hsUpdate); }
 
   /* ── API 목록 ── */
-  var SEC_ORDER = ['특수 API', '팬 캐릭터 API', '기본 API', '캐릭터 필터'];
+  var SEC_ORDER = ['특수 API', '팬 캐릭터 API', '2D 손', '기본 API', '캐릭터 필터'];
   var TOP = ['4컷 사진', '무대 공연', '악마 소환', '천사 강림', '마법소녀 변신', '인형뽑기', '선물상자 짜잔', '불꽃놀이', '대포 발사', '운세 뽑기'];
   function sectionOf(it) {
     if (/^팬 캐릭터/.test(it.title)) return '팬 캐릭터 API';
@@ -2618,6 +2649,24 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
         title: "손 추가 (맨손)",
         desc: "웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.\n피부색, 외곽선 두께와 색을 변경할 수 있습니다. (간단한 악세사리 추가 +10,000원 / 의상 변경 +30,000원)",
         price: "40,000",
+        vtsOnly: true
+      },
+      {
+        title: "쪽지 붙이기",
+        desc: "손으로 캐릭터에게 쪽지를 붙입니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "30,000",
+        vtsOnly: true
+      },
+      {
+        title: "하트총",
+        desc: "손으로 하트총을 쏩니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "15,000",
+        vtsOnly: true
+      },
+      {
+        title: "뻐큐 모자이크",
+        desc: "뻐큐를 하면 손에 모자이크가 씌워집니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "10,000",
         vtsOnly: true
       },
       {
