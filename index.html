@@ -473,7 +473,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       <div class="sec-head"><div class="eyebrow">Products</div><h2>API 목록</h2><p>모든 API는 자유롭게 커스텀이 가능합니다!</p></div>
       <div class="toolbar">
         <div class="seg" id="platformTabs">
-          <button class="on" data-platform="warudo">Warudo</button><button data-platform="vts">VTube Studio</button>
+          <button class="on" data-platform="warudo">Warudo</button><button data-platform="vts">VTube Studio</button><button data-platform="hand">2D 손 추가</button>
         </div>
         <span class="tb-sep" aria-hidden="true"></span>
         <div class="jump" id="apiJump"></div>
@@ -504,6 +504,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       <div class="order-platform-tabs" id="orderPlatformTabs">
         <button type="button" class="order-platform-tab is-active" data-order-platform="warudo">Warudo</button>
         <button type="button" class="order-platform-tab" data-order-platform="vts">VTube Studio</button>
+        <button type="button" class="order-platform-tab" data-order-platform="hand">2D 손 추가</button>
       </div>
       <div class="order-panel">
         <form class="order-form" id="order-form" novalidate></form>
@@ -927,7 +928,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       optText: '추가 옵션<br>· 간단한 악세사리 추가 : +10,000원<br>· 의상 변경 : +30,000원',
       price: '40,000원',
       isNew: true,
-      vtsOnly: true,
+      handOnly: true,
       video: '2D/라투디 손 추가(맨손).mp4',
       chips: ['피부색 변경 가능', '외곽선 두께·색 변경 가능', '악세사리 추가 (+10,000원)', '의상 변경 (+30,000원)'],
       optionHints: {
@@ -944,7 +945,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       desc: '손으로 캐릭터에게 쪽지를 붙입니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
       price: '+30,000원',
       isNew: true,
-      vtsOnly: true,
+      handOnly: true,
       video: '2D/쪽지때기.mp4'
     },
     {
@@ -954,7 +955,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       desc: '손으로 하트총을 쏩니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
       price: '+15,000원',
       isNew: true,
-      vtsOnly: true,
+      handOnly: true,
       video: '2D/하트총.mp4'
     },
     {
@@ -964,7 +965,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       desc: '뻐큐를 하면 손에 모자이크가 씌워집니다.<br>손 추가에 추가할 수 있는 옵션입니다.',
       price: '+10,000원',
       isNew: true,
-      vtsOnly: true,
+      handOnly: true,
       video: '2D/뻐큐시모자이크.mp4'
     },
     {
@@ -1380,6 +1381,12 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
      항목 추가 시 아래 형식 그대로 복사해서 넣으면 됩니다.
      ───────────────────────────────────────────── */
   var PORTFOLIO_ITEMS = [
+    {
+      title: '타코미님 2D 손 추가 API',
+      category: '2D 손 추가',
+      date: '2026.10',
+      video: 'Port2D/타코미님2D손.mp4'
+    },
     {
       title: '하루네님 무대 공연 API',
       category: '와루도 3D API',
@@ -2056,7 +2063,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var n = parseInt(String(p).replace(/[^0-9]/g, ''), 10);
     return isNaN(n) ? p : (n + 10000).toLocaleString('ko-KR') + '원';
   }
-  function platsOf(it) { return it.vtsOnly ? ['vts'] : (it.vts ? ['warudo', 'vts'] : ['warudo']); }
+  function platsOf(it) { return it.handOnly ? ['hand'] : it.vtsOnly ? ['vts'] : (it.vts ? ['warudo', 'vts'] : ['warudo']); }
   function mediaHtml(m, label) {
     var v = m.video || (m.videos && m.videos[0]) || '';
     if (plat === 'vts') { if (m.vtsVideos && m.vtsVideos.length) v = m.vtsVideos[0]; else if (m.vtsVideo) v = m.vtsVideo; }
@@ -2292,7 +2299,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   /* ── 포트폴리오 (카테고리 탭 → 그룹별 목록) ── */
   var CAT_ORDER = PORTFOLIO_CATEGORY_ORDER_SAFE();
   function PORTFOLIO_CATEGORY_ORDER_SAFE() {
-    var pref = ['와루도 3D API', 'Live2D API', '팬캐릭터,PROP제작'], cats = [];
+    var pref = ['와루도 3D API', 'Live2D API', '2D 손 추가', '팬캐릭터,PROP제작'], cats = [];
     PORTFOLIO_ITEMS.forEach(function (it) { var c = it.category || '기타'; if (cats.indexOf(c) < 0) cats.push(c); });
     return cats.sort(function (a, b) { var x = pref.indexOf(a), y = pref.indexOf(b); return (x < 0 ? 9 : x) - (y < 0 ? 9 : y); });
   }
@@ -2607,6 +2614,32 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
         price: "30,000"
       }
     ],
+    "api-hand": [
+      {
+        title: "손 추가 (맨손)",
+        desc: "웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.\n피부색, 외곽선 두께와 색을 변경할 수 있습니다. (간단한 악세사리 추가 +10,000원 / 의상 변경 +30,000원)",
+        price: "40,000",
+        handOnly: true
+      },
+      {
+        title: "쪽지 붙이기",
+        desc: "손으로 캐릭터에게 쪽지를 붙입니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "30,000",
+        handOnly: true
+      },
+      {
+        title: "하트총",
+        desc: "손으로 하트총을 쏩니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "15,000",
+        handOnly: true
+      },
+      {
+        title: "뻐큐 모자이크",
+        desc: "뻐큐를 하면 손에 모자이크가 씌워집니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "10,000",
+        handOnly: true
+      },
+    ],
     "api-custom": [
       {
         title: "안경 자물쇠",
@@ -2643,30 +2676,6 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
         title: "전광판",
         desc: "화면에 전광판이 나타나 원하는 문구를 표시합니다.",
         price: "30,000",
-        vtsOnly: true
-      },
-      {
-        title: "손 추가 (맨손)",
-        desc: "웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.\n피부색, 외곽선 두께와 색을 변경할 수 있습니다. (간단한 악세사리 추가 +10,000원 / 의상 변경 +30,000원)",
-        price: "40,000",
-        vtsOnly: true
-      },
-      {
-        title: "쪽지 붙이기",
-        desc: "손으로 캐릭터에게 쪽지를 붙입니다.\n손 추가에 추가할 수 있는 옵션입니다.",
-        price: "30,000",
-        vtsOnly: true
-      },
-      {
-        title: "하트총",
-        desc: "손으로 하트총을 쏩니다.\n손 추가에 추가할 수 있는 옵션입니다.",
-        price: "15,000",
-        vtsOnly: true
-      },
-      {
-        title: "뻐큐 모자이크",
-        desc: "뻐큐를 하면 손에 모자이크가 씌워집니다.\n손 추가에 추가할 수 있는 옵션입니다.",
-        price: "10,000",
         vtsOnly: true
       },
       {
@@ -2752,6 +2761,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
       { id: "file", label: "파일 전달 (숙련자)" }
     ],
     categories: [
+      { key: "api-hand", label: "2D 손 추가" },
       { key: "api-fan", label: "팬 캐릭터 API" },
       { key: "api-basic", label: "기본 API" },
       { key: "api-custom", label: "특수 API" },
@@ -2777,6 +2787,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   function getPlatformEntries(categoryKey) {
     var items = PRICE_ITEMS[categoryKey] || [];
     var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
+    if (categoryKey === "api-hand") return orderPlatform === "hand" ? entries : [];
+    if (orderPlatform === "hand") return [];
     entries = entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : !e.item.vtsOnly; });
     if (categoryKey === "prop-production") return sortByPrice(entries);
     if (orderPlatform !== "vts") return sortByPrice(entries);
@@ -2948,7 +2960,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     form.innerHTML =
       '<section class="order-section">' +
         '<h3 class="order-section-title">기본 정보</h3>' +
-        (orderPlatform === "vts" ? "" : createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions))) +
+        (orderPlatform !== "warudo" ? "" : createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions))) +
         createField(
           "방송 플랫폼",
           '<div class="order-platform-field">' +
@@ -3070,7 +3082,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var note = form.elements.note ? form.elements.note.value.trim() : "";
     var selectedApis = getSelectedApis();
     var apiEntries = selectedApis.filter(function (entry) {
-      return entry.category === "api-fan" || entry.category === "api-basic" || entry.category === "api-custom";
+      return entry.category === "api-hand" || entry.category === "api-fan" || entry.category === "api-basic" || entry.category === "api-custom";
     });
     var propEntries = selectedApis.filter(function (entry) {
       return entry.category === "prop-production";
@@ -3078,8 +3090,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var isPrivate = form.querySelector('input[name="private"]:checked');
     var lines = ["[Rabbi API 주문서]", ""];
 
-    lines.push("■ 엔진: " + (orderPlatform === "vts" ? "VTube Studio" : "Warudo"));
-    if (orderPlatform !== "vts") lines.push("■ Warudo: " + getRadioLabel("warudo"));
+    lines.push("■ 엔진: " + (orderPlatform === "vts" ? "VTube Studio" : orderPlatform === "hand" ? "2D 손 추가" : "Warudo"));
+    if (orderPlatform === "warudo") lines.push("■ Warudo: " + getRadioLabel("warudo"));
     lines.push("■ 플랫폼: " + (getPlatformLabels().join(", ") || "(미선택)"));
     lines.push("■ 세팅: " + getRadioLabel("setup"));
     lines.push("■ 비공개: " + (isPrivate ? "예 (+20,000원)" : "아니오"));
