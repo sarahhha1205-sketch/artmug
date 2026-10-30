@@ -14,6 +14,11 @@
         price: "50,000"
       },
       {
+        title: "팬 캐릭터 통통",
+        desc: "팬 캐릭터가 나타나 캐릭터 머리 위에서 통통 뜁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
+        price: "50,000"
+      },
+      {
         title: "팬 캐릭터 밀기",
         desc: "작은 팬 캐릭터가 나타나 커지며 캐릭터를 밀고 지나갑니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
         price: "50,000"
@@ -136,6 +141,32 @@
         price: "30,000"
       }
     ],
+    "api-hand": [
+      {
+        title: "손 추가 (맨손)",
+        desc: "웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.\n피부색, 외곽선 두께와 색을 변경할 수 있습니다. (간단한 악세사리 추가 +10,000원 / 의상 변경 +30,000원)",
+        price: "40,000",
+        handOnly: true
+      },
+      {
+        title: "쪽지 붙이기",
+        desc: "손으로 캐릭터에게 쪽지를 붙입니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "30,000",
+        handOnly: true
+      },
+      {
+        title: "하트총",
+        desc: "손으로 하트총을 쏩니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "15,000",
+        handOnly: true
+      },
+      {
+        title: "뻐큐 모자이크",
+        desc: "뻐큐를 하면 손에 모자이크가 씌워집니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "10,000",
+        handOnly: true
+      },
+    ],
     "api-custom": [
       {
         title: "안경 자물쇠",
@@ -180,10 +211,14 @@
         vtsOnly: true
       },
       {
-        title: "손 추가 (맨손)",
-        desc: "웹캠으로 트래킹 가능한 손을 라이브 2D에 추가합니다.\n피부색, 외곽선 두께와 색을 변경할 수 있습니다. (간단한 악세사리 추가 +10,000원 / 의상 변경 +30,000원)",
-        price: "40,000",
-        vtsOnly: true
+        title: "빔",
+        desc: "캐릭터가 입을 벌리면 빔과 함께 표정이 나옵니다. (빔 색상 변경 가능)",
+        price: "30,000"
+      },
+      {
+        title: "화살 쏘기",
+        desc: "날아오는 장난감 화살에 맞습니다.",
+        price: "50,000"
       },
       {
         title: "악마 소환",
@@ -268,6 +303,7 @@
       { id: "file", label: "파일 전달 (숙련자)" }
     ],
     categories: [
+      { key: "api-hand", label: "2D 손 추가" },
       { key: "api-fan", label: "팬 캐릭터 API" },
       { key: "api-basic", label: "기본 API" },
       { key: "api-custom", label: "특수 API" },
@@ -293,6 +329,8 @@
   function getPlatformEntries(categoryKey) {
     var items = PRICE_ITEMS[categoryKey] || [];
     var entries = items.map(function (item, idx) { return { item: item, idx: idx }; });
+    if (categoryKey === "api-hand") return orderPlatform === "hand" ? entries : [];
+    if (orderPlatform === "hand") return [];
     entries = entries.filter(function (e) { return orderPlatform === "vts" ? !e.item.warudoOnly : !e.item.vtsOnly; });
     if (categoryKey === "prop-production") return sortByPrice(entries);
     if (orderPlatform !== "vts") return sortByPrice(entries);
@@ -464,7 +502,7 @@
     form.innerHTML =
       '<section class="order-section">' +
         '<h3 class="order-section-title">기본 정보</h3>' +
-        (orderPlatform === "vts" ? "" : createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions))) +
+        (orderPlatform !== "warudo" ? "" : createField("Warudo 버전", createRadioGroup("warudo", cfg.warudoVersions))) +
         createField(
           "방송 플랫폼",
           '<div class="order-platform-field">' +
@@ -586,7 +624,7 @@
     var note = form.elements.note ? form.elements.note.value.trim() : "";
     var selectedApis = getSelectedApis();
     var apiEntries = selectedApis.filter(function (entry) {
-      return entry.category === "api-fan" || entry.category === "api-basic" || entry.category === "api-custom";
+      return entry.category === "api-hand" || entry.category === "api-fan" || entry.category === "api-basic" || entry.category === "api-custom";
     });
     var propEntries = selectedApis.filter(function (entry) {
       return entry.category === "prop-production";
@@ -594,8 +632,8 @@
     var isPrivate = form.querySelector('input[name="private"]:checked');
     var lines = ["[Rabbi API 주문서]", ""];
 
-    lines.push("■ 엔진: " + (orderPlatform === "vts" ? "VTube Studio" : "Warudo"));
-    if (orderPlatform !== "vts") lines.push("■ Warudo: " + getRadioLabel("warudo"));
+    lines.push("■ 엔진: " + (orderPlatform === "vts" ? "VTube Studio" : orderPlatform === "hand" ? "2D 손 추가" : "Warudo"));
+    if (orderPlatform === "warudo") lines.push("■ Warudo: " + getRadioLabel("warudo"));
     lines.push("■ 플랫폼: " + (getPlatformLabels().join(", ") || "(미선택)"));
     lines.push("■ 세팅: " + getRadioLabel("setup"));
     lines.push("■ 비공개: " + (isPrivate ? "예 (+20,000원)" : "아니오"));
