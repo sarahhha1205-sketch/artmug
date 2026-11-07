@@ -381,13 +381,6 @@
     },
     {
       type: 'card',
-      title: '폴댄스',
-      desc: '캐릭터가 폴을 잡고 다양한 폴댄스 동작을 선보입니다.',
-      price: '문의',
-      video: 'videos/폴댄스API.mp4'
-    },
-    {
-      type: 'card',
       title: '뽀잉눈',
       section: '캐릭터 필터',
       desc: '와루도에서 노드만으로 단순한 뽀잉눈을 구현할 수 있습니다.',
