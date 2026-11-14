@@ -415,6 +415,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
   .order-wrap{padding:30px 18px;border-radius:20px}
 }
 @media(max-width:600px){
+.hero::before,.hero::after{filter:blur(60px)}
   .grid,.grid.two,.pgrid{grid-template-columns:1fr}
   .head h3{font-size:16px}
   /* 모바일: 카드 제목·가격·버튼이 한 줄에 눌리지 않도록 줄바꿈 허용 */
@@ -2177,7 +2178,7 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
 
   /* ── 영상: 화면에 보일 때만 로드/재생 ── */
   /* 화면에 보이는 영상 중 중앙에 가까운 것부터 최대 MAX_PLAYING개만 재생 (나머지는 가장자리에 걸친 영상) */
-  var visibleVids = [], MAX_PLAYING = 6, timerId = 0;
+  var visibleVids = [], MAX_PLAYING = (innerWidth < 700 ? 3 : 5), timerId = 0;
   function rebalance() {
     timerId = 0;
     if (lbOpen) return;
