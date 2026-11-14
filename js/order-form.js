@@ -166,6 +166,12 @@
         price: "10,000",
         handOnly: true
       },
+      {
+        title: "2D 냥발",
+        desc: "ON/OFF 가능한 고양이 손을 추가해 드립니다.\n손 추가에 추가할 수 있는 옵션입니다.",
+        price: "20,000",
+        handOnly: true
+      },
     ],
     "api-custom": [
       {
