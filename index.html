@@ -1474,6 +1474,22 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
      ───────────────────────────────────────────── */
   var PORTFOLIO_ITEMS = [
     {
+      title: '팬 캐릭터 뽀뽀 API',
+      category: 'Live2D API',
+      group: '팬캐릭터 뽀뽀',
+      wide: true,
+      date: '2026.11',
+      video: 'Port2D/2D팬캐릭터뽀뽀_볼.mp4'
+    },
+    {
+      title: '팬 캐릭터 뽀뽀 API',
+      category: 'Live2D API',
+      group: '팬캐릭터 뽀뽀',
+      wide: true,
+      date: '2026.11',
+      video: 'Port2D/2D팬캐릭터뽀뽀_가슴.mp4'
+    },
+    {
       title: '사쿠마 히루님 손 추가',
       category: '2D 손 추가',
       desc: '쪽지 붙이기 옵션이 적용된 2D 손 추가 작업입니다.',
@@ -2569,6 +2585,8 @@ footer{padding:30px 0;border-top:1px solid var(--line);color:var(--dim);font-siz
     var ordered = (keys.indexOf('커스텀 제작') > -1 ? ['커스텀 제작'] : [])
       .concat(PORTFOLIO_GROUP_ORDER.filter(function (g) { return g !== '커스텀 제작' && keys.indexOf(g) > -1; }))
       .concat(keys.filter(function (g) { return g !== '커스텀 제작' && PORTFOLIO_GROUP_ORDER.indexOf(g) < 0; }));
+    /* Live2D 탭은 팬캐릭터 뽀뽀를 맨 앞에 */
+    if (pfCat === 'Live2D API' && ordered.indexOf('팬캐릭터 뽀뽀') > 0) { ordered.splice(ordered.indexOf('팬캐릭터 뽀뽀'), 1); ordered.unshift('팬캐릭터 뽀뽀'); }
     var html = ordered.map(function (g) { return '<div class="pf-group"><h3>' + T(g) + '</h3><div class="pgrid">' + groups[g].map(pfCard).join('') + '</div></div>'; }).join('');
     if (rest.length) html += '<div class="pf-group"><div class="pgrid">' + rest.map(pfCard).join('') + '</div></div>';
     box.innerHTML = html; watch(box);
