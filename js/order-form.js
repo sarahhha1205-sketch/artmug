@@ -518,7 +518,6 @@
               (item.variants && item.variants.length ? ' data-has-variants="true"' : "") + ">" +
             '<span class="order-api-info">' +
               '<span class="order-api-name">' + escapeHtml(item.title) + "</span>" +
-              (item.desc ? '<span class="order-api-desc">' + escapeHtmlBr(item.desc) + "</span>" : "") +
             "</span>" +
             '<span class="order-api-price">' + escapeHtml(formatOrderPrice(vtsAdjustedPrice(item))) + "</span>" +
           "</label>" +
@@ -655,8 +654,6 @@
         entry.variants.forEach(function (variant) {
           lines.push("  · " + (variant.label || variant.desc));
         });
-      } else if (entry.item.desc) {
-        lines.push("  " + entry.item.desc);
       }
     });
   }
