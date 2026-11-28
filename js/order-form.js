@@ -2,6 +2,11 @@
   var PRICE_ITEMS = {
     "api-fan": [
       {
+        title: "팬 캐릭터 커스텀 API",
+        desc: "원하시는 팬 캐릭터 연출을 커스텀 제작해 드립니다.",
+        price: "가격 협의"
+      },
+      {
         title: "팬 캐릭터 뽀뽀",
         desc: "팬 캐릭터가 다가가 캐릭터의 몸 한 부위에 입술자국을 남깁니다.\n팬 캐릭터가 없으면 기본 곰돌이로 세팅해 드립니다. (곰돌이 색상 변경 가능)",
         price: "50,000",
@@ -395,7 +400,7 @@
   function hasVariableEstimate(selectedApis) {
     return selectedApis.some(function (entry) {
       var price = entry.item && entry.item.price;
-      return String(price || "").includes("문의");
+      return /문의|협의/.test(String(price || ""));
     });
   }
 
@@ -449,14 +454,14 @@
   function formatOrderPrice(price) {
     if (!price) return "문의";
     var text = String(price);
-    if (text.includes("문의")) return text;
+    if (/문의|협의/.test(text)) return text;
     if (!/[\d]/.test(text)) return text;
     return text.replace(/~$/, "") + "원";
   }
 
   function getApiAmount(entry) {
     var item = entry.item;
-    if (!item || String(item.price || "").includes("문의")) return 0;
+    if (!item || /문의|협의/.test(String(item.price || ""))) return 0;
     var unit = parseAmount(vtsAdjustedPrice(item));
     if (item.perVariantPricing && item.variants && item.variants.length) {
       return unit * (entry.variants ? entry.variants.length : 0);
